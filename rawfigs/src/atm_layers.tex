@@ -1,0 +1,42 @@
+\documentclass{article}
+\usepackage{mathptmx,geometry,tikz,pgfplots}
+\pgfplotsset{compat=newest}
+\geometry{%
+paperwidth=9cm,
+paperheight=8cm
+}
+\newcommand{\data}{./rawfigs/src/data/}
+\begin{document}
+\pagestyle{empty}
+\tikzset{every node/.append style={font=\footnotesize},
+        pauseNode/.style={black,font=\tiny,above right,inner sep=0.2pt}}
+\begin{tikzpicture}[overlay,remember picture]
+\begin{axis}[at={(current page.center)},anchor=outer center,
+                axis lines=left,
+                clip=false,
+                axis on top,
+                ymin=0,xmin=0,
+                every axis/.append style={mark=none},
+                xlabel = T (K),
+                ylabel = Altitude (km)]
+
+\fill[violet!30] (axis cs:100,800) -- (axis cs:100,1200) -- (axis cs:230,1200) -- (axis cs:230,800) -- cycle;
+\node[rotate=90,violet,above] at (axis cs:250,1000) {Ionosphere};
+\node[coordinate,circle,inner sep=0.7pt,outer sep=0pt,fill=black,
+        pin={[pin edge={black},font=\footnotesize,pin distance=7pt,inner sep=0pt]above:{Troposphere}}] at (axis cs:210,25) {};
+\addplot[red] coordinates{(0,50) (250,50)}; 
+        \node[pauseNode] at (axis cs:0,50){Tropopause};
+\node[right] at (axis cs:5,150){Stratosphere};
+\addplot[blue] coordinates{(0,250) (250,250)}; 
+        \node[pauseNode] at (axis cs:0,250){Stratopause};
+\node[right] at (axis cs:5,425){Mesosphere (?)};
+\addplot[orange] coordinates{(0,600) (250,600)}; 
+        \node[pauseNode] at (axis cs:0,600){Mesopause};
+\node[right] at (axis cs:5,1000){Thermosphere};
+\addplot[cyan] coordinates{(0,1400) (250,1400)}; 
+        \node[pauseNode] at (axis cs:0,1400){Exobase};
+%
+\addplot[black,mark=none,thick] file{\data HASI_exp.dat};
+\end{axis}
+\end{tikzpicture}
+\end{document}

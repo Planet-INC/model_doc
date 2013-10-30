@@ -1,0 +1,42 @@
+\documentclass{article}
+\usepackage{geometry,tikz,pgfplots}
+\pgfplotsset{compat=newest}
+\usepackage[version=3]{mhchem}
+\geometry{%
+paperwidth=12cm,
+paperheight=10cm
+}
+\newcommand{\data}{./rawfigs/src/data/}
+\begin{document}
+\pagestyle{empty}
+\tikzset{every node/.append style={font=\footnotesize},
+        pauseNode/.style={black,font=\tiny,above right,inner sep=0.2pt}}
+\begin{tikzpicture}[overlay,remember picture]
+\begin{axis}[at={(current page.center)},anchor=center,
+                axis lines=left,
+                scale only axis,
+                ymode=log,
+                legend style={at={(0.65,1)},anchor=north,draw=none},
+                xmin=0,xmax=2800,
+                ymin=1e-28,ymax=1e-16,
+                xlabel = $\lambda$ (\AA),
+                ylabel = cross-section (cm$^{-2}$)]
+\addplot[black,mark=none,const plot] table[x=Lambda,y=Total]{\data cs_CH4.dat};
+\addplot[blue,mark=none,const plot] table[x=Lambda,y=Total]{\data cs_N2.dat};
+\legend{$\sigma$--\ce{CH4},$\sigma$--\ce{N2}}
+\end{axis}
+\begin{axis}[at={(current page.center)},anchor=center,
+                axis x line=none,
+                axis y line=right,
+                axis line style={red},
+                ytick style={red!50},
+                scale only axis,
+                ymode=log,
+                ymin = 2e-6,
+                xmin=0,xmax=2800,
+                ylabel = Irradiance (W\,m$^{-2}$nm$^{-1}$)]
+\addplot[red,mark=none,const plot] table[x expr=\thisrow{Wavelength}*10,y=Irradiance]{\data sun.dat};
+\draw[stealth-] (axis cs:1216,8e-3) -- ++(-0.5,1) node[above] {Ly-$\alpha$};
+\end{axis}
+\end{tikzpicture}
+\end{document}

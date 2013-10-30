@@ -1,0 +1,131 @@
+This is the diffusion of a molecule through a medium
+
+The most general model of diffusion is the model of \citet{Massman1998}, given
+in Eq.~\ref{difMas}.
+\begin{equation}
+\diff_{ij}(T,P) = \diff(0,1) \frac{\mathrm{P_0}}{P}\left(\frac{T}{\mathrm{T_0}}\right)^\beta
+\label{difMas}
+\end{equation}
+with $\mathrm{P_0}$ and $\mathrm{T_0}$ being constants (resp. 1~atm and $0^\circ$C).
+\citet{Wakeham1973} use a simplified model, basiquelly the same at $P=1.0133~$bar, thus
+their model is easily defined in terms of \citet{Massman1998} model. In \citet{WilsonPhD,Haye2005},
+we have another model, using concentration instead of pressure. The conversion is done
+using the ideal gas constant relation (Eq.~\ref{idealGas}).
+\begin{equation}
+P = n\mathrm{k_B}T
+\label{idealGas}
+\end{equation}
+with $\mathrm{k_B}$ being the Boltzmann constant.
+In the case of no data, we use the equations~\ref{Titan:Diff_no_data}
+\begin{equation}
+\diff_{ij}(T,P) =
+\left\{\begin{array}{l@{\quad}r}
+\diff_{ii}(T,P)\sqrt{\frac{\frac{m_j}{m_i} + 1}{2}} & \text{if }m_j < m_i    \\[\baselineskip]
+\diff_{ii}(T,P)\sqrt{\frac{m_j}{m_i}}               & \text{if }m_j \geq m_i \\
+\end{array}\right.
+\label{Titan:Diff_no_data}
+\end{equation}
+From \citet{Wakeham1973,Massman1998}, we have the following data and
+fits, see Fig.~\ref{diff-Wake}.
+\begin{figure}[htp]
+\centering
+\includegraphics[width=\linewidth]{DiffusionMeas}\\
+\begin{tabular}{lcccc}\toprule
+                & \multicolumn{2}{c}{\citet{Wakeham1973}} & \multicolumn{2}{c}{\citet{Massman1998}} \\\cmidrule(lr){2-3}\cmidrule(lr){4-5}
+Couple          & $A$ (cm$^2$s$^{-1}$)  &  $s$            & $D(0,1)$ (cm$^2$s$^{-1}$)  & $\beta$ \\\midrule
+\ce{CH4 - N2}   & $1.04\,10^{-5}$       & 1.76            & 0.1892                     & 1.81 \\
+\ce{C2H6 - N2}  & $0.77\,10^{-5}$       & 1.73 \\
+\ce{C3H8 - N2}  & $0.89\,10^{-5}$       & 1.66 \\
+\ce{C4H10 - N2} & $1.00\,10^{-5}$       & 1.61 \\
+\bottomrule
+\end{tabular}
+\caption{\label{diff-Wake}Raw data and fits as given in \citet{Wakeham1973,Massman1998}.
+Black: \citet{Wakeham1973} fits; red: \citet{Massman1998} fit with $P = \mathrm{P_W} = 1.0133~$bar.
+The uncertainty on the data is 4\%. The gray zone is Titan's atmosphere conditions.}
+\end{figure}
+
+\begin{table}
+\centering
+\begin{tabular}{cccccccc}\toprule
+\multicolumn{2}{c}{\ce{CH4 - N2}} &
+\multicolumn{2}{c}{\ce{C2H6 - N2}} &
+\multicolumn{2}{c}{\ce{C3H8 - N2}} &
+\multicolumn{2}{c}{\ce{C4H10 - N2}} \\\cmidrule(lr){1-2}\cmidrule(lr){3-4}\cmidrule(lr){5-6}\cmidrule(lr){7-8}
+$T$ (K) & $D_{12}$ & 
+$T$ (K) & $D_{12}$ & 
+$T$ (K) & $D_{12}$ & 
+$T$ (K) & $D_{12}$ \\
+        & (cm$^2$s$^{-1}$) &
+        & (cm$^2$s$^{-1}$) &
+        & (cm$^2$s$^{-1}$) &
+        & (cm$^2$s$^{-1}$) \\\midrule
+313.7 & 0.242 & 312.2  & 0.157 & 316.5 & 0.124 & 313.5 & 0.104 \\
+314.9 & 0.250 & 370.5  & 0.224 & 373.7 & 0.168 & 373.5 & 0.140 \\
+375.2 & 0.353 & 471.7  & 0.337 & 474.2 & 0.247 & 474.3 & 0.204 \\
+474.7 & 0.542 & 474.9  & 0.336 & 573.5 & 0.332 & 573.5 & 0.283 \\
+481.0 & 0.539 & 573.46 & 0.462 & 578.1 & 0.337 & 671.3 & 0.351 \\
+573.5 & 0.720 & 670.8  & 0.601 & 671.3 & 0.432 \\
+671.1 & 0.919 & 671.2  & 0.609 \\
+\bottomrule
+\end{tabular}
+\caption{\label{diffWakehamRaw}Raw data from \citet[Tab.~1]{Wakeham1973}.}
+\end{table}
+The diffusion coefficient for one species is calculated as diffusing through
+a medium of \ce{N2} and \ce{CH4}, using equation~\ref{Titan:Ds}.
+\begin{equation}
+\diff_s = \frac{\concAtm - \conc_s}{\displaystyle\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{j_m,s}}}
+\label{Titan:Ds}
+\end{equation}
+The final diffusion coefficient is given by the equation~\ref{Titan:Ds-tilde}.
+\begin{equation}
+\tilde{\diff} = \frac{\diff_s}{1-\frac{\conc_s}{\concAtm}\left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}
+\label{Titan:Ds-tilde}
+\end{equation}
+avec \mean{\Mm_{\neq s}} the mean molecular mass of the atmosphere without
+species $s$.
+
+\begin{remark}
+From \citet{WilsonPhD,Haye2005} to \citet{Massman1998} and \citet{Wakeham1973}.
+Starting from the equation used in \citet{WilsonPhD} and re-used in \citet{Haye2005}
+(I suspect this is an error starting back in \citet{Wakeham1973}, no one really 
+bothered to correct\dots)
+\begin{equation}
+D_{ij} = A \frac{T^s}{n}
+\label{eqWil}
+\end{equation}
+We connect it to the \citet{Massman1998} equation (Eq.~\ref{eqMas}) and the \citet{Wakeham1973}
+corrected equation (Eq.~\ref{eqWak}).
+\begin{equation}
+D_{ij} = D(0,1)\frac{\mathrm{P_0}}{P}\left(\frac{T}{\mathrm{T_0}}\right)^\beta
+\label{eqMas}
+\end{equation}
+with $\mathrm{P_0} = 1$~atm and $\mathrm{T_0} = 0^\circ$C
+\begin{equation}
+D_{ij} = A_W\left(\frac{T}{\mathrm{T_W}}\right)^{s_W}
+\label{eqWak}
+\end{equation}
+with $\mathrm{T_W} = 1$~K, measurements were performed at $\mathrm{P_W} = 1.0133$~bar.
+Using the ideal gas equation $P = n\mathrm{k_B}T$, we have the following relations:
+\begin{center}
+\begin{tabular}{rccccc}\toprule
+    &                              & Wilson & Massman & Wakeham\\\midrule
+\multirow{2}{*}{Wilson (Eq.~\ref{eqWil})} 
+    &       $A$ &/&$D(0,1)\frac{\mathrm{P_0}}{\mathrm{T_0^\beta k_B}}$
+                                           & $A_W \frac{\mathrm{P_W}}{\mathrm{T_W}^{s_W} \mathrm{k_B}}$ \\
+    &       $s$ &/&$\beta - 1$          & $s_W - 1$ \\\addlinespace[12pt]
+\multirow{2}{*}{Massman (Eq.~\ref{eqMas})} &
+       $D(0,1)$ & $A\frac{\mathrm{T_0}^{s+1}\mathrm{k_B}}{\mathrm{P_0}}$ &
+                               /           & $A_W\frac{\mathrm{P_W}}{\mathrm{P_0}}\left(\frac{\mathrm{T_0}}{\mathrm{T_W}}\right)^{s_W}$ \\
+    &   $\beta$ & $s + 1$    &  /  & $s_W$ \\\addlinespace[12pt]
+\multirow{2}{*}{Wakeham (Eq.~\ref{eqWak})} &
+       $A_W$    & $A\frac{\mathrm{T_W}^{s+1}\mathrm{k_B}}{\mathrm{P_W}}$ &
+                               $D(0,1)\frac{\mathrm{P_0}}{\mathrm{P_W}}\left(\frac{\mathrm{T_W}}{\mathrm{T_0}}\right)^{\beta}$ &/ \\
+    &   $s_W$   & $s + 1$    &  $\beta$  & /\\
+\bottomrule
+\end{tabular}
+\end{center}
+We use raw data as possible, thus \citet{Massman1998} or corrected \citet{Wakeham1973} equations (resp. Eq.~\ref{eqMas}
+and Eq.~\ref{eqWak}) when possible. 
+This is full of uncertainties, no idea of the impact, this will have to be discussed, inverse the measurements
+sometime.
+\end{remark}

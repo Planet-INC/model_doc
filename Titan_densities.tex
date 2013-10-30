@@ -1,0 +1,32 @@
+The densities are determined by chemistry and diffusion.
+
+\section{First approximation}
+
+We use here the barometric equation~\ref{Titan:Dens_init}
+\begin{equation}
+\conc(z) = \conc(\zmin) \exp\left(-\frac{z - \zmin}
+                                        {\left(\RTitan + z\right)
+                                         \left(\RTitan + \zmin\right)
+                                         \frac{\Nav\cdot\kb\cdot T(z)}{\Guni\cdot\MTitan\cdot\mean{\Mm}}
+                                        }
+                            \right)
+\label{Titan:Dens_init}
+\end{equation}
+with \mean{\Mm}\ begin the mean molar mass of the atmosphere.
+
+\begin{remark}
+Beware with the units!
+\begin{itemize}
+\item $z$         in \unit{km},
+\item \RTitan\    in \unit{km} in the file \planetConstantsHeader,
+\item \Nav\       in \unit{mol^{-1}} in the file \antiochPhysicalConstantsHeader,
+\item \kb\        in $\unit{J\,K^{-1}} \equiv \unit{kg\,m^2s^{-2}}$ in file \planetConstantsHeader,
+\item $T$\        in \unit{K},
+\item \Guni\      in \unit{m^3kg^{-1}s^{-2}} in file \planetConstantsHeader,
+\item \MTitan\    in \unit{kg} in file \planetConstantsHeader,
+\item \mean{\Mm}\ in \unit{g\,mol^{-1}}.
+\end{itemize}
+Thus some adaptations are necessary to obtain a unitless coefficient in the exponential,
+changing the term $\left(\RTitan + z\right)$ or $\left(\RTitan + \zmin\right)$ in \unit{m}
+and the term \mean{\Mm} in \unit{kg\,mol^{-1}}.
+\end{remark}

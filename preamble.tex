@@ -1,0 +1,55 @@
+\graphicspath{{./figs/}}
+\makeatletter
+%%%
+\newcommand{\mytilde}{\raisebox{-0.3\baselineskip}{\~{}}}
+\newcommand{\doverd}[2]{\ensuremath{\frac{\partial#1}{\partial#2}}}
+%%%
+\newcommand{\h}        {\ensuremath{\mathrm{h}}}
+\newcommand{\dd}       {\ensuremath{\mathrm{d}}}
+\newcommand{\chapman}  {\ensuremath{\text{Chap}(\x,\chi)}}
+\newcommand{\erf}      {\ensuremath{\text{erf}}}
+\newcommand{\kb}       {\ensuremath{\text{k}_\text{b}}}
+\newcommand{\Mm}       {\ensuremath{\text{M}}}
+\newcommand{\Nav}      {\ensuremath{\mathcal{N}_\text{Avo}}}
+\newcommand{\RTitan}   {\ensuremath{\text{R}_\text{Titan}}}
+\newcommand{\MTitan}   {\ensuremath{\text{m}_\text{Titan}}}
+\newcommand{\Guni}     {\ensuremath{\mathcal{G}}}
+\newcommand{\gloc}     {\ensuremath{g}}
+\newcommand{\x}        {\ensuremath{a}}
+\newcommand{\sch}      {\ensuremath{H}}
+\newcommand{\fhvAU}    {\ensuremath{\Phi_\text{1\,AU}}}
+\newcommand{\fhvtop}   {\ensuremath{\Phi_\infty}}
+\newcommand{\fhv}      {\ensuremath{\Phi}}
+\newcommand{\dSS}      {\ensuremath{\text{d}_\text{Sun-Saturn}}}
+\newcommand{\cs}       {\ensuremath{\sigma}}
+\newcommand{\heatrate} {\ensuremath{Q_a}}
+\newcommand{\conc}     {\ensuremath{n}}
+\newcommand{\concAtm}  {\ensuremath{n_\text{total}}}
+\newcommand{\mass}     {\ensuremath{m}}
+\newcommand{\zmin}     {\ensuremath{z_\text{min}}}
+\newcommand{\mean}[1]  {\ensuremath{\langle#1\rangle}}
+\newcommand{\unit}[1]  {\ensuremath{\mathtt{#1}}}
+\newcommand{\nounit}   {\unit{no\ unit}}
+\newcommand{\diff}     {\ensuremath{D}}
+\newcommand{\eddy}     {\ensuremath{K}}
+\newcommand{\thermcoef}{\ensuremath{\alpha}}
+%%
+\newcommand{\file}[1]{\textsf{#1}}
+\newcommand{\planetConstantsHeader}{\file{\mytilde/planet/src/utilities/include/planet/planet\_constants.h}}
+\newcommand{\antiochMathConstantsHeader}{\file{\mytilde/antioch/src/utilities/include/planet/math\_constants.h}}
+\newcommand{\antiochPhysicalConstantsHeader}{\file{\mytilde/antioch/src/utilities/include/planet/physical\_constants.h}}
+%%%
+\newlength{\remwidth}
+\newenvironment{remark}
+{%
+\renewcommand{\labelitemi}{\textemdash}
+\par\noindent%
+\setlength{\remwidth}{\linewidth-\widthof{\underline{\bf Remark}:}-5pt}%
+\rule{\linewidth}{0.4pt}\\*[3pt]%
+\underline{\bf Remark}:
+\begin{minipage}[t]{\remwidth}%
+\small\sf%
+}
+{\end{minipage}\\*[3pt]%
+\rule{\linewidth}{0.4pt}}
+\makeatother

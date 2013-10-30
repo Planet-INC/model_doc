@@ -1,0 +1,130 @@
+\section{Reaction}
+A photochemical reaction typically is:
+\begin{equation}
+\renewcommand{\arraystretch}{1.2}
+\ce{CH4 + \h{\nu} ->[\sigma(\lambda)]}\left\{\begin{array}{l}
+                    \ce{-> ^1CH2 + H2} \\
+                    \ce{-> CH3 + H}\\
+                    \ce{-> CH2 + 2 H}\\
+                    \ce{-> CH4+}\\
+                    \ce{-> CH3+ + H}\\
+                    \ce{-> CH2+ + H2}\\
+                    \ce{-> CH+ + H2 + H}\\
+                    \ce{-> H+ + CH3}\\
+                    \ce{-> CH + H2 + H}\\
+                    \end{array}\right.
+\end{equation}
+The rate constant is computed through the equation
+\begin{equation}
+k(z) = \int_0^\infty \cs(\lambda)\fhv^{\h\nu}(z,\lambda)\dd\lambda
+\end{equation}
+with $\fhv^{\h\nu}(z,\lambda)$ the photon flux at the considered altitude.
+Thus the calculations is made in three steps:
+\begin{enumerate}
+\item calculate the function $\fhv^{\h\nu}(z,\lambda)$,
+\item harmonize the $\lambda$ grid,
+\item integrate.
+\end{enumerate}
+
+\section{Photon flux at altitude \texorpdfstring{$z$}{z}}
+
+\begin{equation}
+\fhv^{\h\nu}(z,\lambda) = \fhvtop^{\h\nu}(\lambda) \exp\left(-\tau(z,\lambda)\right)
+\end{equation}
+with \fhvtop\ the photon flux at the top of the atmosphere, and
+\begin{equation}
+\tau(z,\lambda) = \chapman\sum_s\sigma_s(\lambda)\int_z^\infty n_s(z')\dd z'
+\end{equation}
+with $n_s(z')$ the molar density of species $s$ at altitude $z'$.
+the Chapman function depends on the
+incident angle $\chi$.\\
+For $\chi \le 75^\circ$
+\begin{equation}
+\chapman =  \frac{1}{\cos(\chi)},
+\end{equation}
+for $75^\circ < \chi \le 90^\circ$
+\begin{equation}
+\chapman = \sqrt{\frac{\pi \x}{2}} 
+                \left(1 - \erf\left(\sqrt{\frac{\x}{2}}|\cos(\chi)|\right)\right)\exp\left(\frac{\x}{2}\cos^2(\chi)\right),
+\end{equation}
+for $90^\circ < \chi$
+\begin{equation}
+\begin{split}
+\chapman = & \sqrt{2\pi \x}\bigg[\sqrt{\sin(\chi)}\exp\left(\x\left(1-\sin(\chi)\right)\right) \\
+           &  -\frac{1}{2}\exp\left(\frac{\x}{2}\cos^2(\chi)\left(1-\erf\left(\sqrt{\frac{\x}{2}}|\cos(\chi)|\right)\right)\right)\bigg]
+\end{split}
+\end{equation}
+And the definition of \x\ is given by
+\begin{equation}
+\x(z) = \frac{\RTitan + z}{\sch(z)}
+\end{equation}
+with $\sch(z)$ being the scale height of definition
+\begin{equation}
+\sch(z) = \frac{\kb T(z)}{\gloc(z)\mean{\mass}}
+\end{equation}
+with \kb\ the Boltzmann constant, 
+\mean{\mass}\ the atmospheric mass ($\mean{\mass} = \frac{\Mm(z)}{\Nav}\conc_\text{tot}(z)$, 
+$\Mm(z)$ the molar mass of the atmosphere at altitude $z$,
+\Nav\ the Avogadro number, $\conc_\text{tot}(z)$ the density at altitude $z$), 
+$\gloc(z)$ the gravitationnal field at altitude $z$, given by the equation
+\begin{equation}
+\gloc(z) = \frac{\Guni\cdot\MTitan}{\left(\RTitan + z\right)^2}
+\label{gfield}
+\end{equation}
+
+\section{Photon flux at the top of the atmosphere}
+\begin{equation}
+\fhvtop(\lambda) = \frac{\fhvAU}{\dSS^2}
+\end{equation}
+with \dSS\ the distance between the Sun and Saturn.
+
+\section{Finally}
+
+The whole computations starts with the inputs:
+\Guni, the universal gravitationnal constant,
+\MTitan, the mass of Titan,
+\RTitan, the radius of Titan,
+\Nav, the Avogadro number,
+\kb, the Boltzmann constant,
+$\{n_s\}$, the molar densities of the species at each altitude,
+\fhvAU, the solar flux at 1 AU of the Sun,
+\dSS, the distance Sun-Saturn,
+$\chi$, the zenith angle,
+$\{\cs_s(\lambda)\}$, the cross-section of the species.
+\begin{center}
+\begin{tabular}{rrrrrrrr}
+\Guni   & \rdelim\}{3}{28pt}[\gloc(z)] & & & & & & \\
+\MTitan &      & \rdelim\}{7}{35pt}[\sch(z)] & & & & &  \\
+\RTitan &      & &                       &    & & & \\
+        & \Nav & \RTitan & \rdelim\}{2}{27pt}[\x(z)]&\rdelim\}{3}{58pt}[\chapman] & & & \\[5pt]
+        & \kb  & & $\chi$                &             & \rdelim\}{4}{39pt}[$\tau(z,\lambda)$]&\\
+        & $T(z)$ & &                     & \sch(z)     & & \rdelim\}{5}{41pt}[$\fhv(z,\lambda)$]\\
+\multirow{2}{*}{$\{n_s\}$} 
+        & \rdelim\}{2}{28pt}[\Mm] & &   & $\{n_s\}$   & &\\
+        &      & &                       & $\{\cs_s\}$ & &\\[5pt]
+        &      & &                       & $\fhvAU(\lambda)$ & \rdelim\}{2}{38pt}[$\fhvtop(\lambda)$] &\\
+        &      & &                       & \dSS        & &
+\end{tabular}
+\end{center}
+
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{sunray}
+\caption{\label{sunray}Titan under the sun (from \citet[Fig.~3.3]{Haye2005})}
+\end{figure}
+
+\section{The data}
+
+Starting with $\fhvAU(\lambda)$, thus values of
+irradiance on a grid of wavelengthes. We calculate
+$\fhv(z,\lambda)$ on the same grid with the given
+workflow. Then we need to integrate $\cs(\lambda)\fhv(z,\lambda)$
+for every altitude.
+
+\begin{figure}
+\centering
+\includegraphics{cs_CH4}
+\caption{\label{csCH4}Cross-section of \ce{CH4}}
+\end{figure}
+
