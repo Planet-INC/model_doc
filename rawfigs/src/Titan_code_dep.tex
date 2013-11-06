@@ -2,33 +2,16 @@
 \usepackage{tikz,geometry}
 \usetikzlibrary{trees,backgrounds,calc,fit}
 \geometry{
-paperwidth=40cm,paperheight=12cm,
+paperwidth=28cm,paperheight=10.5cm,
 left=0pt,right=0pt,top=1pt,bottom=0pt}
 \begin{document}
 \centering
 \tikzset{
-limit/.style={ultra thick, loosely dashed, gray!50}
+limit/.style={ultra thick, loosely dashed, gray!50},
+round/.style={rounded corners=5mm,red}
 }
 \begin{tikzpicture}[every node/.append style={anchor=base}]%,fill=white,opacity=0.8}]
 \node (atm) at (0,0) {Atmosphere} [grow'=up]
-        child[sibling distance=5cm] {
-          child {
-                node (diff) {diffusion}
-                 [sibling distance=3cm]
-                  child {
-                           node (eddy) {eddy diffusion}
-                        }
-                  child {
-                           node (moldiff) {molecular diffusion} child {
-                                                                child {
-                                                                child {
-                                                                node (bindiff) {binary diffusion}
-                                                                      }
-                                                                      }
-                                                                      }
-                        }
-              }
-              }
         child[sibling distance=3.5cm] {
                 child {
                 node (kin) {kinetics} [sibling distance=3.2cm]
@@ -54,6 +37,29 @@ limit/.style={ultra thick, loosely dashed, gray!50}
                               }
               }
               }
+        child[sibling distance = 3cm] {
+                child {
+                child {
+                node (hvfeval) {Photon evaluator}
+                           child {
+                           child {
+                             node (hvtau) {photon opacity}
+                                child {
+                                         node {Chapman}
+                                      }
+                                 }
+                                 }
+                     }
+                     }
+              }
+        child[sibling distance=3cm] 
+              {
+                child{
+                child{
+                child {node (atmmix) {atmospheric mixture}}
+                }
+                }
+              }
         child[sibling distance=1cm] { 
                 child { 
                 child { 
@@ -78,28 +84,23 @@ limit/.style={ultra thick, loosely dashed, gray!50}
                  }
                  }
               }
-        child[sibling distance=3cm] 
-              {
-                child{
-                child{
-                child {node (atmmix) {atmospheric mixture}}
-                }
-                }
+        child[sibling distance=5cm] {
+          child {
+                node (diff) {diffusion}
+                 [sibling distance=3cm]
+                  child {
+                           node (moldiff) {molecular diffusion} child {
+                                                                child {
+                                                                child {
+                                                                node (bindiff) {binary diffusion}
+                                                                      }
+                                                                      }
+                                                                      }
+                        }
+                  child {
+                           node (eddy) {eddy diffusion}
+                        }
               }
-        child[sibling distance = 3cm] {
-                child {
-                child {
-                node (hvfeval) {Photon evaluator}
-                           child {
-                           child {
-                             node (hvtau) {photon opacity}
-                                child {
-                                         node {Chapman}
-                                      }
-                                 }
-                                 }
-                     }
-                     }
               }
 ;
 \coordinate (gauche) at (current bounding box.west);
@@ -111,22 +112,22 @@ limit/.style={ultra thick, loosely dashed, gray!50}
 \coordinate (l5)     at ($(diff)!0.5!(atm)$);
 \begin{pgfonlayer}{background}
 \node[fit= (neucomp) (ioncomp) (neukineval) (ionkineval),rounded corners=1cm,inner sep=5pt,fill=gray!30] {};
-\draw (alt) -- (temp);
-\draw (alt) -- (atmmix);
-\draw (temp) -- (atmmix);
-\draw (neucomp) ..controls([yshift=-10pt]ionreac.south west).. (atmmix);
-\draw (ioncomp) -- (atmmix);
-\draw (alt) ..controls(atmmix.north east).. (hvfeval);
-\draw (atmmix) -- (hvfeval);
-\draw[rounded corners=1cm] ([xshift=-10pt]atmmix) |- ([yshift=-10pt]moldiff);
-\draw[rounded corners=1cm] ([xshift=-10pt]temp) |- ([yshift=10pt]moldiff);
-\draw (alt) ..controls ($(ionreac)!0.5!(ionkineval)$) .. ($(ionreac)!0.5!(neukineval)$) .. controls ([xshift=-1cm]$(neureac)!0.5!(neukineval)$) .. (moldiff);
-\draw (alt) ..controls ([yshift=-10pt]neureac.north east) and (bindiff.south east).. (eddy);
-\draw (atmmix) ..controls ([yshift=-1cm]$(ionkineval.south)!0.5!(neukineval.south)$) and ([yshift=1cm]moldiff.north west).. (eddy);
-\draw[rounded corners=1cm] ([xshift=10pt]temp)  -- ++(0,-3) .. controls (moldiff.south) .. (diff.north);
-\draw[rounded corners=1cm] ([xshift=-10pt]alt) --++(0,-5) ..controls ([yshift=20pt]kin.north) .. (diff);
-\draw[rounded corners=1cm] (atmmix) --++(0,-2)..controls(kin.north) .. (diff);
-\draw[rounded corners=1cm] (hvfeval) |- (kin);
+\draw[round] (alt) -| (temp);
+\draw[round] (alt) |- (atmmix);
+\draw[round] (alt) |- (hvfeval);
+\draw[round] (alt) -- ($(alt)!0.4!(alt -| bindiff)$) -- ++(0,-2.5) -| (moldiff);
+\draw[round] (alt) -- ($(alt)!0.6!(alt -| bindiff)$) -- ++(0,-2) -| (diff.north);
+\draw[round] (alt) -- ($(alt)!0.8!(alt -| bindiff)$) -- ++(0,-1.5) -| (eddy);
+\draw[round] (temp) -| (atmmix);
+\draw[round] (temp) |- (moldiff);
+\draw[round] (temp) |- (diff);
+\draw[round] (atmmix) -| (hvfeval);
+\draw[round] (atmmix) -| (moldiff);
+\draw[round] (atmmix) -| (eddy);
+\draw[round] (atmmix) |- (diff);
+\draw[round] (ioncomp) -- ($(ioncomp.south)!0.5!(ionreac.north)$) -| (atmmix);
+\draw[round] (neucomp) |- ($(neucomp.south east)!0.5!(ionreac.north west)$) |- ($(ionreac.south)!0.5!(ionkineval.north)$) -| (atmmix);
+\draw[round] (hvfeval) |- (kin);
 \foreach \level in {1,...,5}
   \draw[limit] ( gauche |- l\level)  -- (l\level -| droite);
 \end{pgfonlayer}
