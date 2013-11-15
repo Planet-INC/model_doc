@@ -4,8 +4,104 @@
 \caption{\label{T(z):Titan}Temperature profile of Titan's atmosphere}
 \end{figure}
 
-The heating rate is given by equation~\ref{Titan:heat_rate}
+\warning{Not implemented yet}
+
+The heat transfer equation is:
 \begin{equation}
-\heatrate(z,\lambda) = \fhv(z,\lambda)\sum_s \cs_s(\lambda)\conc_s(z)
-\label{Titan:heat_rate}
+\concAtm(z)\specHeat_{\text{atm}}(z)\doverd{T}{t} 
+                                     = \frac{1}{\left(\RTitan + z\right)^2} 
+                                       \doverd{\left(\left(\RTitan + z\right)^2
+                                               \conductivity_\text{atm}(z)\doverd{T}{z}\right)
+                                              }{z}
+                                        + \HeatRate_{\text{\sc heat}}
+                                        + \HeatRate_{\text{\sc cooling}}
+\label{Titan:temp}
 \end{equation}
+with the atmospheric specific heat $\specHeat_\text{atm}$ (\unit{J\,mol^{-1}\,K^{-1}} or \unit{J\,kg^{-1}\,K^{-1}}) and
+$\conductivity_\text{atm}$ the atmospheric thermal conductivity (\unit{W\,m^{-1}\,K^{-1}}),
+$\HeatRate_{\text{\sc heat}}$ the heating rate (\unit{J\,m^{-3}\,s^{-1}}) and
+$\HeatRate_{\text{\sc cooling}}$ the cooling rate (\unit{J\,m^{-3}\,s^{-1}}).
+
+\section{Atmospheric specific heat}
+It is defined as:
+\begin{equation}
+\specHeat_{\text{atm}}(z) = \sum_s \molarfrac_s(z)\specHeat_s(z)
+\label{Titan:spec_heat}
+\end{equation}
+
+\section{Atmospheric conductivity}
+
+\begin{equation}
+\conductivity_\text{atm}(T) = \sum_{s \in \{\ce{N2}, \ce{CH4}\}} 
+                              \frac{\conductivity_s(T,z)}
+                                   {\displaystyle\sum_{j\neq s}\frac{\numprint{1.065}}{2\sqrt{2\left(1+\frac{\mass_s}{\mass_j}\right)}}
+                                    \left[1 + \sqrt{\frac{\viscosity_s(T)}{\viscosity_j(T)}\sqrt{\frac{\mass_j}{\mass_s}}}\right]^2
+                                    \frac{\molarfrac_j(z)}{\molarfrac_s(z)}
+                                   }
+\label{Titan:atmcond}
+\end{equation}
+Approximating Titan's
+atmosphere by a mixture of \{\ce{N2},\ce{CH4}\}, we have as conductivity 
+$\conductivity_i$ of \ce{N2} and \ce{CH4},
+\begin{equation}
+\begin{split}
+\conductivity_{\ce{N2}}(T)  & = \numprint{0.00309} + \numprint{7.593}\,10^{-5}\, T - \numprint{1.1014}\,10^{-8}\, T^2 \\
+\conductivity_{\ce{CH4}}(T) & = \numprint{-0.00935} + \numprint{1.4028}\,10^{-4}\, T + \numprint{3.318}\,10^{-8}\, T^2
+\end{split}
+\label{Titan:conduc}
+\end{equation}
+and viscosities $\viscosity_i$ (\unit{P}--poise):
+\begin{equation}
+\begin{split}
+\viscosity_{\ce{N2}}(T)  & = \viscosity_{0,\ce{N2}}\frac{T_{0,\ce{N2}} + \visC_{\ce{N2}}}{T + \visC_{\ce{N2}}}\left(\frac{T}{T_{0,\ce{N2}}}\right)^{\frac{3}{2}} \\
+\viscosity_{\ce{CH4}}(T) & = \left(\numprint{3.8435} + \numprint{0.40112}\, T - \numprint{1.4303}\,10^{-4}\, T^2\right)\,10^{-4}
+\end{split}
+\label{Titan:visco}
+\end{equation}
+with \visC\ the Sutherland constant (\unit{K}).
+
+\section{Heating rate}
+
+\subsection{Solar heating rate}
+
+The solar heating rate is given by equation~\ref{Titan:solar-heat-rate}
+\begin{equation}
+\HeatRate_{\text{solar,atm}}(z,\lambda) = \heatEff^{\text{solar}}(z,\lambda)\heat_{\text{solar,atm}}(z,\lambda)
+\label{Titan:solar-heat-rate}
+\end{equation}
+Using the solar heating efficiency of the atmosphere $\heatEff^{\text{solar}}$ and
+the absorbed solar energy $\heat_{\text{solar,atm}}$:
+\begin{equation}
+\heat_{\text{solar,atm}}(z,\lambda) = \fhv(z,\lambda)\sum_s \cs_s(\lambda)\conc_s(z)
+\label{Titan:solar-heat}
+\end{equation}
+
+\subsection{Magnetospheric heating}
+
+Heating du to electrons flux through the atmosphere, same than
+photon, only it's electrons.
+\begin{equation}
+\HeatRate_{\text{elec,atm}}(z,E) = \heatEff^{\text{elec}}(z,E)\heat_{\text{elec,atm}}(z,E)
+\label{Titan:elec-heat-rate}
+\end{equation}
+Using the electronic heating efficiency of the atmosphere $\heatEff^{\text{elec}}$ and
+the absorbed electronic energy $\heat_{\text{elec,atm}}$:
+\begin{equation}
+\heat_{\text{elec,atm}}(z,E) = \fhv^{\text{elect}}(z,E)\sum_s \cs^{\text{elec}}_s(E)\conc_s(z) \times 40~\unit{eV}
+\label{Titan:elec-heat}
+\end{equation}
+with the factor 40~\unit{eV}, the energy needed on average to break an
+electron-ion pair.
+
+\subsection{Global heating rate}
+
+Is defined a global heating rate profile:
+\begin{equation}
+\heatEff_\text{g} = \frac{\displaystyle\sum_\lambda\HeatRate_{\text{solar,atm}}(z,\lambda) + 
+                          \displaystyle\sum_E\HeatRate_{elec,atm}(z,E)}
+                         {\displaystyle\sum_\lambda\heat_{\text{solar,atm}}(z,\lambda) + 
+                          \displaystyle\sum_E\heat_{elec,atm}(z,E)}
+\label{Titan:global-heat}
+\end{equation}
+
+\section{\texorpdfstring{\ce{HCN} rotational cooling}{Hydrogen cyanide rotational cooling}}

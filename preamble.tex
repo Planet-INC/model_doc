@@ -22,7 +22,6 @@
 \newcommand{\fhv}      {\ensuremath{\Phi}}
 \newcommand{\dSS}      {\ensuremath{\text{d}_\text{Sun-Saturn}}}
 \newcommand{\cs}       {\ensuremath{\sigma}}
-\newcommand{\heatrate} {\ensuremath{Q_a}}
 \newcommand{\conc}     {\ensuremath{n}}
 \newcommand{\concAtm}  {\ensuremath{n_\text{total}}}
 \newcommand{\mass}     {\ensuremath{m}}
@@ -33,12 +32,20 @@
 \newcommand{\diff}     {\ensuremath{D}}
 \newcommand{\eddy}     {\ensuremath{K}}
 \newcommand{\thermcoef}{\ensuremath{\alpha}}
+\newcommand{\conductivity}{\ensuremath{\kappa}}
+\newcommand{\viscosity}   {\ensuremath{\nu}}
+\newcommand{\visC}        {\ensuremath{C}}
+\newcommand{\molarfrac}   {\ensuremath{x}}
+\newcommand{\specHeat}    {\ensuremath{{C_p}}}
+\newcommand{\HeatRate}    {\ensuremath{H}}
+\newcommand{\heat}        {\ensuremath{Q}}
+\newcommand{\heatEff}     {\ensuremath{\epsilon}}
 %%
 \newcommand{\file}[1]{\textsf{#1}}
 \newcommand{\planetConstantsHeader}{\file{\mytilde/planet/src/utilities/include/planet/planet\_constants.h}}
 \newcommand{\antiochMathConstantsHeader}{\file{\mytilde/antioch/src/utilities/include/planet/math\_constants.h}}
 \newcommand{\antiochPhysicalConstantsHeader}{\file{\mytilde/antioch/src/utilities/include/planet/physical\_constants.h}}
-%%%
+%%%%%%%
 \newlength{\remwidth}
 \newenvironment{remark}
 {%
@@ -52,4 +59,15 @@
 }
 {\end{minipage}\\*[3pt]%
 \rule{\linewidth}{0.4pt}}
+%%%%%%%
+\newcommand{\warningsign}{%
+\begin{tikzpicture}[baseline = (x.base)]
+\node[regular polygon, regular polygon sides=3,draw=white,double=red,
+      fill=red,text=white,font=\bf\large,rounded corners] (x) {!};
+\end{tikzpicture}
+}
+\newcommand{\warning}[1]{%
+\hspace{-1in}\warningsign\textbf{\textcolor{red}%
+{\large\sc #1}}
+}
 \makeatother
