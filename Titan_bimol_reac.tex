@@ -1,0 +1,20 @@
+\subsection{The reaction}
+\begin{chemequation}
+\ce{H + CH -> H2 + C}
+\end{chemequation}
+
+These reactions are all considered elementary processes, and
+the kinetics model used is Hercourt-Essen, Arrhenuis or Kooij
+(see Tab.~\ref{Titan_bimol_kin}).
+\begin{table}
+\centering
+\renewcommand{\arraystretch}{2}
+\begin{tabular}{ll}\toprule
+Kinetics model & Equation \\\midrule
+Hercourt-Essen & $\alpha(T) = \preCoeff \left(\frac{T}{\Tref}\right)^\powerPar$ \\
+Arrhenius      & $\alpha(T) = \preCoeff \exp\left(\frac{\actEn}{\Runi T}\right)$ \\
+Kooij          & $\alpha(T) = \preCoeff \left(\frac{T}{\Tref}\right)^\powerPar\exp\left(\frac{\actEn}{\Runi T}\right)$ \\
+\bottomrule
+\end{tabular}
+\caption{\label{Titan_bimol_kin}Different kinetics models used for bimolecular reactions.}
+\end{table}

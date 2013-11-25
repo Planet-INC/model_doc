@@ -17,9 +17,11 @@
 \newcommand{\gloc}     {\ensuremath{g}}
 \newcommand{\x}        {\ensuremath{a}}
 \newcommand{\sch}      {\ensuremath{H}}
-\newcommand{\fhvAU}    {\ensuremath{\Phi_\text{1\,AU}}}
-\newcommand{\fhvtop}   {\ensuremath{\Phi_\infty}}
-\newcommand{\fhv}      {\ensuremath{\Phi}}
+\newcommand{\flux}     {\ensuremath{\Phi}}
+\newcommand{\fhv}      {\ensuremath{\flux^{\h\nu}}}
+\newcommand{\fhvAU}    {\ensuremath{\fhv_\text{1\,AU}}}
+\newcommand{\fhvtop}   {\ensuremath{\fhv_\infty}}
+\newcommand{\fe}       {\ensuremath{\flux^{\ce{e-}}}}
 \newcommand{\dSS}      {\ensuremath{\text{d}_\text{Sun-Saturn}}}
 \newcommand{\cs}       {\ensuremath{\sigma}}
 \newcommand{\conc}     {\ensuremath{n}}
@@ -40,25 +42,46 @@
 \newcommand{\HeatRate}    {\ensuremath{H}}
 \newcommand{\heat}        {\ensuremath{Q}}
 \newcommand{\heatEff}     {\ensuremath{\epsilon}}
+%%%
+\newcommand{\Tref}    {\ensuremath{\mathrm{T_{ref}}}}
+\newcommand{\preCoeff}{\ensuremath{A}}
+\newcommand{\powerPar}{\ensuremath{\beta}}
+\newcommand{\actEn}   {\ensuremath{E_a}}
+\newcommand{\Runi}    {\ensuremath{\mathrm{R}}}
+\newcommand{\order}[1]{\ensuremath{{m_{#1}}}}
+\newcommand{\stoi}[1] {\ensuremath{{\nu_{#1}}}}
 %%
+\newcommand{\Antioch}{\texttt{Antioch}}
+\newcommand{\GitAntioch}{\href{https://github.com/libantioch/antioch}{\Antioch\ on Github}}
 \newcommand{\file}[1]{\textsf{#1}}
-\newcommand{\planetConstantsHeader}{\file{\mytilde/planet/src/utilities/include/planet/planet\_constants.h}}
-\newcommand{\antiochMathConstantsHeader}{\file{\mytilde/antioch/src/utilities/include/planet/math\_constants.h}}
+\newcommand{\planetConstantsHeader}         {\file{\mytilde/planet/src/utilities/include/planet/planet\_constants.h}}
+\newcommand{\antiochMathConstantsHeader}    {\file{\mytilde/antioch/src/utilities/include/planet/math\_constants.h}}
 \newcommand{\antiochPhysicalConstantsHeader}{\file{\mytilde/antioch/src/utilities/include/planet/physical\_constants.h}}
 %%%%%%%
-\newlength{\remwidth}
+% remarks
+%%%%%%%
 \newenvironment{remark}
 {%
 \renewcommand{\labelitemi}{\textemdash}
 \par\noindent%
-\setlength{\remwidth}{\linewidth-\widthof{\underline{\bf Remark}:}-5pt}%
-\rule{\linewidth}{0.4pt}\\*[3pt]%
-\underline{\bf Remark}:
-\begin{minipage}[t]{\remwidth}%
+\rule{\linewidth}{0.4pt}\\*%
+\underline{\bf Remark}:%
+\flushright\begin{minipage}{0.95\linewidth}%
 \small\sf%
 }
-{\end{minipage}\\*[3pt]%
+{\end{minipage}\\*[3pt]
 \rule{\linewidth}{0.4pt}}
+%%%%%%%
+% chemical equation
+%%%%%%%
+\newcounter{chemReac}
+\renewcommand{\thechemReac}{$\chi$\;\thechapter.\arabic{chemReac}}
+\newenvironment{chemequation}
+{\begin{displaymath}
+\refstepcounter{chemReac}\tag{\thechemReac}}
+{\end{displaymath}}
+%%%%%%%
+% warning
 %%%%%%%
 \newcommand{\warningsign}{%
 \begin{tikzpicture}[baseline = (x.base)]

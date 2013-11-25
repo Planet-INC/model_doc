@@ -1,0 +1,37 @@
+\section{Photochemistry}
+\input{Titan_photochem}
+
+\section{Electrochemistry}
+\input{Titan_electrochem}
+
+\section{Bimolecular reactions}
+\label{Titan_bimol_sec}
+\input{Titan_bimol_reac}
+
+\section{Falloff reactions}
+\input{Titan_falloff_reac}
+
+\section{Dissociative electronic impact reactions}
+\input{Titan_DR_reac}
+
+\section{Kinetics computations}
+The kinetics law is given by
+\begin{equation}
+\left(\doverd{\conc_s}{t}\right)_{\text{kin},r} = \stoi{s,r}\; k_{r} \prod_{i\in\text{reactants}}\conc_i^\order{i}
+\end{equation}
+for the contribution of reaction $r$ to a species $s$ concentration's
+time derivative. \stoi{s,r}\ is the stoichiometric coefficient of species
+$s$ in reaction $r$. The elementary process enables to make the hypothesis
+\begin{equation}
+\forall r \in \text{reactions}\qquad
+\order{i} = |\stoi{r,i}|
+\end{equation}
+
+The total kinetics contribution for species $s$ would then be:
+\begin{equation}
+\left(\doverd{\conc_s}{t}\right)_\text{kin} = \sum_{r\in \text{reactions}} \stoi{s,r} \prod_{i\in\text{reactants}}\conc_i^{|\stoi{i,r}|}
+\end{equation}
+
+\section{More on kinetics}
+All the kinetics details are taken
+care of by \Antioch, see \GitAntioch.

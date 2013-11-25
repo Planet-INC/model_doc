@@ -1,8 +1,8 @@
-\section{Reaction}
+\subsection{Reaction}
 A photochemical reaction typically is:
-\begin{equation}
+\begin{chemequation}
 \renewcommand{\arraystretch}{1.2}
-\ce{CH4 + \h{\nu} ->[\sigma(\lambda)]}\left\{\begin{array}{l}
+\ce{CH4 ->[\sigma(\lambda)][\fhv(\lambda)]}\left\{\begin{array}{l}
                     \ce{-> ^1CH2 + H2} \\
                     \ce{-> CH3 + H}\\
                     \ce{-> CH2 + 2 H}\\
@@ -13,23 +13,23 @@ A photochemical reaction typically is:
                     \ce{-> H+ + CH3}\\
                     \ce{-> CH + H2 + H}\\
                     \end{array}\right.
-\end{equation}
+\end{chemequation}
 The rate constant is computed through the equation
 \begin{equation}
-k(z) = \int_0^\infty \cs(\lambda)\fhv^{\h\nu}(z,\lambda)\dd\lambda
+k(z) = \int_0^\infty \cs(\lambda)\fhv(z,\lambda)\dd\lambda
 \end{equation}
-with $\fhv^{\h\nu}(z,\lambda)$ the photon flux at the considered altitude.
+with $\fhv(z,\lambda)$ the photon flux at the considered altitude.
 Thus the calculations is made in three steps:
 \begin{enumerate}
-\item calculate the function $\fhv^{\h\nu}(z,\lambda)$,
+\item calculate the function $\fhv(z,\lambda)$,
 \item harmonize the $\lambda$ grid,
 \item integrate.
 \end{enumerate}
 
-\section{Photon flux at altitude \texorpdfstring{$z$}{z}}
+\subsection{Photon flux at altitude \texorpdfstring{$z$}{z}}
 
 \begin{equation}
-\fhv^{\h\nu}(z,\lambda) = \fhvtop^{\h\nu}(\lambda) \exp\left(-\tau(z,\lambda)\right)
+\fhv(z,\lambda) = \fhvtop(\lambda) \exp\left(-\tau(z,\lambda)\right)
 \end{equation}
 with \fhvtop\ the photon flux at the top of the atmosphere, and
 \begin{equation}
@@ -72,13 +72,13 @@ $\gloc(z)$ the gravitationnal field at altitude $z$, given by the equation
 \label{gfield}
 \end{equation}
 
-\section{Photon flux at the top of the atmosphere}
+\subsection{Photon flux at the top of the atmosphere}
 \begin{equation}
 \fhvtop(\lambda) = \frac{\fhvAU}{\dSS^2}
 \end{equation}
 with \dSS\ the distance between the Sun and Saturn.
 
-\section{Finally}
+\subsection{Finally}
 
 The whole computations starts with the inputs:
 \Guni, the universal gravitationnal constant,
@@ -98,11 +98,11 @@ $\{\cs_s(\lambda)\}$, the cross-section of the species.
 \RTitan &      & &                       &    & & & \\
         & \Nav & \RTitan & \rdelim\}{2}{27pt}[\x(z)]&\rdelim\}{3}{58pt}[\chapman] & & & \\[5pt]
         & \kb  & & $\chi$                &             & \rdelim\}{4}{39pt}[$\tau(z,\lambda)$]&\\
-        & $T(z)$ & &                     & \sch(z)     & & \rdelim\}{5}{41pt}[$\fhv(z,\lambda)$]\\
+        & $T(z)$ & &                     & \sch(z)     & & \rdelim\}{5}{50pt}[$\fhv(z,\lambda)$]\\
 \multirow{2}{*}{$\{n_s\}$} 
         & \rdelim\}{2}{28pt}[\Mm] & &   & $\{n_s\}$   & &\\
         &      & &                       & $\{\cs_s\}$ & &\\[5pt]
-        &      & &                       & $\fhvAU(\lambda)$ & \rdelim\}{2}{38pt}[$\fhvtop(\lambda)$] &\\
+        &      & &                       & $\fhvAU(\lambda)$ & \rdelim\}{2}{39pt}[$\fhvtop(\lambda)$] &\\
         &      & &                       & \dSS        & &
 \end{tabular}
 \end{center}
@@ -114,7 +114,7 @@ $\{\cs_s(\lambda)\}$, the cross-section of the species.
 \caption{\label{sunray}Titan under the sun (from \citet[Fig.~3.3]{Haye2005})}
 \end{figure}
 
-\section{The data}
+\subsection{The data}
 
 Starting with $\fhvAU(\lambda)$, thus values of
 irradiance on a grid of wavelengthes. We calculate

@@ -1,0 +1,18 @@
+\subsection{The reaction}
+\begin{chemequation}
+\renewcommand{\arraystretch}{1.5}
+\ce{CH3+ + e- ->} \left\{\begin{array}{l}
+                        \ce{->}\left\{\begin{array}{l}
+                                      \ce{-> ^1CH2 + H} \\
+                                      \ce{-> ^3CH2 + H} \\
+                                      \end{array}\right. \\
+                        \ce{-> CH + H2} \\
+                        \ce{-> CH + 2 H} \\
+                        \ce{-> C + H2 + H} \\
+                         \end{array}\right.
+\end{chemequation}
+These reactions are coded by an elemetary process with a Hercourt-Essen
+kinetics model:
+\begin{equation}
+k(T) = \preCoeff \left(\frac{T}{\Tref}\right)^\powerPar
+\end{equation}
