@@ -1,35 +1,194 @@
-This is the diffusion of a molecule through a medium
+\subsection{The Massman model}
 
 The most general model of diffusion is the model of \citet{Massman1998}, given
-in Eq.~\ref{difMas}.
+in Eq.~\ref{Titan:diffusion_Massman} for the diffusion of species $s$ through
+species $m$.
 \begin{equation}
-\diff_{ij}(T,P) = \diff(0,1) \frac{\mathrm{P_0}}{P}\left(\frac{T}{\mathrm{T_0}}\right)^\beta
-\label{difMas}
+\diff_{sm}(T,P) = \diff_s(0,1) \frac{\Pz}{P}\left(\frac{T}{\Tz}\right)^{\beta_s}
+\label{Titan:diffusion_Massman}
 \end{equation}
-with $\mathrm{P_0}$ and $\mathrm{T_0}$ being constants (resp. 1~atm and $0^\circ$C).
-\citet{Wakeham1973} use a simplified model, basiquelly the same at $P=1.0133~$bar, thus
+with \Pz\ and \Tz\ being constants (resp. $1~\unit{atm}$ and $0\unit{^\circ C}$).
+\citet{Wakeham1973} use a simplified model, basiquelly the same at $P=\numprint{1.0133}~\unit{bar}$, thus
 their model is easily defined in terms of \citet{Massman1998} model. In \citet{WilsonPhD,Haye2005},
 we have another model, using concentration instead of pressure. The conversion is done
 using the ideal gas constant relation (Eq.~\ref{idealGas}).
 \begin{equation}
-P = n\mathrm{k_B}T
+P = \concAtm\kb T
 \label{idealGas}
 \end{equation}
-with $\mathrm{k_B}$ being the Boltzmann constant.
-In the case of no data, we use the equations~\ref{Titan:Diff_no_data}
+with \kb\ being the Boltzmann constant.
+We have thus
 \begin{equation}
-\diff_{ij}(T,P) =
+\begin{split}
+\doverd{\diff_{sm}}{z} & = \diff_s(0,1) \frac{\Pz}{\kb T}\left(\frac{T}{\Tz}\right)^{\beta_s} \dOverd{\frac{1}{\concAtm}}{z}\\
+                       & = -\frac{\diff_{sm}}{\concAtm}\doverd{\concAtm}{z}
+\end{split}
+\end{equation}
+Which finally gives:
+\begin{equation}
+\doverd{\diff_{sm}}{z}  = -\frac{\diff_{sm}}{\concAtm}\sum_{i\in\text{species}}\doverd{\conc_i}{z}
+\label{Titan:Massman_derive}
+\end{equation}
+
+Other used models are translated to the Massman model. Those models are
+Wilson (Eq.~\ref{Titan:diffusion_Wilson}) and Wakeham (Eq.~\ref{Titan:diffusion_Wakeham}).
+Starting from \citet{WilsonPhD,Haye2005}, they refer to \citet{Massman1998,Wakeham1973}.
+The equations presented here are adjusted to obtain consistent units.
+\begin{equation}
+D_{sm} = \Awi_s \frac{1}{\concAtm}\left(\frac{T}{\Tref}\right)^{\swi_s}
+\label{Titan:diffusion_Wilson}
+\end{equation}
+and
+\begin{equation}
+D_{sm} = \Awa_s\left(\frac{T}{\Tref}\right)^{\swa_s}
+\label{Titan:diffusion_Wakeham}
+\end{equation}
+with $\Tref = 1~\unit{K}$, measurements were performed at $\Pwa =\concwa \kb T = \numprint{1.0133}~\unit{bar}$.
+Tab.~\ref{Titan:diffusion_corres} show the correspondencies.
+\begin{table}
+\centering
+\begin{tabular}{rccccc}\toprule
+    &                              & Massman & Wilson & Wakeham\\\midrule
+\multirow{2}{*}{Massman (Eq.~\ref{Titan:diffusion_Massman})}
+& $D(0,1)$ &  /                                                              &  $\Awi\frac{\Tz^{\swi+1}}{\Tref^{\swi}}\frac{\kb}{\Pz}$  & $\Awa\frac{\Pwa}{\Pz}\left(\frac{\Tz}{\Tref}\right)^{\swa}$ \\
+& $\beta$  &  /                                                              &  $\swi + 1$                                              & \swa \\\addlinespace[12pt]
+\multirow{2}{*}{Wilson (Eq.~\ref{Titan:diffusion_Wilson})} 
+& \Awi     &  $D(0,1)\frac{\Pz}{\kb}\frac{\Tref^{\beta-1}}{\Tz^\beta}$       &  /                                                       & $\Awa \concwa$ \\
+& \swi     &  $\beta - 1$                                                    &  /                                                       & \swa \\\addlinespace[12pt]
+\multirow{2}{*}{Wakeham (Eq.~\ref{Titan:diffusion_Wakeham})}
+& \Awa     &  $D(0,1)\frac{\Pz}{\Pwa}\left(\frac{\Tref}{\Tz}\right)^{\beta}$ & $\Awi\frac{1}{\concAtm}$                                 & / \\
+& \swa     &  $\beta$                                                        & \swi                                                     & / \\
+\bottomrule
+\end{tabular}
+\caption{\label{Titan:diffusion_corres}Correspondancies between the different diffusion models.}
+\end{table}
+
+\subsection{No data model}
+
+In the case of no data, we use the relations~\ref{Titan:Diff_no_data}
+\begin{equation}
+\renewcommand{\arraystretch}{2}
+\diff_{sm}(T,P) =
 \left\{\begin{array}{l@{\quad}r}
-\diff_{ii}(T,P)\sqrt{\frac{\frac{m_j}{m_i} + 1}{2}} & \text{if }m_j < m_i    \\[\baselineskip]
-\diff_{ii}(T,P)\sqrt{\frac{m_j}{m_i}}               & \text{if }m_j \geq m_i \\
+\diff_{mm}(T,P)\sqrt{\frac{\frac{\Mm_s}{\Mm_m} + 1}{2}} & \text{if }\Mm_s < \Mm_m    \\
+\diff_{mm}(T,P)\sqrt{\frac{\Mm_s}{\Mm_m}}               & \text{if }\Mm_s \geq \Mm_m \\
 \end{array}\right.
 \label{Titan:Diff_no_data}
 \end{equation}
+Thus, we obtain for the derivative with respect to altitude:
+\begin{equation}
+\begin{split}
+\renewcommand{\arraystretch}{2}
+\dOverd{\diff_{sm}}{z} & =
+\left\{\begin{array}{l@{\quad}r}
+\doverd{\diff_{mm}}{z}\sqrt{\frac{\frac{\Mm_s}{\Mm_m} + 1}{2}}  & \text{if } \Mm_s < \Mm_m    \\
+\doverd{\diff_{mm}}{z}\sqrt{\frac{\Mm_s}{\Mm_m}}                                       & \text{if } \Mm_s \geq \Mm_m \\
+\end{array}\right. 
+\\\\
+\dOverd{\diff_{sm}}{z} & =
+\left\{\begin{array}{l@{\quad}r}
+-\diff_{mm}\frac{1}{\concAtm}\sqrt{\frac{\frac{\Mm_s}{\Mm_m} + 1}{2}}\displaystyle\sum_{i\in\text{species}}\doverd{\conc_i}{z}  & \text{if } \Mm_s < \Mm_m    \\
+-\diff_{mm}\frac{1}{\concAtm}\sqrt{\frac{\Mm_s}{\Mm_m}}\displaystyle\sum_{i\in\text{species}}\doverd{\conc_i}{z}                & \text{if } \Mm_s \geq \Mm_m \\
+\end{array}\right. 
+\end{split}
+\label{Titan:diffusion_no_data_derive}
+\end{equation}
+Which gives the same equation than Eq.~\ref{Titan:Massman_derive}.
+
+\subsection{Bimolecular diffusion coefficient}
+
+The diffusion coefficient for one species $s$ is calculated as diffusing through
+a medium composed of the species $\{j_m\}$, the index $i$ meaning all the
+species:
+\begin{equation}
+\diff_s = \frac{\concAtm - \conc_s}{\displaystyle\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
+\label{Titan:Ds}
+\end{equation}
+Thus:
+\begin{equation}
+\begin{split}
+\doverd{\diff_s}{z} & = \frac{1}{\displaystyle\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}\displaystyle\sum_{i\neq s}\doverd{\conc_i}{z} 
+                      - \frac{\concAtm - \conc_s}{\left(\displaystyle\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}\right)^2}
+                        \displaystyle\sum_{j_m \neq s} 
+                                \left[\doverd{\conc_{j_m}}{z}\frac{1}{\diff_{s,j_m}} - \frac{\conc_{j_m}}{\diff_{s,j_m}^2}\doverd{\diff_{s,j_m}}{z}\right]\\
+                    & = \diff_s\left[\frac{1}{\concAtm - \conc_s}\displaystyle\sum_{i\neq s}\doverd{\conc_i}{z} 
+                      - \frac{1}{\displaystyle\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
+                        \displaystyle\sum_{j_m \neq s}\frac{1}{\diff_{s,j_m}}
+                                \left[\doverd{\conc_{j_m}}{z} + \frac{\conc_{j_m}}{\concAtm}\sum_{i}\doverd{\conc_{i}}{z}\right]
+                                \right]
+\end{split}
+\label{Titan:dDs_dz}
+\end{equation}
+The final diffusion coefficient is given by the equation~\ref{Titan:Ds-tilde}.
+\begin{equation}
+\tilde{\diff_s} = \frac{\diff_s}{1-\frac{\conc_s}{\concAtm}\left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}
+\label{Titan:Ds-tilde}
+\end{equation}
+avec \mean{\Mm_{\neq s}} the mean molecular mass of the atmosphere without
+species $s$:
+\begin{equation}
+\begin{split}
+\mean{\Mm_{\neq s}} & = \sum_{i\neq s} \frac{\conc_i}{\concAtm - \conc_s}\Mm_i\\
+\Rightarrow \dOverd{\mean{\Mm_{\neq s}}}{z} &
+                = \mean{\Mm_{\neq s}}\left[\frac{1}{\displaystyle\sum_{i\neq s}\conc_i\Mm_i} \sum_i \Mm_i\doverd{\conc_i}{z}
+                  - \frac{1}{\concAtm - \conc_s} \sum_{i\neq s}\doverd{\conc_i}{z}\right]
+\end{split}
+\end{equation}
+ which provides
+\begin{equation}
+\begin{split}
+\doverd{\tilde{\diff_s}}{z} & = \doverd{\diff_s}{z}\frac{1}{1-\frac{\conc_s}{\concAtm}\left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}
+                              - \frac{\diff_s}{\left[1-\frac{\conc_s}{\concAtm}\left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)\right]^2}
+                                \dOverd{1-\frac{\conc_s}{\concAtm}\left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}{z}\\
+                            & = \tilde{\diff_s}\bigg(\frac{1}{\diff_s}\doverd{\diff_s}{z}
+                              + 
+                                   \frac{1}{1-\frac{\conc_s}{\concAtm}  \left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)} \\
+                              &\hspace{4cm}
+                                \left[\frac{1}{\concAtm}\doverd{\conc_s}{z} - \frac{\conc_s}{\concAtm^2}\displaystyle\sum_i\doverd{\conc_i}{z} + 
+                                      \frac{\Mm_s}{\mean{\Mm_{\neq s}}^2}\dOverd{\mean{\Mm_{\neq s}}}{z}\right]\bigg)
+\end{split}
+\end{equation}
+Aaaaallright\dots
+\begin{equation}
+\begin{split}
+\doverd{\tilde{\diff_s}}{z} = \tilde{\diff_s}\bigg[\; & \\
+        &            \frac{1}{\concAtm - \conc_s}\left( 1 -
+                           \frac{1}{1-\frac{\conc_s}{\concAtm}  \left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}\frac{\Mm_s}{\mean{\Mm_{\neq s}}}
+                     \right) \displaystyle\sum_{i\neq s}\doverd{\conc_i}{z} 
++ \\
+        &                \displaystyle\sum_i\frac{1}{\displaystyle\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
+                         \left[\sum_{j_m \neq s}\frac{1}{\diff_{s,j_m}}
+                                 \frac{\conc_{j_m}}{\concAtm}\right]\doverd{\conc_{i}}{z} 
+- \\
+        &                \displaystyle\sum_i\frac{1}{1-\frac{\conc_s}{\concAtm}  \left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}
+                         \frac{\conc_s}{\concAtm^2}\doverd{\conc_i}{z} 
++ \\
+        &                \displaystyle\sum_i\frac{1}{1-\frac{\conc_s}{\concAtm}  \left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}
+                                      \frac{\Mm_s}{\mean{\Mm_{\neq s}}}
+                      \frac{1}{\displaystyle\sum_{i\neq s}\conc_i\Mm_i} \Mm_i\doverd{\conc_i}{z} 
++ \\
+        &                \frac{1}{1-\frac{\conc_s}{\concAtm}  \left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}
+                                \frac{1}{\concAtm}\doverd{\conc_s}{z} 
+- \\
+        &                \frac{1}{\displaystyle\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
+                         \displaystyle\sum_{j_m \neq s}\frac{1}{\diff_{s,j_m}}
+                                \doverd{\conc_{j_m}}{z} 
+\\ \bigg]
+\end{split}
+\end{equation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% WORK TO DO HERE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\pagebreak
+\begin{remark}
+This is full of uncertainties, no idea of the impact, this will have to be discussed, inverse the measurements
+sometime. See where the measurements are made and where we use the models found by regression.
 From \citet{Wakeham1973,Massman1998}, we have the following data and
-fits, see Fig.~\ref{diff-Wake}.
-\begin{figure}[htp]
-\centering
-\includegraphics[width=\linewidth]{DiffusionMeas}\\
+fits:
+\begin{center}
+\includegraphics[width=\linewidth]{DiffusionMeas}
 \begin{tabular}{lcccc}\toprule
                 & \multicolumn{2}{c}{\citet{Wakeham1973}} & \multicolumn{2}{c}{\citet{Massman1998}} \\\cmidrule(lr){2-3}\cmidrule(lr){4-5}
 Couple          & $A$ (cm$^2$s$^{-1}$)             &  $s$                       & $D(0,1)$ (cm$^2$s$^{-1}$)  & $\beta$ \\\midrule
@@ -39,13 +198,12 @@ Couple          & $A$ (cm$^2$s$^{-1}$)             &  $s$                       
 \ce{C4H10 - N2} & $\numprint{1.00}\,10^{-5}$       & \numprint{1.61} \\
 \bottomrule
 \end{tabular}
-\caption{\label{diff-Wake}Raw data and fits as given in \citet{Wakeham1973,Massman1998}.
+\end{center}
+{Raw data and fits as given in \citet{Wakeham1973,Massman1998}.
 Black: \citet{Wakeham1973} fits; red: \citet{Massman1998} fit with $P = \mathrm{P_W} = 1.0133~$bar.
 The uncertainty on the data is 4\%. The gray zone is Titan's atmosphere conditions.}
-\end{figure}
 
-\begin{table}
-\centering
+\begin{center}
 \begin{tabular}{cccccccc}\toprule
 \multicolumn{2}{c}{\ce{CH4 - N2}} &
 \multicolumn{2}{c}{\ce{C2H6 - N2}} &
@@ -68,64 +226,6 @@ $T$ (K) & $D_{12}$ \\
 \numprint{671.1} & \numprint{0.919} & \numprint{671.2}  & \numprint{0.609} \\
 \bottomrule
 \end{tabular}
-\caption{\label{diffWakehamRaw}Raw data from \citet[Tab.~1]{Wakeham1973}.}
-\end{table}
-The diffusion coefficient for one species is calculated as diffusing through
-a medium of \ce{N2} and \ce{CH4}, using equation~\ref{Titan:Ds}.
-\begin{equation}
-\diff_s = \frac{\concAtm - \conc_s}{\displaystyle\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{j_m,s}}}
-\label{Titan:Ds}
-\end{equation}
-The final diffusion coefficient is given by the equation~\ref{Titan:Ds-tilde}.
-\begin{equation}
-\tilde{\diff} = \frac{\diff_s}{1-\frac{\conc_s}{\concAtm}\left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}
-\label{Titan:Ds-tilde}
-\end{equation}
-avec \mean{\Mm_{\neq s}} the mean molecular mass of the atmosphere without
-species $s$.
-
-\begin{remark}
-From \citet{WilsonPhD,Haye2005} to \citet{Massman1998} and \citet{Wakeham1973}.
-Starting from the equation used in \citet{WilsonPhD} and re-used in \citet{Haye2005}
-(I suspect this is an error starting back in \citet{Wakeham1973}, no one really 
-bothered to correct\dots)
-\begin{equation}
-D_{ij} = A \frac{T^s}{n}
-\label{eqWil}
-\end{equation}
-We connect it to the \citet{Massman1998} equation (Eq.~\ref{eqMas}) and the \citet{Wakeham1973}
-corrected equation (Eq.~\ref{eqWak}).
-\begin{equation}
-D_{ij} = D(0,1)\frac{\mathrm{P_0}}{P}\left(\frac{T}{\mathrm{T_0}}\right)^\beta
-\label{eqMas}
-\end{equation}
-with $\mathrm{P_0} = 1$~atm and $\mathrm{T_0} = 0^\circ$C
-\begin{equation}
-D_{ij} = A_W\left(\frac{T}{\mathrm{T_W}}\right)^{s_W}
-\label{eqWak}
-\end{equation}
-with $\mathrm{T_W} = 1$~K, measurements were performed at $\mathrm{P_W} = 1.0133$~bar.
-Using the ideal gas equation $P = n\mathrm{k_B}T$, we have the following relations:
-\begin{center}
-\begin{tabular}{rccccc}\toprule
-    &                              & Wilson & Massman & Wakeham\\\midrule
-\multirow{2}{*}{Wilson (Eq.~\ref{eqWil})} 
-    &       $A$ &/&$D(0,1)\frac{\mathrm{P_0}}{\mathrm{T_0^\beta k_B}}$
-                                           & $A_W \frac{\mathrm{P_W}}{\mathrm{T_W}^{s_W} \mathrm{k_B}}$ \\
-    &       $s$ &/&$\beta - 1$          & $s_W - 1$ \\\addlinespace[12pt]
-\multirow{2}{*}{Massman (Eq.~\ref{eqMas})} &
-       $D(0,1)$ & $A\frac{\mathrm{T_0}^{s+1}\mathrm{k_B}}{\mathrm{P_0}}$ &
-                               /           & $A_W\frac{\mathrm{P_W}}{\mathrm{P_0}}\left(\frac{\mathrm{T_0}}{\mathrm{T_W}}\right)^{s_W}$ \\
-    &   $\beta$ & $s + 1$    &  /  & $s_W$ \\\addlinespace[12pt]
-\multirow{2}{*}{Wakeham (Eq.~\ref{eqWak})} &
-       $A_W$    & $A\frac{\mathrm{T_W}^{s+1}\mathrm{k_B}}{\mathrm{P_W}}$ &
-                               $D(0,1)\frac{\mathrm{P_0}}{\mathrm{P_W}}\left(\frac{\mathrm{T_W}}{\mathrm{T_0}}\right)^{\beta}$ &/ \\
-    &   $s_W$   & $s + 1$    &  $\beta$  & /\\
-\bottomrule
-\end{tabular}
 \end{center}
-We use raw data as possible, thus \citet{Massman1998} or corrected \citet{Wakeham1973} equations (resp. Eq.~\ref{eqMas}
-and Eq.~\ref{eqWak}) when possible. 
-This is full of uncertainties, no idea of the impact, this will have to be discussed, inverse the measurements
-sometime.
+{\label{diffWakehamRaw}Raw data from \citet[Tab.~1]{Wakeham1973}.}
 \end{remark}

@@ -16,7 +16,7 @@ A photochemical reaction typically is:
 \end{chemequation}
 The rate constant is computed through the equation
 \begin{equation}
-k(z) = \int_0^\infty \cs(\lambda)\fhv(z,\lambda)\dd\lambda
+\rate(z) = \int_0^\infty \cs(\lambda)\fhv(z,\lambda)\dd\lambda
 \end{equation}
 with $\fhv(z,\lambda)$ the photon flux at the considered altitude.
 Thus the calculations is made in three steps:
@@ -61,11 +61,12 @@ And the definition of \x\ is given by
 with $\sch(z)$ being the scale height of definition
 \begin{equation}
 \sch(z) = \frac{\kb T(z)}{\gloc(z)\mean{\mass}}
+\label{Titan:scale_height}
 \end{equation}
 with \kb\ the Boltzmann constant, 
-\mean{\mass}\ the atmospheric mass ($\mean{\mass} = \frac{\Mm(z)}{\Nav}\conc_\text{tot}(z)$, 
+\mean{\mass}\ the atmospheric mass ($\mean{\mass} = \frac{\Mm(z)}{\Nav}$, 
 $\Mm(z)$ the molar mass of the atmosphere at altitude $z$,
-\Nav\ the Avogadro number, $\conc_\text{tot}(z)$ the density at altitude $z$), 
+\Nav\ the Avogadro number), 
 $\gloc(z)$ the gravitationnal field at altitude $z$, given by the equation
 \begin{equation}
 \gloc(z) = \frac{\Guni\cdot\MTitan}{\left(\RTitan + z\right)^2}

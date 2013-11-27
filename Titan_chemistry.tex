@@ -1,3 +1,6 @@
+\section{Generalities on chemistry}
+\input{Titan_chem_generalities}
+
 \section{Photochemistry}
 \input{Titan_photochem}
 
@@ -29,9 +32,6 @@ $s$ in reaction $r$. The elementary process enables to make the hypothesis
 
 The total kinetics contribution for species $s$ would then be:
 \begin{equation}
-\left(\doverd{\conc_s}{t}\right)_\text{kin} = \sum_{r\in \text{reactions}} \stoi{s,r} \prod_{i\in\text{reactants}}\conc_i^{|\stoi{i,r}|}
+\left(\doverd{\conc_s}{t}\right)_\text{kin} = \sum_{r\in \text{reactions}} \stoi{s,r} k_{r} \prod_{i\in\text{reactants}}\conc_i^{|\stoi{i,r}|}
+\label{Titan:kinetics}
 \end{equation}
-
-\section{More on kinetics}
-All the kinetics details are taken
-care of by \Antioch, see \GitAntioch.

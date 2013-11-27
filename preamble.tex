@@ -3,13 +3,14 @@
 %%%
 \newcommand{\mytilde}{\raisebox{-0.3\baselineskip}{\~{}}}
 \newcommand{\doverd}[2]{\ensuremath{\frac{\partial#1}{\partial#2}}}
+\newcommand{\dOverd}[2]{\doverd{\left(#1\right)}{#2}}
+\newcommand{\ddoverd}[2]{\ensuremath{\frac{\partial^2#1}{\partial{#2}^2}}}
 %%%
 \newcommand{\h}        {\ensuremath{\mathrm{h}}}
 \newcommand{\dd}       {\ensuremath{\mathrm{d}}}
 \newcommand{\chapman}  {\ensuremath{\text{Chap}(\x,\chi)}}
 \newcommand{\erf}      {\ensuremath{\text{erf}}}
 \newcommand{\kb}       {\ensuremath{\text{k}_\text{b}}}
-\newcommand{\Mm}       {\ensuremath{\text{M}}}
 \newcommand{\Nav}      {\ensuremath{\mathcal{N}_\text{Avo}}}
 \newcommand{\RTitan}   {\ensuremath{\text{R}_\text{Titan}}}
 \newcommand{\MTitan}   {\ensuremath{\text{m}_\text{Titan}}}
@@ -17,6 +18,7 @@
 \newcommand{\gloc}     {\ensuremath{g}}
 \newcommand{\x}        {\ensuremath{a}}
 \newcommand{\sch}      {\ensuremath{H}}
+%%%%%
 \newcommand{\flux}     {\ensuremath{\Phi}}
 \newcommand{\fhv}      {\ensuremath{\flux^{\h\nu}}}
 \newcommand{\fhvAU}    {\ensuremath{\fhv_\text{1\,AU}}}
@@ -24,15 +26,28 @@
 \newcommand{\fe}       {\ensuremath{\flux^{\ce{e-}}}}
 \newcommand{\dSS}      {\ensuremath{\text{d}_\text{Sun-Saturn}}}
 \newcommand{\cs}       {\ensuremath{\sigma}}
+%%%%%
 \newcommand{\conc}     {\ensuremath{n}}
 \newcommand{\concAtm}  {\ensuremath{n_\text{total}}}
 \newcommand{\mass}     {\ensuremath{m}}
+\newcommand{\Mm}       {\ensuremath{\text{M}}}
 \newcommand{\zmin}     {\ensuremath{z_\text{min}}}
 \newcommand{\mean}[1]  {\ensuremath{\langle#1\rangle}}
 \newcommand{\unit}[1]  {\ensuremath{\mathtt{#1}}}
 \newcommand{\nounit}   {\unit{no\ unit}}
-\newcommand{\diff}     {\ensuremath{D}}
-\newcommand{\eddy}     {\ensuremath{K}}
+%%
+\newcommand{\diff}  {\ensuremath{D}}
+\newcommand{\eddy}  {\ensuremath{K}}
+\newcommand{\Tz}    {\ensuremath{\mathrm{T_0}}}
+\newcommand{\Pz}    {\ensuremath{\mathrm{P_0}}}
+\newcommand{\diff@}[2]{\ensuremath{#1^\text{(#2)}}}
+\newcommand{\Pwa}   {\diff@{\mathrm{P}}{wa}}
+\newcommand{\Awa}   {\diff@{A}{wa}}
+\newcommand{\swa}   {\diff@{\beta}{wa}}
+\newcommand{\concwa}{\diff@{\conc}{wa}}
+\newcommand{\Awi}   {\diff@{A}{wi}}
+\newcommand{\swi}   {\diff@{\beta}{wi}}
+%%
 \newcommand{\thermcoef}{\ensuremath{\alpha}}
 \newcommand{\conductivity}{\ensuremath{\kappa}}
 \newcommand{\viscosity}   {\ensuremath{\nu}}
@@ -50,6 +65,7 @@
 \newcommand{\Runi}    {\ensuremath{\mathrm{R}}}
 \newcommand{\order}[1]{\ensuremath{{m_{#1}}}}
 \newcommand{\stoi}[1] {\ensuremath{{\nu_{#1}}}}
+\newcommand{\rate}    {\ensuremath{k}}
 %%
 \newcommand{\Antioch}{\texttt{Antioch}}
 \newcommand{\GitAntioch}{\href{https://github.com/libantioch/antioch}{\Antioch\ on Github}}

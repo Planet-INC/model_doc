@@ -1,0 +1,52 @@
+Here is an overview of how the chemical kinetics are
+handed. It is all taken
+care of by \Antioch, see \GitAntioch\ for a detailed
+description.
+
+\subsection{Description of a chemical reaction}
+
+A chemical reaction is characterized by a rate constant
+\rate, which depends on the pressure and temperature.
+A kinetics model is defined to represent the temperature
+dependency while a chemical process codes for the pressure
+dependency. As we treat only gaseous media and we make
+the ideal gas approximation, pressure is concentration.
+
+A kinetics model is called hereafter $\alpha$ and depends solely on
+temperature. The kinetics models supported by \Antioch\ are given
+in Tab.~\ref{Antioch_kinetics_models}
+\begin{table}
+\centering
+\renewcommand{\arraystretch}{2}
+\begin{tabular}{ll}\toprule
+Kinetics model & Equation \\\midrule
+Hercourt-Essen & $\alpha(T) = \preCoeff \left(\frac{T}{\Tref}\right)^\powerPar$ \\
+Berthelot      & $\alpha(T) = \preCoeff \;\exp\!\left(D T\right)$ \\
+Arrhenius      & $\alpha(T) = \preCoeff \;\exp\!\left(-\frac{\actEn}{\Runi T}\right)$ \\
+Kooij          & $\alpha(T) = \preCoeff \left(\frac{T}{\Tref}\right)^\powerPar\exp\!\left(-\frac{\actEn}{\Runi T}\right)$ \\
+Van't Hoff     & $\alpha(T) = \preCoeff \left(\frac{T}{\Tref}\right)^\powerPar\exp\!\left(-\frac{\actEn}{\Runi T} + D T\right)$ \\
+\bottomrule
+\end{tabular}
+\caption{\label{Antioch_kinetics_models}Different kinetics models supported by \Antioch.}
+\end{table}
+
+A chemical process will then be a generalization of the kinetics model, adding
+pressure dependency. Tab.~\ref{Antioch_chem_process} summarizes the supported
+chemical process.
+\begin{table}
+\centering
+\renewcommand{\arraystretch}{2}
+\begin{tabular}{ll}\toprule
+Chemical process & Equation \\\midrule
+Elementary       & $\rate(T,\conc) = \alpha(T)$ \\
+Duplicate        & $\rate(T,\conc) = \sum_{i=1}^n\alpha_i(T)$ \\
+Three body       & $\rate(T,\conc) = \alpha(T)\left(\sum_s \epsilon_s\conc_s\right)$ \\
+Falloff          & $\rate(T,\conc) = \alpha_\infty(T)\frac{\conc\,\alpha_0(T)}{\conc\,\alpha_0(T) + \alpha_\infty(T)} F$ \\\cmidrule{2-2}
+                 &\begin{tabular}{>{\small}ll} 
+                   Lindemann & $F = 1$ \\
+                   Troe      & $F =$ a complicated equation
+                  \end{tabular}\\
+\bottomrule
+\end{tabular}
+\caption{\label{Antioch_chem_process}Different chemical processes supported by \Antioch.}
+\end{table}
