@@ -15,27 +15,3 @@ and we develop thanks to equations~\ref{Titan:diffusion} and \ref{Titan:kinetics
                                      \frac{2}{r} + \frac{1}{r^2}\doverd{\left(\conc_s\omega_s\right)}{r} \\
 \end{split}
 \end{equation}
-Using Eq.~\ref{Titan:omega_diff}
-\begin{equation}
-\conc_s\omega_s = -\tilde{\diff_s} \left[\doverd{\conc_s}{z} + \frac{\conc_s}{\sch_s} + 
-                                \frac{\conc_s}{T}\doverd{T}{z}\left(1 + \frac{\concAtm - \conc_s}{\concAtm}\thermcoef_{T_s}\right)\right] - 
-                  \eddy \left[\doverd{\conc_s}{z} + \frac{\conc_s}{\sch_a} + \frac{\conc_s}{T}\doverd{T}{z}\right]
-\end{equation}
-since $r = \RTitan + z$ and \RTitan\ is constant, $\partial r = \partial z$.
-\begin{equation}
-\begin{split}
-\dOverd{\conc_s\omega_s}{z} & = -\dOverd{\tilde{\diff_s}\doverd{\conc_s}{z}}{z} - \doverd{\frac{\tilde{\diff_s}\conc_s}{\sch_s}}{z}
-                                - \dOverd{\tilde{\diff_s}\frac{\conc_s}{T}\doverd{T}{z}}{z}
-                                - \dOverd{\tilde{\diff_s}\frac{\conc_s}{T}\doverd{T}{z}\thermcoef_{T_s}}{z}
-                                - \dOverd{\tilde{\diff_s}\frac{\conc_s}{T}\doverd{T}{z}\thermcoef_{T_s}\frac{\conc_s}{\concAtm}}{z} \\
-                            &   - \dOverd{\eddy \doverd{\conc_s}{z}}{z} 
-                                - \dOverd{\eddy\frac{\conc_s}{\sch_a}}{z} 
-                                - \dOverd{\eddy\frac{\conc_s}{T}\doverd{T}{z}}{z} \\
-\end{split}
-\end{equation}
-Using Eq.~\ref{Titan:scale_height},
-\begin{equation}
-\begin{split}
-\dOverd{\conc_s\omega_s}{z} & = -\dOverd{\tilde{\diff_s}\doverd{\conc_s}{z}}{z} - \doverd{\frac{\tilde{\diff_s}\conc_s}{\sch_s}}{z}
-\end{split}
-\end{equation}

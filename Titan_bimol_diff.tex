@@ -20,13 +20,13 @@ with \kb\ being the Boltzmann constant.
 We have thus
 \begin{equation}
 \begin{split}
-\doverd{\diff_{sm}}{z} & = \diff_s(0,1) \frac{\Pz}{\kb T}\left(\frac{T}{\Tz}\right)^{\beta_s} \dOverd{\frac{1}{\concAtm}}{z}\\
-                       & = -\frac{\diff_{sm}}{\concAtm}\doverd{\concAtm}{z}
+\doverdz{\diff_{sm}} & = \diff_s(0,1) \frac{\Pz}{\kb T}\left(\frac{T}{\Tz}\right)^{\beta_s} \dOverdz{\frac{1}{\concAtm}}\\
+                     & = -\frac{\diff_{sm}}{\concAtm}\doverdz{\concAtm}
 \end{split}
 \end{equation}
 Which finally gives:
 \begin{equation}
-\doverd{\diff_{sm}}{z}  = -\frac{\diff_{sm}}{\concAtm}\sum_{i\in\text{species}}\doverd{\conc_i}{z}
+\doverdz{\diff_{sm}}  = -\frac{\diff_{sm}}{\concAtm}\diverge{\conc}
 \label{Titan:Massman_derive}
 \end{equation}
 
@@ -47,7 +47,7 @@ with $\Tref = 1~\unit{K}$, measurements were performed at $\Pwa =\concwa \kb T =
 Tab.~\ref{Titan:diffusion_corres} show the correspondencies.
 \begin{table}
 \centering
-\begin{tabular}{rccccc}\toprule
+\begin{tabular}{r@{\;}ccccc}\toprule
     &                              & Massman & Wilson & Wakeham\\\midrule
 \multirow{2}{*}{Massman (Eq.~\ref{Titan:diffusion_Massman})}
 & $D(0,1)$ &  /                                                              &  $\Awi\frac{\Tz^{\swi+1}}{\Tref^{\swi}}\frac{\kb}{\Pz}$  & $\Awa\frac{\Pwa}{\Pz}\left(\frac{\Tz}{\Tref}\right)^{\swa}$ \\
@@ -79,16 +79,16 @@ Thus, we obtain for the derivative with respect to altitude:
 \begin{equation}
 \begin{split}
 \renewcommand{\arraystretch}{2}
-\dOverd{\diff_{sm}}{z} & =
+\dOverdz{\diff_{sm}} & =
 \left\{\begin{array}{l@{\quad}r}
-\doverd{\diff_{mm}}{z}\sqrt{\frac{\frac{\Mm_s}{\Mm_m} + 1}{2}}  & \text{if } \Mm_s < \Mm_m    \\
-\doverd{\diff_{mm}}{z}\sqrt{\frac{\Mm_s}{\Mm_m}}                                       & \text{if } \Mm_s \geq \Mm_m \\
+\doverdz{\diff_{mm}}\sqrt{\frac{\frac{\Mm_s}{\Mm_m} + 1}{2}}  & \text{if } \Mm_s < \Mm_m    \\
+\doverdz{\diff_{mm}}\sqrt{\frac{\Mm_s}{\Mm_m}}                & \text{if } \Mm_s \geq \Mm_m \\
 \end{array}\right. 
 \\\\
-\dOverd{\diff_{sm}}{z} & =
+\dOverdz{\diff_{sm}} & =
 \left\{\begin{array}{l@{\quad}r}
--\diff_{mm}\frac{1}{\concAtm}\sqrt{\frac{\frac{\Mm_s}{\Mm_m} + 1}{2}}\displaystyle\sum_{i\in\text{species}}\doverd{\conc_i}{z}  & \text{if } \Mm_s < \Mm_m    \\
--\diff_{mm}\frac{1}{\concAtm}\sqrt{\frac{\Mm_s}{\Mm_m}}\displaystyle\sum_{i\in\text{species}}\doverd{\conc_i}{z}                & \text{if } \Mm_s \geq \Mm_m \\
+-\diff_{mm}\frac{1}{\concAtm}\sqrt{\frac{\frac{\Mm_s}{\Mm_m} + 1}{2}}\diverge{\conc}  & \text{if } \Mm_s < \Mm_m    \\
+-\diff_{mm}\frac{1}{\concAtm}\sqrt{\frac{\Mm_s}{\Mm_m}}\diverge{\conc}                & \text{if } \Mm_s \geq \Mm_m \\
 \end{array}\right. 
 \end{split}
 \label{Titan:diffusion_no_data_derive}
@@ -107,18 +107,37 @@ species:
 Thus:
 \begin{equation}
 \begin{split}
-\doverd{\diff_s}{z} & = \frac{1}{\displaystyle\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}\displaystyle\sum_{i\neq s}\doverd{\conc_i}{z} 
-                      - \frac{\concAtm - \conc_s}{\left(\displaystyle\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}\right)^2}
-                        \displaystyle\sum_{j_m \neq s} 
-                                \left[\doverd{\conc_{j_m}}{z}\frac{1}{\diff_{s,j_m}} - \frac{\conc_{j_m}}{\diff_{s,j_m}^2}\doverd{\diff_{s,j_m}}{z}\right]\\
-                    & = \diff_s\left[\frac{1}{\concAtm - \conc_s}\displaystyle\sum_{i\neq s}\doverd{\conc_i}{z} 
-                      - \frac{1}{\displaystyle\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
-                        \displaystyle\sum_{j_m \neq s}\frac{1}{\diff_{s,j_m}}
-                                \left[\doverd{\conc_{j_m}}{z} + \frac{\conc_{j_m}}{\concAtm}\sum_{i}\doverd{\conc_{i}}{z}\right]
-                                \right]
+\doverdz{\diff_s}   & = \frac{1}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}\left(\diverge{\conc} - \doverdz{\conc_s}\right)
+                      - \frac{\concAtm - \conc_s}{\left(\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}\right)^2}
+                        \sum_{j_m \neq s} 
+                                \left[\doverdz{\conc_{j_m}}\frac{1}{\diff_{s,j_m}} - \frac{\conc_{j_m}}{\diff_{s,j_m}^2}\doverdz{\diff_{s,j_m}}\right]\\
+                    & = \diff_s\left[\frac{1}{\concAtm - \conc_s}\left(\diverge{\conc} - \doverdz{\conc_s}\right)
+                      - \frac{1}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
+                        \sum_{j_m \neq s}\frac{1}{\diff_{s,j_m}}
+                                \left[\doverdz{\conc_{j_m}} + \frac{\conc_{j_m}}{\concAtm}\A\diverge{\conc}\right]
+                                \right] \\
+                    & \;\;
+                        \begin{split}
+                           = \diff_s\Bigg[\frac{1}{\concAtm - \conc_s}\left(\diverge{\conc} - \doverdz{\conc_s}\right)
+                         & - \frac{1}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
+                              \sum_{j_m \neq s}\frac{1}{\diff_{s,j_m}}\doverdz{\conc_{j_m}} \\
+                         & - \frac{1}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
+                             \left(\sum_{j_m \neq s}\frac{\conc_{j_m}}{\concAtm}\A\right)\diverge{\conc}\Bigg]
+                        \end{split}
 \end{split}
 \label{Titan:dDs_dz}
 \end{equation}
+with
+\begin{equation}
+\renewcommand{\arraystretch}{1.5}
+\A = \left\{\begin{array}{l@{\quad\quad}l}
+                        1                             & \text{if $\diff_{s,j_m}$ defined}\\
+             \sqrt{\frac{\frac{\Mm_s}{\Mm_m} + 1}{2}} & \text{if $\diff_{s,j_m}$ undefined and }\Mm_s < \Mm_m \\
+             \sqrt{\frac{\Mm_s}{\Mm_m}}               & \text{if $\diff_{s,j_m}$ undefined and }\Mm_s \geq \Mm_m 
+            \end{array}\right.
+\end{equation}
+with $j_m$ a medium species.
+
 The final diffusion coefficient is given by the equation~\ref{Titan:Ds-tilde}.
 \begin{equation}
 \tilde{\diff_s} = \frac{\diff_s}{1-\frac{\conc_s}{\concAtm}\left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}
@@ -129,51 +148,38 @@ species $s$:
 \begin{equation}
 \begin{split}
 \mean{\Mm_{\neq s}} & = \sum_{i\neq s} \frac{\conc_i}{\concAtm - \conc_s}\Mm_i\\
-\Rightarrow \dOverd{\mean{\Mm_{\neq s}}}{z} &
-                = \mean{\Mm_{\neq s}}\left[\frac{1}{\displaystyle\sum_{i\neq s}\conc_i\Mm_i} \sum_i \Mm_i\doverd{\conc_i}{z}
-                  - \frac{1}{\concAtm - \conc_s} \sum_{i\neq s}\doverd{\conc_i}{z}\right]
+\Rightarrow \dOverdz{\mean{\Mm_{\neq s}}} &
+                = \mean{\Mm_{\neq s}}\left[\frac{1}{\sum_{i\neq s}\conc_i\Mm_i} \sum_i \Mm_i\doverdz{\conc_i}
+                  - \frac{1}{\concAtm - \conc_s} \left(\diverge{\conc} - \doverdz{\conc_s}\right)\right]
 \end{split}
 \end{equation}
- which provides
+which provides
 \begin{equation}
 \begin{split}
-\doverd{\tilde{\diff_s}}{z} & = \doverd{\diff_s}{z}\frac{1}{1-\frac{\conc_s}{\concAtm}\left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}
+\doverdz{\tilde{\diff_s}}   & = \doverdz{\diff_s}\frac{1}{1-\frac{\conc_s}{\concAtm}\left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}
                               - \frac{\diff_s}{\left[1-\frac{\conc_s}{\concAtm}\left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)\right]^2}
-                                \dOverd{1-\frac{\conc_s}{\concAtm}\left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}{z}\\
-                            & = \tilde{\diff_s}\bigg(\frac{1}{\diff_s}\doverd{\diff_s}{z}
-                              + 
-                                   \frac{1}{1-\frac{\conc_s}{\concAtm}  \left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)} \\
-                              &\hspace{4cm}
-                                \left[\frac{1}{\concAtm}\doverd{\conc_s}{z} - \frac{\conc_s}{\concAtm^2}\displaystyle\sum_i\doverd{\conc_i}{z} + 
-                                      \frac{\Mm_s}{\mean{\Mm_{\neq s}}^2}\dOverd{\mean{\Mm_{\neq s}}}{z}\right]\bigg)
-\end{split}
-\end{equation}
-Aaaaallright\dots
-\begin{equation}
-\begin{split}
-\doverd{\tilde{\diff_s}}{z} = \tilde{\diff_s}\bigg[\; & \\
-        &            \frac{1}{\concAtm - \conc_s}\left( 1 -
-                           \frac{1}{1-\frac{\conc_s}{\concAtm}  \left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}\frac{\Mm_s}{\mean{\Mm_{\neq s}}}
-                     \right) \displaystyle\sum_{i\neq s}\doverd{\conc_i}{z} 
-+ \\
-        &                \displaystyle\sum_i\frac{1}{\displaystyle\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
-                         \left[\sum_{j_m \neq s}\frac{1}{\diff_{s,j_m}}
-                                 \frac{\conc_{j_m}}{\concAtm}\right]\doverd{\conc_{i}}{z} 
-- \\
-        &                \displaystyle\sum_i\frac{1}{1-\frac{\conc_s}{\concAtm}  \left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}
-                         \frac{\conc_s}{\concAtm^2}\doverd{\conc_i}{z} 
-+ \\
-        &                \displaystyle\sum_i\frac{1}{1-\frac{\conc_s}{\concAtm}  \left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}
-                                      \frac{\Mm_s}{\mean{\Mm_{\neq s}}}
-                      \frac{1}{\displaystyle\sum_{i\neq s}\conc_i\Mm_i} \Mm_i\doverd{\conc_i}{z} 
-+ \\
-        &                \frac{1}{1-\frac{\conc_s}{\concAtm}  \left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}
-                                \frac{1}{\concAtm}\doverd{\conc_s}{z} 
-- \\
-        &                \frac{1}{\displaystyle\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
-                         \displaystyle\sum_{j_m \neq s}\frac{1}{\diff_{s,j_m}}
-                                \doverd{\conc_{j_m}}{z} 
-\\ \bigg]
+                                \dOverdz{1-\frac{\conc_s}{\concAtm}\left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}\\
+                            & \;\;
+                                 \begin{split} 
+                                    = \tilde{\diff_s}\Bigg[
+                            &   \frac{1}{1-\frac{\conc_s}{\concAtm}  \left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}
+                                                        \frac{1}{\concAtm}\doverdz{\conc_s} \\
+                            &  + \sum_i
+                                    \frac{1}{1-\frac{\conc_s}{\concAtm}  \left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}
+                                      \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\frac{\Mm_i}{\sum_{j\neq s}\conc_j\Mm_j}\doverdz{\conc_i} \\
+                            & - \left(\frac{1}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
+                                       \sum_{j_m \neq s}\frac{\conc_{j_m}}{\concAtm}\A 
+                              + \frac{1}{1-\frac{\conc_s}{\concAtm}  \left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}
+                                        \frac{\conc_s}{\concAtm^2}\right)\diverge{\conc} \\
+                            & + \left( \frac{1}{\concAtm - \conc_s}
+                                 + \frac{1}{1-\frac{\conc_s}{\concAtm}  \left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}
+                                      \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\frac{1}{\concAtm - \conc_s}\right)\diverge{\conc} \\
+                            & - \left( \frac{1}{\concAtm - \conc_s}
+                                 + \frac{1}{1-\frac{\conc_s}{\concAtm}  \left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}
+                                      \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\frac{1}{\concAtm - \conc_s}\right)\doverdz{\conc_s} \\
+                            & - \sum_{j_m \neq s}\frac{1}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
+                                 \frac{1}{\diff_{s,j_m}}\doverdz{\conc_{j_m}}\Bigg]
+                                 \end{split} 
 \end{split}
 \end{equation}
 
