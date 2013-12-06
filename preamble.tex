@@ -1,15 +1,23 @@
 \graphicspath{{./figs/}}
 \makeatletter
-%%%
+%%% misc
 \newcommand{\mytilde}{\raisebox{-0.3\baselineskip}{\~{}}}
-\newcommand{\doverd}[2]{\ensuremath{\frac{\partial#1}{\partial#2}}}
-\newcommand{\dOverd}[2]{\doverd{\left(#1\right)}{#2}}
-\newcommand{\ddoverd}[2]{\ensuremath{\frac{\partial^2#1}{\partial{#2}^2}}}
-\newcommand{\doverdz}[1]{\doverd{#1}{z}}
-\newcommand{\dOverdz}[1]{\dOverd{#1}{z}}
+%%% math
+\newcommand{\doverd}  [2]{\ensuremath{\frac{\partial#1}{\partial#2}}}
+\newcommand{\ddoverd} [2]{\ensuremath{\frac{\partial^2#1}{\partial{#2}^2}}}
+\newcommand{\dOverd}  [2]{\doverd{\left(#1\right)}{#2}}
+\newcommand{\doverdz} [1]{\doverd{#1}{z}}
 \newcommand{\ddoverdz}[1]{\ddoverd{#1}{z}}
-\newcommand{\diverge}[1]{\ensuremath{\left(\nabla\cdot{#1}\right)}}
-%%%
+\newcommand{\dOverdz} [1]{\dOverd{#1}{z}}
+\newcommand{\vect}    [1]{\ensuremath{\overrightarrow{#1}}}
+\newcommand{\diverge} [1]{\ensuremath{\vect{\nabla}\cdot\vect{#1}}}
+\newcommand{\divergex}[2]{\ensuremath{\partial_{#1}{\vect{#2}}}}
+\newcommand{\divergez}[1]{\divergex{z}{#1}}
+\newcommand{\gradien} [2]{\ensuremath{\text{grad}_{#1}\vect{#2}}}
+\newcommand{\gradienz}[1]{\gradien{z}{#1}}
+\newcommand{\vectProd}[2]{\ensuremath{\vect{#1}\cdot\vect{#2}}}
+\newcommand{\vectprod}[2]{\ensuremath{#1\cdot#2}}
+%%% global
 \newcommand{\h}        {\ensuremath{\mathrm{h}}}
 \newcommand{\dd}       {\ensuremath{\mathrm{d}}}
 \newcommand{\chapman}  {\ensuremath{\text{Chap}(\x,\chi)}}
@@ -22,7 +30,7 @@
 \newcommand{\gloc}     {\ensuremath{g}}
 \newcommand{\x}        {\ensuremath{a}}
 \newcommand{\sch}      {\ensuremath{H}}
-%%%%%
+%%%%% hv
 \newcommand{\flux}     {\ensuremath{\Phi}}
 \newcommand{\fhv}      {\ensuremath{\flux^{\h\nu}}}
 \newcommand{\fhvAU}    {\ensuremath{\fhv_\text{1\,AU}}}
@@ -30,7 +38,7 @@
 \newcommand{\fe}       {\ensuremath{\flux^{\ce{e-}}}}
 \newcommand{\dSS}      {\ensuremath{\text{d}_\text{Sun-Saturn}}}
 \newcommand{\cs}       {\ensuremath{\sigma}}
-%%%%%
+%%%%% chemistry
 \newcommand{\conc}     {\ensuremath{n}}
 \newcommand{\concAtm}  {\ensuremath{n_\text{total}}}
 \newcommand{\mass}     {\ensuremath{m}}
@@ -39,7 +47,7 @@
 \newcommand{\mean}[1]  {\ensuremath{\langle#1\rangle}}
 \newcommand{\unit}[1]  {\ensuremath{\mathtt{#1}}}
 \newcommand{\nounit}   {\unit{no\ unit}}
-%%
+%% diffusion
 \newcommand{\diff}  {\ensuremath{D}}
 \newcommand{\eddy}  {\ensuremath{K}}
 \newcommand{\Tz}    {\ensuremath{\mathrm{T_0}}}
@@ -51,7 +59,7 @@
 \newcommand{\concwa}{\diff@{\conc}{wa}}
 \newcommand{\Awi}   {\diff@{A}{wi}}
 \newcommand{\swi}   {\diff@{\beta}{wi}}
-%%
+%% molecules
 \newcommand{\thermcoef}{\ensuremath{\alpha}}
 \newcommand{\conductivity}{\ensuremath{\kappa}}
 \newcommand{\viscosity}   {\ensuremath{\nu}}
@@ -61,7 +69,7 @@
 \newcommand{\HeatRate}    {\ensuremath{H}}
 \newcommand{\heat}        {\ensuremath{Q}}
 \newcommand{\heatEff}     {\ensuremath{\epsilon}}
-%%%
+%%% kinetics
 \newcommand{\Tref}    {\ensuremath{\mathrm{T_{ref}}}}
 \newcommand{\preCoeff}{\ensuremath{A}}
 \newcommand{\powerPar}{\ensuremath{\beta}}
@@ -70,7 +78,7 @@
 \newcommand{\order}[1]{\ensuremath{{m_{#1}}}}
 \newcommand{\stoi}[1] {\ensuremath{{\nu_{#1}}}}
 \newcommand{\rate}    {\ensuremath{k}}
-%%
+%% libraries
 \newcommand{\Antioch}{\texttt{Antioch}}
 \newcommand{\GitAntioch}{\href{https://github.com/libantioch/antioch}{\Antioch\ on Github}}
 \newcommand{\file}[1]{\textsf{#1}}
@@ -99,6 +107,15 @@
 \newenvironment{chemequation}
 {\begin{displaymath}
 \refstepcounter{chemReac}\tag{\thechemReac}}
+{\end{displaymath}}
+%%%%%%%
+% notations
+%%%%%%%
+\newcounter{notationCounter}
+\renewcommand{\thenotationCounter}{Notation~\arabic{notationCounter}}
+\newenvironment{notation}
+{\begin{displaymath}
+\refstepcounter{notationCounter}\tag{\thenotationCounter}}
 {\end{displaymath}}
 %%%%%%%
 % warning

@@ -26,7 +26,7 @@ We have thus
 \end{equation}
 Which finally gives:
 \begin{equation}
-\doverdz{\diff_{sm}}  = -\frac{\diff_{sm}}{\concAtm}\diverge{\conc}
+\doverdz{\diff_{sm}}  = -\frac{\diff_{sm}}{\concAtm}\divergez{\conc}
 \label{Titan:Massman_derive}
 \end{equation}
 
@@ -87,8 +87,8 @@ Thus, we obtain for the derivative with respect to altitude:
 \\\\
 \dOverdz{\diff_{sm}} & =
 \left\{\begin{array}{l@{\quad}r}
--\diff_{mm}\frac{1}{\concAtm}\sqrt{\frac{\frac{\Mm_s}{\Mm_m} + 1}{2}}\diverge{\conc}  & \text{if } \Mm_s < \Mm_m    \\
--\diff_{mm}\frac{1}{\concAtm}\sqrt{\frac{\Mm_s}{\Mm_m}}\diverge{\conc}                & \text{if } \Mm_s \geq \Mm_m \\
+-\diff_{mm}\frac{1}{\concAtm}\sqrt{\frac{\frac{\Mm_s}{\Mm_m} + 1}{2}}\divergez{\conc}  & \text{if } \Mm_s < \Mm_m    \\
+-\diff_{mm}\frac{1}{\concAtm}\sqrt{\frac{\Mm_s}{\Mm_m}}\divergez{\conc}                & \text{if } \Mm_s \geq \Mm_m \\
 \end{array}\right. 
 \end{split}
 \label{Titan:diffusion_no_data_derive}
@@ -107,7 +107,7 @@ species:
 Thus:
 \begin{equation}
 \begin{split}
-\doverdz{\diff_s} = &\;   \frac{1}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}\diverge{\conc} 
+\doverdz{\diff_s} = &\;   \frac{1}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}\divergez{\conc} 
                         - \frac{1}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}\doverdz{\conc_s} \\
                     &\; - \sum_{j_m\neq s}\frac{\concAtm - \conc_s}{\left(\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}\right)^2}
                                 \doverdz{\conc_{j_m}}\frac{1}{\diff_{s,j_m}} 
@@ -117,8 +117,8 @@ Thus:
                     &\; - \sum_{j_m\neq s}\frac{\diff_s}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
                                 \frac{1}{\diff_{s,j_m}} \doverdz{\conc_{j_m}} \\
                     &\; +  \sum_{j_m\neq s}\frac{\diff_s}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}} 
-                                \frac{\diverge{\conc}}{\diff_{s,j_m}}\conc_{j_m} \\
-                    &\; + \frac{\diff_s}{\concAtm - \conc_s}\diverge{\conc} \\
+                                \frac{\divergez{\conc}}{\diff_{s,j_m}}\conc_{j_m} \\
+                    &\; + \frac{\diff_s}{\concAtm - \conc_s}\divergez{\conc} \\
 \end{split}
 \label{Titan:dDs_dz}
 \end{equation}
@@ -132,12 +132,18 @@ The final diffusion coefficient is given by the equation~\ref{Titan:Ds-tilde}.
 avec \mean{\Mm_{\neq s}} the mean molecular mass of the atmosphere without
 species $s$:
 \begin{equation}
+\mean{\Mm_{\neq s}}   = \sum_{i\neq s} \frac{\conc_i}{\concAtm - \conc_s}\Mm_i
+                      = \frac{\vectProd{\Mm}{\conc} - \conc_s\Mm_s}{\concAtm - \conc_s}
+\end{equation}
+Thus
+\begin{equation}
 \begin{split}
-\mean{\Mm_{\neq s}} & = \sum_{i\neq s} \frac{\conc_i}{\concAtm - \conc_s}\Mm_i\\
-\Rightarrow \dOverdz{\mean{\Mm_{\neq s}}} = 
-        &\;   \frac{\mean{\Mm_{\neq s}}}{\sum_{i\neq s}\conc_i\Mm_i} \sum_{i\neq s} \Mm_i\doverdz{\conc_i} \\
+\dOverdz{\mean{\Mm_{\neq s}}} = 
+        &\;   \frac{1}{\concAtm - \conc_s}\left( \vectprod{\vect{\Mm}}{\gradienz{\conc}} - \Mm_s\doverdz{\conc_s}\right) \\
         &\;  + \frac{\mean{\Mm_{\neq s}}}{\concAtm - \conc_s} \doverdz{\conc_s} \\
-        &\;  - \frac{\mean{\Mm_{\neq s}}}{\concAtm - \conc_s} \diverge{\conc}
+        &\;  - \frac{\mean{\Mm_{\neq s}}}{\concAtm - \conc_s} \divergez{\conc} \\
+=       &\;    \frac{\mean{\Mm_{\neq s}} - \Mm_s}{\concAtm - \conc_s} \doverdz{\conc_s} \\
+        &\;  + \frac{\vectprod{\vect{\Mm}}{\gradienz{\conc}} - \mean{\Mm_{\neq s}} \divergez{\conc}}{\concAtm - \conc_s}
 \end{split}
 \end{equation}
 which provides
@@ -153,9 +159,10 @@ with
                   = &\; - \frac{\tilde{\diff_s}}{\concAtm - \conc_s}\doverdz{\conc_s} \\
                     &\; - \sum_{j_m\neq s}\frac{\tilde{\diff_s}}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
                                 \frac{1}{\diff_{s,j_m}} \doverdz{\conc_{j_m}} \\
-                    &\; +  \sum_{j_m\neq s}\frac{\tilde{\diff_s}}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}} 
-                                \frac{\diverge{\conc}}{\diff_{s,j_m}}\conc_{j_m} \\
-                    &\; + \frac{\tilde{\diff_s}}{\concAtm - \conc_s}\diverge{\conc} \\
+                    &\; +  \tilde{\diff_s}\divergez{\conc} \sum_{j_m\neq s}
+                           \frac{1}{\diff_{s,j_m}\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
+                                        \conc_{j_m} \\
+                    &\; + \frac{\tilde{\diff_s}}{\concAtm - \conc_s}\divergez{\conc} \\
 \end{split}
 \end{equation}
 and
@@ -170,43 +177,45 @@ and
         = &\; - \frac{\tilde{\diff_s}}{\concAtm\left(1-\frac{\conc_s}{\concAtm}\left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)\right)}
                  \doverdz{\conc_s}\\
           &\; + \frac{\tilde{\diff_s}\conc_s}{\concAtm^2\left(1-\frac{\conc_s}{\concAtm}\left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)\right)}
-                 \diverge{\conc}\\
+                 \divergez{\conc}\\
           &\; - \frac{\Mm_s\tilde{\diff_s}}{\mean{\Mm_{\neq s}}^2\left(1-\frac{\conc_s}{\concAtm}\left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)\right)}
                  \doverdz{\mean{\Mm_{\neq s}}}\\
         = &\; - \frac{\tilde{\diff_s}}{1-\frac{\conc_s}{\concAtm}\left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}
-                  \left( \frac{\Mm_s}{\sum_{i\neq s}\conc_i\Mm_i} + \frac{1}{\concAtm}\right)
-                 \doverdz{\conc_s}\\
-          &\; + \frac{\tilde{\diff_s}}{1-\frac{\conc_s}{\concAtm}\left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}
-                \left(\frac{\conc_s}{\concAtm^2} - \frac{\Mm_s}{\sum_i\conc_i\Mm_i}\right)
-                 \diverge{\conc}\\
-          &\; - \frac{\tilde{\diff_s}}{\left(1-\frac{\conc_s}{\concAtm}\left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)\right)}
-                 \frac{\Mm_s}{\mean{\Mm_{\neq s}}\sum_{i\neq s}\conc_i\Mm_i} \sum_{i\neq s} \Mm_i\doverdz{\conc_i} \\
+                  \frac{\Mm_s}{\vectProd{\conc}{\Mm} - \conc_s\Mm_s} \\
+          &\;\qquad   \left(1 + \frac{\vectProd{\conc}{\Mm} - \conc_s\Mm_s}{\Mm_s\concAtm} + \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right) 
+                        \doverdz{\conc_s} \\
+          &\; + \frac{\tilde{\diff_s}}{1-\frac{\conc_s}{\concAtm}\left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)} \\
+          &\;\qquad \left(\left(\frac{\conc_s}{\concAtm^2} - \frac{\Mm_s}{\vectProd{\conc}{\Mm}}\right)\divergez{\conc}
+                        - \frac{\Mm_s\:\vectprod{\vect{\Mm}}{\gradienz{\conc}}}
+                               {\mean{\Mm_{\neq s}}\left(\vectProd{\conc}{\Mm} - \conc_s\Mm_s\right)}
+                    \right)\\
 \end{split}
 \end{equation}
 finally
+\begin{landscape}
 \begin{equation}
 \begin{split}
-\doverdz{\tilde{\diff_s}}  = &\; \\
-    &\;  - \left[\frac{\tilde{\diff_s}}{\concAtm - \conc_s}
-         + \frac{\tilde{\diff_s}}{1-\frac{\conc_s}{\concAtm}\left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}
-                  \left( \frac{\Mm_s}{\sum_{i\neq s}\conc_i\Mm_i} + \frac{1}{\concAtm}\right)\right]
-                 \doverdz{\conc_s}\\
-    &\; - \frac{\tilde{\diff_s}}{\left(1-\frac{\conc_s}{\concAtm}\left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)\right)}
-           \frac{\Mm_s}{\mean{\Mm_{\neq s}}\sum_{i\neq s}\conc_i\Mm_i} \sum_{i\neq s} \Mm_i\doverdz{\conc_i} \\
-    &\; + \frac{\tilde{\diff_s}}{1-\frac{\conc_s}{\concAtm}\left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}
-               \frac{\diverge{\conc}}{\concAtm^2} 
-           \conc_s\\
-    &\; - \sum_{j_m\neq s}\frac{\tilde{\diff_s}}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
+& \doverdz{\tilde{\diff_s}}  = \\
+          & - \left[\frac{\tilde{\diff_s}}{1-\frac{\conc_s}{\concAtm}\left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}
+                  \frac{\Mm_s}{\vectProd{\conc}{\Mm} - \conc_s\Mm_s} 
+                        \left(1 + \frac{\vectProd{\conc}{\Mm} - \conc_s\Mm_s}{\Mm_s\concAtm} + \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)
+                  + \frac{\tilde{\diff_s}}{\concAtm - \conc_s}\right]
+                \doverdz{\conc_s} \\
+          & - \sum_{j_m\neq s}\frac{\tilde{\diff_s}}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
                                 \frac{1}{\diff_{s,j_m}} \doverdz{\conc_{j_m}} \\
-    &\; +  \sum_{j_m\neq s}\frac{\tilde{\diff_s}}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}} 
-                                \frac{\diverge{\conc}}{\diff_{s,j_m}}\conc_{j_m} \\
-    &\; + \left[\frac{\tilde{\diff_s}}{\concAtm - \conc_s}
-              - \frac{\tilde{\diff_s}}{1-\frac{\conc_s}{\concAtm}\left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}
-                \frac{\Mm_s}{\sum_{i\neq s}\conc_i\Mm_i}
-          \right]
-           \diverge{\conc}\\
+          & +  \tilde{\diff_s}\divergez{\conc} \sum_{j_m\neq s}
+                           \frac{1}{\diff_{s,j_m}\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
+                                        \conc_{j_m} \\
+          & + \frac{\tilde{\diff_s}}{\concAtm - \conc_s}\divergez{\conc} 
+            + \frac{\tilde{\diff_s}}{1-\frac{\conc_s}{\concAtm}\left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}
+              \left(\left(\frac{\conc_s}{\concAtm^2} - \frac{\Mm_s}{\vectProd{\conc}{\Mm}}\right)\divergez{\conc}
+                        - \frac{\Mm_s\:\vectprod{\vect{\Mm}}{\gradienz{\conc}}}
+                               {\mean{\Mm_{\neq s}}\left(\vectProd{\conc}{\Mm} - \conc_s\Mm_s\right)}
+                    \right)\\
 \end{split}
+\label{Titan:diff_deriv_D_tilde}
 \end{equation}
+\end{landscape}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% WORK TO DO HERE
