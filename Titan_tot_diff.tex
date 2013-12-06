@@ -28,21 +28,24 @@ with
 \end{equation}
 thus
 \begin{equation}
-\doverdz{\mean{\Mm}} =   \frac{1}{\concAtm}\sum_s \Mm_s\doverdz{\conc_s} - \frac{\mean{\Mm}}{\concAtm}\diverge{\conc}
+\begin{split}
+\doverdz{\mean{\Mm}} = &\;  \frac{1}{\concAtm}\sum_s \Mm_s\doverdz{\conc_s}\\
+                       &\; - \frac{\mean{\Mm}}{\concAtm}\diverge{\conc}
+\end{split}
 \end{equation}
 \begin{equation}
 \doverdz{\gloc} = -   \gloc \frac{2}{\RTitan + z}
 \end{equation}
 \begin{equation}
-\doverdz{\sch_a} = \sch_a\left[ 
-                       \frac{2}{\RTitan + z} 
-                     + \frac{1}{T}\doverdz{T(z)} 
-                     + \frac{1}{\concAtm}\diverge{\conc}
-                     - \sum_i\frac{\Mm_i}{\mean{\Mm}}\frac{1}{\concAtm}\doverdz{\conc_i}
-                       \right]
+\begin{split}
+\doverdz{\sch_a} = 
+                 &\; - \sch_a\sum_i\frac{\Mm_i}{\mean{\Mm}\concAtm}\doverdz{\conc_i} \\
+                 &\; + \frac{\sch_a}{\concAtm}\diverge{\conc} \\
+                 &\; + \sch_a\left(\frac{2}{\RTitan + z} + \frac{1}{T}\doverdz{T(z)}\right)
+\end{split}
 \end{equation}
 \begin{equation}
-\doverdz{\sch_s} = \sch_s\left[\frac{2}{\RTitan + z} + \frac{1}{T}\doverdz{T(z)}\right] 
+\doverdz{\sch_s} = \sch_s\left(\frac{2}{\RTitan + z} + \frac{1}{T}\doverdz{T(z)}\right) 
 \end{equation}
 
 The contribution of diffusion to \doverd{\conc}{t} is:
@@ -55,68 +58,20 @@ The contribution of diffusion to \doverd{\conc}{t} is:
 \begin{equation}
 \begin{split}
 \conc_s\omega_s = &\: -\tilde{\diff_s} 
-                        \left[\doverd{\conc_s}{z} + \frac{\conc_s}{\sch_s} + 
-                                \frac{\conc_s}{T}\doverdz{T} + \frac{\conc_s}{T}\doverdz{T}\thermcoef_{T_s} 
-                                - \frac{\conc_s}{T}\doverdz{T}\thermcoef_{T_s}\frac{\conc_s}{\concAtm}\right] \\
-                  &\: - \eddy \left[\doverd{\conc_s}{z} + \frac{\conc_s}{\sch_a} + \frac{\conc_s}{T}\doverd{T}{z}\right]
+                        \left(\doverd{\conc_s}{z} + \left(\frac{1}{\sch_s} + 
+                                \frac{1}{T}\doverdz{T} + \frac{\thermcoef_{T_s}}{T}\doverdz{T}\right)\conc_s
+                                - \frac{\thermcoef_{T_s}}{T}\doverdz{T}\frac{\conc_s^2}{\concAtm}\right) \\
+                  &\: - \eddy \left(\doverd{\conc_s}{z} + \left(\frac{1}{\sch_a} + \frac{1}{T}\doverd{T}{z}\right)\conc_s\right)
 \end{split}
 \end{equation}
 since $r = \RTitan + z$ and \RTitan\ is constant, $\partial r = \partial z$.
 \begin{equation}
 \begin{split}
-\dOverdz{\conc_s\omega_s} = 
-                  &\: - \tilde{\diff_s}\Bigg[
-                     \frac{1}{1-\frac{\conc_s}{\concAtm}  \left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}
-                                                        \frac{1}{\concAtm}\doverdz{\conc_s} \\
-                  &  + \sum_i \frac{1}{1-\frac{\conc_s}{\concAtm}  \left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}
-                                      \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\frac{\Mm_i}{\sum_{j\neq s}\conc_j\Mm_j}\doverdz{\conc_i} \\
-                  & - \left(\frac{1}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
-                                       \sum_{j_m \neq s}\frac{\conc_{j_m}}{\concAtm}\A 
-                              + \frac{1}{1-\frac{\conc_s}{\concAtm}  \left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}
-                                        \frac{\conc_s}{\concAtm^2}\right)\diverge{\conc} \\
-                  & + \left( \frac{1}{\concAtm - \conc_s}
-                                 + \frac{1}{1-\frac{\conc_s}{\concAtm}  \left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}
-                                      \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\frac{1}{\concAtm - \conc_s}\right)\diverge{\conc} \\
-                  & - \left( \frac{1}{\concAtm - \conc_s}
-                                 + \frac{1}{1-\frac{\conc_s}{\concAtm}  \left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}
-                                      \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\frac{1}{\concAtm - \conc_s}\right)\doverdz{\conc_s} \\
-                  & - \sum_{j_m \neq s}\frac{1}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
-                                 \frac{1}{\diff_{s,j_m}}\doverdz{\conc_{j_m}}\Bigg]\\
-                  &\:
-                                \left[\doverd{\conc_s}{z} + \frac{\conc_s}{\sch_s} + 
-                                \frac{\conc_s}{T}\doverdz{T} + \frac{\conc_s}{T}\doverdz{T}\thermcoef_{T_s} 
-                                - \frac{\conc_s}{T}\doverdz{T}\thermcoef_{T_s}\frac{\conc_s}{\concAtm}\right] \\
-                  &\:\begin{split} 
-                        - \tilde{\diff_s}\Bigg[
-                             & \ddoverd{\conc_s}{z} 
-                                + \frac{1}{\sch_s}\doverdz{\conc_s} 
-                                - \frac{\conc_s}{\sch_s}\left[\frac{2}{\RTitan + z} + \frac{1}{T}\doverdz{T(z)}\right]  \\  
-                             &  + \doverdz{T}\doverdz{\conc_s}\frac{1}{T} 
-                                - \frac{\conc_s}{T^2}\doverdz{T}\doverdz{T} 
-                                + \frac{\conc_s}{T}\ddoverdz{T}\\
-                             &  + \thermcoef_{T_s}\doverdz{T}\doverdz{\conc_s}\frac{1}{T} 
-                                - \thermcoef_{T_s}\frac{\conc_s}{T^2}\doverdz{T}\doverdz{T} 
-                                + \thermcoef_{T_s}\frac{\conc_s}{T}\ddoverdz{T} \\
-                             &  - \thermcoef_{T_s}\frac{\conc_s}{\concAtm}\doverdz{T}\doverdz{\conc_s}\frac{1}{T} 
-                                + \thermcoef_{T_s}\frac{\conc_s}{\concAtm}\frac{\conc_s}{T^2}\doverdz{T}\doverdz{T} 
-                                - \thermcoef_{T_s}\frac{\conc_s}{\concAtm}\frac{\conc_s}{T}\ddoverdz{T} \\
-                             &  - \frac{\conc_s}{T}\doverdz{T}\frac{1}{\concAtm}\doverdz{\conc_s} 
-                                + \frac{\conc_s}{T}\doverdz{T}\frac{\conc_s}{\concAtm^2}\diverge{\conc}
-                        \Bigg] 
-                      \end{split} \\
-                  &\: + \frac{1}{2} \eddy_0  \frac{\sqrt{\concAtm(\zmin)}}{\concAtm\sqrt{\concAtm}}\diverge{\conc}
-                         \doverd{\conc_s}{z} \\
-                  &\: + \frac{1}{2} \eddy_0  \frac{\sqrt{\concAtm(\zmin)}}{\concAtm\sqrt{\concAtm}}
-                        \frac{\conc_s}{\sch_a}\diverge{\conc} \\
-                  &\: + \frac{1}{2} \eddy_0  \frac{\sqrt{\concAtm(\zmin)}}{\concAtm\sqrt{\concAtm}}
-                        \frac{\conc_s}{T}\doverd{T}{z}\diverge{\conc} \\
-                  &\: - \eddy \left[\ddoverd{\conc_s}{z} + \frac{1}{\sch_a}\doverdz{\conc_s} - \frac{\conc_s}{\sch_a^2}\doverdz{\sch_a} 
-                        + \doverdz{T}\doverdz{\conc_s}\frac{1}{T} - \frac{\conc_s}{T^2}\doverdz{T}\doverdz{T} + \frac{\conc_s}{T}\ddoverdz{T}
-\right]
-\end{split}
-\end{equation}
-\begin{equation}
-\begin{split}
-\dOverdz{\conc_s\omega_s} = & \ddoverdz{\conc_s}\left[-\tilde{\diff_s} - \eddy\right]
+\dOverdz{\conc_s\omega_s} = &\; \\
+        &\; - \left(\tilde{\diff_s} + \eddy\right) \ddoverdz{\conc_s} \\
+        &\; + \left[\frac{\tilde{\diff_s}}{\concAtm - \conc_s}
+         + \frac{\tilde{\diff_s}}{1-\frac{\conc_s}{\concAtm}\left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}
+                  \left( \frac{\Mm_s}{\mean{\Mm_{\neq s}}\left(\concAtm - \conc_s\right)} + \frac{1}{\concAtm}\right)\right]
+             \left(\doverdz{\conc_s}\right)^2\\
 \end{split}
 \end{equation}
