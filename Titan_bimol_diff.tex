@@ -109,20 +109,20 @@ Thus:
 \begin{split}
 \doverdz{\diff_s} = &\;   \frac{1}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}\divergez{\conc} 
                         - \frac{1}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}\doverdz{\conc_s} \\
-                    &\; - \sum_{j_m\neq s}\frac{\concAtm - \conc_s}{\left(\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}\right)^2}
-                                \doverdz{\conc_{j_m}}\frac{1}{\diff_{s,j_m}} 
-                        -  \sum_{j_m\neq s}\frac{\concAtm - \conc_s}{\left(\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}\right)^2} 
-                                \frac{\conc_{j_m}}{\diff_{s,j_m}^2}\doverdz{\diff_{s,j_m}}\\
+                    &\; - \sum_{k_m\neq s}\frac{\concAtm - \conc_s}{\left(\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}\right)^2}
+                                \doverdz{\conc_{k_m}}\frac{1}{\diff_{s,k_m}} 
+                        -  \sum_{k_m\neq s}\frac{\concAtm - \conc_s}{\left(\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}\right)^2} 
+                                \frac{\conc_{k_m}}{\diff_{s,k_m}^2}\doverdz{\diff_{s,k_m}}\\
                   = &\; - \frac{\diff_s}{\concAtm - \conc_s}\doverdz{\conc_s} \\
-                    &\; - \sum_{j_m\neq s}\frac{\diff_s}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
-                                \frac{1}{\diff_{s,j_m}} \doverdz{\conc_{j_m}} \\
-                    &\; +  \sum_{j_m\neq s}\frac{\diff_s}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}} 
-                                \frac{\divergez{\conc}}{\diff_{s,j_m}}\conc_{j_m} \\
+                    &\; - \sum_{k_m\neq s}\frac{\diff_s}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
+                                \frac{1}{\diff_{s,k_m}} \doverdz{\conc_{k_m}} \\
+                    &\; +  \sum_{k_m\neq s}\frac{\diff_s}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}} 
+                                \frac{\divergez{\conc}}{\diff_{s,k_m}}\conc_{k_m} \\
                     &\; + \frac{\diff_s}{\concAtm - \conc_s}\divergez{\conc} \\
 \end{split}
 \label{Titan:dDs_dz}
 \end{equation}
-with $j_m$ a medium species.
+with $j_m$ and $k_m$ medium species.
 
 The final diffusion coefficient is given by the equation~\ref{Titan:Ds-tilde}.
 \begin{equation}
@@ -157,11 +157,11 @@ with
 \begin{split}
 \frac{\tilde{\diff_s}}{\diff_s}\doverdz{\diff_s}
                   = &\; - \frac{\tilde{\diff_s}}{\concAtm - \conc_s}\doverdz{\conc_s} \\
-                    &\; - \sum_{j_m\neq s}\frac{\tilde{\diff_s}}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
-                                \frac{1}{\diff_{s,j_m}} \doverdz{\conc_{j_m}} \\
-                    &\; +  \tilde{\diff_s}\divergez{\conc} \sum_{j_m\neq s}
-                           \frac{1}{\diff_{s,j_m}\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
-                                        \conc_{j_m} \\
+                    &\; - \sum_{k_m\neq s}\frac{\tilde{\diff_s}}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
+                                \frac{1}{\diff_{s,k_m}} \doverdz{\conc_{k_m}} \\
+                    &\; +  \tilde{\diff_s}\divergez{\conc} \sum_{k_m\neq s}
+                           \frac{1}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
+                                    \frac{\conc_{k_m}}{\diff_{s,k_m}} \\
                     &\; + \frac{\tilde{\diff_s}}{\concAtm - \conc_s}\divergez{\conc} \\
 \end{split}
 \end{equation}
@@ -201,11 +201,11 @@ finally
                         \left(1 + \frac{\vectProd{\conc}{\Mm} - \conc_s\Mm_s}{\Mm_s\concAtm} + \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)
                   + \frac{\tilde{\diff_s}}{\concAtm - \conc_s}\right]
                 \doverdz{\conc_s} \\
-          & - \sum_{j_m\neq s}\frac{\tilde{\diff_s}}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
-                                \frac{1}{\diff_{s,j_m}} \doverdz{\conc_{j_m}} \\
-          & +  \tilde{\diff_s}\divergez{\conc} \sum_{j_m\neq s}
-                           \frac{1}{\diff_{s,j_m}\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
-                                        \conc_{j_m} \\
+          & - \sum_{k_m\neq s}\frac{\tilde{\diff_s}}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
+                                \frac{1}{\diff_{s,k_m}} \doverdz{\conc_{k_m}} \\
+          & +  \tilde{\diff_s}\divergez{\conc} \sum_{k_m\neq s}
+                           \frac{1}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
+                                        \frac{\conc_{k_m}}{\diff_{s,k_m}} \\
           & + \frac{\tilde{\diff_s}}{\concAtm - \conc_s}\divergez{\conc} 
             + \frac{\tilde{\diff_s}}{1-\frac{\conc_s}{\concAtm}\left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}
               \left(\left(\frac{\conc_s}{\concAtm^2} - \frac{\Mm_s}{\vectProd{\conc}{\Mm}}\right)\divergez{\conc}

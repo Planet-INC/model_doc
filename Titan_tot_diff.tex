@@ -121,86 +121,121 @@ So, using Eq.~\ref{Titan:diff_deriv_K_fac}, \ref{Titan:eddy_diff_deriv},
 \begin{equation}
 \begin{split}
 \dOverdz{\conc_s\omega_s} = & 
+%% a * d^2n_dz^2
   - \left(\tilde{\diff_s} + \eddy\right)\ddoverdz{\conc_s} \\
-& + \Bigg(- \left[
-          \frac{\tilde{\diff_s}}{1-\frac{\conc_s}{\concAtm}\left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}
+%% (b * dn_dz + c ) * dn_dz
+& + \Bigg(- \tilde{\diff_s}\left[
+          \frac{1}{1-\frac{\conc_s}{\concAtm}\left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}
                    \frac{\Mm_s}{\vectProd{\conc}{\Mm} - \conc_s\Mm_s} 
                    \left(1 + \frac{\vectProd{\conc}{\Mm} - \conc_s\Mm_s}{\Mm_s\concAtm} + \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)
-          + \frac{\tilde{\diff_s}}{\concAtm - \conc_s}
+          + \frac{1}{\concAtm - \conc_s}
     \right]
             \doverdz{\conc_s} \\
-& \qquad + \left(
-           - \eddy \left[\frac{1}{\sch_a} + \frac{1}{T}\doverdz{T}\right]
+& \qquad - \tilde{\diff_s}\left[\sum_{k_m\neq s}\frac{1}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
+                                \frac{1}{\diff_{s,k_m}} \doverdz{\conc_{k_m}}
+         + \divergez{\conc} \sum_{k_m\neq s}
+                           \frac{1}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
+                                        \frac{\conc_{k_m}}{\diff_{s,k_m}}\right] \\
+& \qquad + \frac{1}{T}\left(
+           - \eddy \left[\frac{T}{\sch_a} + \doverdz{T} + \frac{T}{2\concAtm} \divergez{\conc}\right]
            - \tilde{\diff_s}\left[
-                                   \frac{1}{\sch_s}
-                                   + \frac{1}{T}\doverdz{T}\left(1 + \thermcoef_{T_s}\right)
-                                   - 2 \frac{\thermcoef_{T_s}}{T}\doverdz{T}\frac{\conc_s}{\concAtm}
+                                   \frac{T}{\sch_s}
+                                   + \doverdz{T}\left(1 + \thermcoef_{T_s}\right)
+                                   - 2 \thermcoef_{T_s}\doverdz{T}\frac{\conc_s}{\concAtm}
                             \right]
-           - \frac{\eddy}{2\concAtm} \divergez{\conc}
     \right) \\
-& \qquad - \left(
-                    \left(
-                            \frac{1}{\sch_s}
-                            + \frac{1}{T}\doverdz{T}\left(1 + \thermcoef_{T_s}\right)
-                     \right)\conc_s 
-                    - \frac{\thermcoef_{T_s}}{T}\doverdz{T}\frac{\conc_s^2}{\concAtm}
+& \qquad - \frac{\tilde{\diff_s}}{T}\frac{\conc_s}{\concAtm - \conc_s} \left(
+                            \frac{T}{\sch_s}
+                            + \doverdz{T}\left(1 + \thermcoef_{T_s}\right)
+                    - \thermcoef_{T_s}\doverdz{T}\frac{\conc_s}{\concAtm}
              \right) \\ & \qquad\qquad
              \left[
-                    \frac{\tilde{\diff_s}}{1-\frac{\conc_s}{\concAtm}\left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}
+                    \frac{\concAtm-\conc_s}{1-\frac{\conc_s}{\concAtm}\left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}
                                 \frac{\Mm_s}{\vectProd{\conc}{\Mm} - \conc_s\Mm_s} 
                                 \left(1 + \frac{\vectProd{\conc}{\Mm} - \conc_s\Mm_s}{\Mm_s\concAtm} + \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)
-                  + \frac{\tilde{\diff_s}}{\concAtm - \conc_s}
-             \right]
-%
-\Bigg)\doverdz{\conc_s} \\
-& + \Bigg( -\eddy \left[ \frac{1}{T}\ddoverdz{T} 
-          - \frac{1}{T}\doverdz{T(z)}\left(\frac{1}{\sch_a}
-                                           + \frac{1}{T}\doverdz{T}
-                                     \right)
-           - \frac{1}{\sch_a}
-                             \left(
-                                  \frac{\divergez{\conc}}{\concAtm}
-                                - \frac{\vectprod{\vect{\Mm}}{\gradienz{\conc}}}{\mean{\Mm}\concAtm}
-                                + \frac{2}{\RTitan + z} 
-                            \right)
-           + \frac{\divergez{\conc}}{2\concAtm} \left(\frac{1}{\sch_a} + \frac{1}{T}\doverdz{T}\right)
-                 \right]  \\
-& \qquad -\tilde{\diff_s}  \left[\left(1 + \thermcoef_{T_s}\right)\frac{1}{T}\ddoverdz{T} 
-                   - \frac{1}{T}\doverdz{T(z)}
-                        \left(\frac{1}{T}\doverdz{T}\left(1 + \thermcoef_{T_s}\right)
-                              + \frac{1}{\sch_s}
-                                        \left(1 - \frac{2}{\RTitan + z}\right)
-                        \right)
-            \right] \Bigg)\conc_s \\
-  & -\tilde{\diff_s}  \left[\frac{\thermcoef_{T_s}}{T}\doverdz{T}\left(
-                \frac{\divergez{\conc}}{\concAtm}
-                + \frac{1}{T}\doverdz{T}\right)
-      - \frac{\thermcoef_{T_s}}{T}\ddoverdz{T}\right]\frac{\conc_s^2}{\concAtm}\\
-%
-%
-%
-%
-          & - 
-\left(\doverd{\conc_s}{z} + \left(\frac{1}{\sch_s} + \frac{1}{T}\doverdz{T}\left(1 + \thermcoef_{T_s}\right)\right)\conc_s
-                                - \frac{\thermcoef_{T_s}}{T}\doverdz{T}\frac{\conc_s^2}{\concAtm}\right)
-\sum_{j_m\neq s}\frac{\tilde{\diff_s}}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
-                                \frac{1}{\diff_{s,j_m}} \doverdz{\conc_{j_m}} \\
-          & +  
-\left(\doverd{\conc_s}{z} + \left(\frac{1}{\sch_s} + \frac{1}{T}\doverdz{T}\left(1 + \thermcoef_{T_s}\right)\right)\conc_s
-                                - \frac{\thermcoef_{T_s}}{T}\doverdz{T}\frac{\conc_s^2}{\concAtm}\right)
-\tilde{\diff_s}\divergez{\conc} \sum_{j_m\neq s}
-                           \frac{1}{\diff_{s,j_m}\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
-                                        \conc_{j_m} \\
-          & +
-\left(\doverd{\conc_s}{z} + \left(\frac{1}{\sch_s} + \frac{1}{T}\doverdz{T}\left(1 + \thermcoef_{T_s}\right)\right)\conc_s
-                                - \frac{\thermcoef_{T_s}}{T}\doverdz{T}\frac{\conc_s^2}{\concAtm}\right) \\ &\qquad\qquad
- \left(\frac{\tilde{\diff_s}}{\concAtm - \conc_s}\divergez{\conc} 
-            + \frac{\tilde{\diff_s}}{1-\frac{\conc_s}{\concAtm}\left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}
-              \left(\left(\frac{\conc_s}{\concAtm^2} - \frac{\Mm_s}{\vectProd{\conc}{\Mm}}\right)\divergez{\conc}
+                  + 1
+             \right] \\
+& \qquad + \tilde{\diff_s}\left(\frac{\divergez{\conc} }{\concAtm - \conc_s}
+            + \frac{1}{1-\frac{\conc_s}{\concAtm}\left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}
+              \left[\left(\frac{\conc_s}{\concAtm^2} - \frac{\Mm_s}{\vectProd{\conc}{\Mm}}\right)\divergez{\conc}
                         - \frac{\Mm_s\:\vectprod{\vect{\Mm}}{\gradienz{\conc}}}
                                {\mean{\Mm_{\neq s}}\left(\vectProd{\conc}{\Mm} - \conc_s\Mm_s\right)}
-                    \right)\right)\\
+                    \right]\right) \\
+& \qquad \Bigg)\doverdz{\conc_s} \\ &\dots
+\end{split}
+\end{equation}
+\begin{equation}
+\begin{split}
+\textcolor{white}{\dOverdz{\conc_s\omega_s} =} & \dots\\
+%% d * n^2
+& + \Bigg( -\frac{\tilde{\diff_s}}{T\concAtm}
+                \Bigg[
+                     - \thermcoef_{T_s}\ddoverdz{T}
+                     + \thermcoef_{T_s}\doverdz{T}
+                                    \Bigg(
+                                          \frac{\divergez{\conc}}{\concAtm} 
+                                          + \frac{1}{T}\doverdz{T}
+                                          - \sum_{k_m\neq s}\frac{1}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
+                                                        \frac{1}{\diff_{s,k_m}} \doverdz{\conc_{k_m}} \\
+    & \qquad\qquad\qquad                  + \divergez{\conc} 
+                                                \left( 
+                                                  \sum_{k_m\neq s}\frac{1}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
+                                                        \frac{\conc_{k_m}}{\diff_{s,k_m}} 
+                                                  + \frac{1}{\concAtm - \conc_s}
+                                                  + \frac{\frac{\conc_s}{\concAtm^2} - \frac{\Mm_s}{\vectProd{\conc}{\Mm}}}
+                                                         {1-\frac{\conc_s}{\concAtm}\left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}
+                                                \right) \\
+    & \qquad\qquad\qquad                  - \frac{1}{1-\frac{\conc_s}{\concAtm}\left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}
+                                                       \frac{\Mm_s\:\vectprod{\vect{\Mm}}{\gradienz{\conc}}}
+                                                             {\mean{\Mm_{\neq s}}\left(\vectProd{\conc}{\Mm} - \conc_s\Mm_s\right)}
+                                        \Bigg)
+                \Bigg]\\
+& \qquad\Bigg)\conc_s^2\\
+%% e * n
+& + \Bigg( - \frac{\eddy}{T} 
+          \left[ \ddoverdz{T} 
+           - \doverdz{T}\left(\frac{1}{T}\doverdz{T} + \frac{1}{\sch_a} - \frac{\divergez{\conc}}{2\concAtm}\right)
+           - \frac{T}{\sch_a\concAtm}
+                             \left(
+                                  \frac{\divergez{\conc}}{2}
+                                - \frac{\vectprod{\vect{\Mm}}{\gradienz{\conc}}}{\mean{\Mm}}
+                                + \frac{2\concAtm}{\RTitan + z} 
+                            \right)
+          \right]  \\
+& \qquad - \frac{\tilde{\diff_s}}{T}
+                \Bigg(
+                        \left(1 + \thermcoef_{T_s}\right)\ddoverdz{T} 
+                      - \frac{1}{T}\doverdz{T}\left(\doverdz{T}\left(1 + \thermcoef_{T_s}\right)
+                                         + \frac{T}{\sch_s}\left(1 - \frac{2}{\RTitan + z}\right)
+                                   \right)
+             \\
+&\qquad\qquad + \left(\frac{T}{\sch_s} + \doverdz{T}\left(1 + \thermcoef_{T_s}\right)\right)
+\Bigg[ - \sum_{k_m\neq s}\frac{1}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
+                                \frac{1}{\diff_{s,k_m}} \doverdz{\conc_{k_m}} \\
+& \qquad\qquad\qquad + \divergez{\conc}
+                 \left(\sum_{k_m\neq s}\frac{1}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}\frac{\conc_{k_m}}{\diff_{s,k_m}}
+                      + \frac{1}{\concAtm - \conc_s}
+                      + \frac{\frac{\conc_s}{\concAtm^2} - \frac{\Mm_s}{\vectProd{\conc}{\Mm}}}
+                             {1-\frac{\conc_s}{\concAtm}\left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}
+                 \right) \\
+&\qquad\qquad\qquad 
+               - \frac{1}{1-\frac{\conc_s}{\concAtm}\left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}
+                           \frac{\Mm_s\:\vectprod{\vect{\Mm}}{\gradienz{\conc}}}
+                                 {\mean{\Mm_{\neq s}}\left(\vectProd{\conc}{\Mm} - \conc_s\Mm_s\right)}
+\Bigg]
+\Bigg)\\
+& \qquad\Bigg)\conc_s
 \end{split}
 \label{Titan:diff_nw_deriv}
 \end{equation}
 \end{landscape}
+So, to summarize this beauty, let's call the coefficients \coeffderivdiff{i}{j} with
+$i$ being the order of derivation and $j$ the power, we have:
+\begin{equation}
+\dOverdz{\conc_s\omega_s} = \coeffderivdiff{2}{1} \ddoverdz{\conc_s}
+                            + \left(\coeffderivdiff{1}{2} \doverdz{\conc_s} + \coeffderivdiff{1}{1}\right)\doverdz{\conc_s}
+                            + \coeffderivdiff{0}{2} \conc_s^2
+                            + \coeffderivdiff{0}{1} \conc_s
+\label{Titan:diff_final_der}
+\end{equation}
+of course, they all depend on concentrations and temperature.
