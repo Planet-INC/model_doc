@@ -10,15 +10,14 @@ and we develop thanks to equations~\ref{Titan:diffusion} and \ref{Titan:kinetics
 \left(\doverd{\conc_s}{t}\right) & = \sum_{r\in \text{reactions}} \stoi{s,r}\rate_{r} \prod_{i\in\text{reactants}}\conc_i^{|\stoi{i,r}|} +
                                      \frac{1}{r^2}\doverd{\left(r^2\conc_s\omega_s\right)}{r} \\
                                  & = \sum_{r\in \text{reactions}} \stoi{s,r} \rate_r\prod_{i\in\text{reactants}}\conc_i^{|\stoi{i,r}|} +
-                                     \frac{1}{r^2}\doverd{\left(r^2\right)}{r} + \frac{1}{r^2}\doverd{\left(\conc_s\omega_s\right)}{r} \\
+                                     \frac{1}{r^2}\doverd{\left(r^2\right)}{r}\conc_s\omega_s + \doverd{\left(\conc_s\omega_s\right)}{r} \\
                                  & = \sum_{r\in \text{reactions}} \stoi{s,r} \rate_{r}\prod_{i\in\text{reactants}}\conc_i^{|\stoi{i,r}|} +
-                                     \frac{2}{r} + \frac{1}{r^2}\doverdz{\left(\conc_s\omega_s\right)} \\[\baselineskip]
-                                 & = \dOverdz{\frac{\conc_s\omega_s}{r^2}} 
+                                     \frac{2\conc_s\omega_s}{r} + \doverdz{\left(\conc_s\omega_s\right)} \\[\baselineskip]
+                                 & = \dOverdz{\conc_s\omega_s} 
                                         {\qquad\color{red}\leftarrow \text{contains } 
                                                 \ddoverdz{\conc}, \left(\doverdz{\conc}\right)^2, \doverdz{\conc}, \conc^2, \conc}\\
-                                 &  \quad + \frac{\conc_s\omega_s}{r} 
+                                 &  \quad + \frac{2\conc_s\omega_s}{r}
                                           + \sum_{r\in \text{reactions}} \stoi{s,r} \rate_{r}\prod_{i\in\text{reactants}}\conc_i^{|\stoi{i,r}|} 
                                         {\qquad\color{red} \leftarrow \text{contains } \doverdz{\conc}, \conc^2, \conc}\\
-                                 &  \quad + \frac{2}{r}
 \end{split}
 \end{equation}
