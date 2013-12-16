@@ -4,7 +4,7 @@ The most general model of diffusion is the model of \citet{Massman1998}, given
 in Eq.~\ref{Titan:diffusion_Massman} for the diffusion of species $s$ through
 species $m$.
 \begin{equation}
-\diff_{sm}(T,P) = \diff_s(0,1) \frac{\Pz}{P}\left(\frac{T}{\Tz}\right)^{\beta_s}
+\diff_{s,m}(T,P) = \Amas{s,m} \frac{\Pz}{P}\left(\frac{T}{\Tz}\right)^{\smas{s,m}}
 \label{Titan:diffusion_Massman}
 \end{equation}
 with \Pz\ and \Tz\ being constants (resp. $1~\unit{atm}$ and $0\unit{^\circ C}$).
@@ -20,13 +20,13 @@ with \kb\ being the Boltzmann constant.
 We have thus
 \begin{equation}
 \begin{split}
-\doverdz{\diff_{sm}} & = \diff_s(0,1) \frac{\Pz}{\kb T}\left(\frac{T}{\Tz}\right)^{\beta_s} \dOverdz{\frac{1}{\concAtm}}\\
-                     & = -\frac{\diff_{sm}}{\concAtm}\doverdz{\concAtm}
+\doverdz{\diff_{s,m}} & = \Amas{s,m} \frac{\Pz}{\kb T}\left(\frac{T}{\Tz}\right)^{\smas{s,m}} \dOverdz{\frac{1}{\concAtm}}\\
+                      & = -\frac{\diff_{s,m}}{\concAtm}\doverdz{\concAtm}
 \end{split}
 \end{equation}
 Which finally gives:
 \begin{equation}
-\doverdz{\diff_{sm}}  = -\frac{\diff_{sm}}{\concAtm}\divergez{\conc}
+\doverdz{\diff_{s,m}}  = -\frac{\diff_{s,m}}{\concAtm}\divergez{\conc}
 \label{Titan:Massman_derive}
 \end{equation}
 
@@ -35,30 +35,46 @@ Wilson (Eq.~\ref{Titan:diffusion_Wilson}) and Wakeham (Eq.~\ref{Titan:diffusion_
 Starting from \citet{WilsonPhD,Haye2005}, they refer to \citet{Massman1998,Wakeham1973}.
 The equations presented here are adjusted to obtain consistent units.
 \begin{equation}
-D_{sm} = \Awi_s \frac{1}{\concAtm}\left(\frac{T}{\Tref}\right)^{\swi_s}
+\diff_{s,m} = \Awi{s,m} \frac{1}{\concAtm}\left(\frac{T}{\Tref}\right)^{\swi{s,m}}
 \label{Titan:diffusion_Wilson}
 \end{equation}
 and
 \begin{equation}
-D_{sm} = \Awa_s\left(\frac{T}{\Tref}\right)^{\swa_s}
+\diff_{s,m} = \Awa{s,m}\left(\frac{T}{\Tref}\right)^{\swa{s,m}}
 \label{Titan:diffusion_Wakeham}
 \end{equation}
 with $\Tref = 1~\unit{K}$, measurements were performed at $\Pwa =\concwa \kb T = \numprint{1.0133}~\unit{bar}$.
 Tab.~\ref{Titan:diffusion_corres} show the correspondencies.
 \begin{table}
 \centering
-\begin{tabular}{r@{\;}ccccc}\toprule
-    &                              & Massman & Wilson & Wakeham\\\midrule
+\begin{tabular}{r@{\;}c@{}c@{}ccc}\toprule %just to fit in the page
+    &         & Massman & Wilson & Wakeham\\\midrule
+%
 \multirow{2}{*}{Massman (Eq.~\ref{Titan:diffusion_Massman})}
-& $D(0,1)$ &  /                                                              &  $\Awi\frac{\Tz^{\swi+1}}{\Tref^{\swi}}\frac{\kb}{\Pz}$  & $\Awa\frac{\Pwa}{\Pz}\left(\frac{\Tz}{\Tref}\right)^{\swa}$ \\
-& $\beta$  &  /                                                              &  $\swi + 1$                                              & \swa \\\addlinespace[12pt]
+& \Amas{i,j}  &  /      &  $\Awi{i,j}\frac{\Tz^{\swi{i,j}+1}}{\Tref^{\swi{i,j}}}\frac{\kb}{\Pz}$  
+                                 & $\Awa{i,j}\frac{\Pwa}{\Pz}\left(\frac{\Tz}{\Tref}\right)^{\swa{i,j}}$ \\
+& \smas{i,j}  &  /      &  $\swi{i,j} + 1$
+                                 & \swa{i,j} 
+%%%%
+\\\addlinespace[12pt]
+%%%%%
 \multirow{2}{*}{Wilson (Eq.~\ref{Titan:diffusion_Wilson})} 
-& \Awi     &  $D(0,1)\frac{\Pz}{\kb}\frac{\Tref^{\beta-1}}{\Tz^\beta}$       &  /                                                       & $\Awa \concwa$ \\
-& \swi     &  $\beta - 1$                                                    &  /                                                       & \swa \\\addlinespace[12pt]
+& \Awi{i,j}   &  $\Amas{i,j}\frac{\Pz}{\kb}\frac{\Tref^{\smas{i,j}-1}}{\Tz^\smas{i,j}}$
+                           &  /  & $\Awa{i,j} \concwa$ \\
+& \swi{i,j}   &  $\smas{i,j} - 1$
+                        &  /     & \swa{i,j} 
+%%%
+\\\addlinespace[12pt]
+%%%%
 \multirow{2}{*}{Wakeham (Eq.~\ref{Titan:diffusion_Wakeham})}
-& \Awa     &  $D(0,1)\frac{\Pz}{\Pwa}\left(\frac{\Tref}{\Tz}\right)^{\beta}$ & $\Awi\frac{1}{\concAtm}$                                 & / \\
-& \swa     &  $\beta$                                                        & \swi                                                     & / \\
-\bottomrule
+& \Awa{i,j}   &  $\Amas{i,j}\frac{\Pz}{\Pwa}\left(\frac{\Tref}{\Tz}\right)^{\smas{i,j}}$ 
+                        & $\Awi{i,j}\frac{1}{\concAtm}$   
+                                 & / \\
+& \swa{i,j}   &  \smas{i,j}
+                        & \swi{i,j}
+                                 & / 
+%%%
+\\\bottomrule
 \end{tabular}
 \caption{\label{Titan:diffusion_corres}Correspondancies between the different diffusion models.}
 \end{table}
@@ -68,27 +84,40 @@ Tab.~\ref{Titan:diffusion_corres} show the correspondencies.
 In the case of no data, we use the relations~\ref{Titan:Diff_no_data}
 \begin{equation}
 \renewcommand{\arraystretch}{2}
-\diff_{sm}(T,P) =
+\diff_{s,m}(T,P) =
 \left\{\begin{array}{l@{\quad}r}
-\diff_{mm}(T,P)\sqrt{\frac{\frac{\Mm_s}{\Mm_m} + 1}{2}} & \text{if }\Mm_s < \Mm_m    \\
-\diff_{mm}(T,P)\sqrt{\frac{\Mm_s}{\Mm_m}}               & \text{if }\Mm_s \geq \Mm_m \\
+\diff_{m,m}(T,P)\sqrt{\frac{\frac{\Mm_s}{\Mm_m} + 1}{2}} & \text{if }\Mm_s < \Mm_m    \\
+\diff_{m,m}(T,P)\sqrt{\frac{\Mm_s}{\Mm_m}}               & \text{if }\Mm_s \geq \Mm_m \\
 \end{array}\right.
 \label{Titan:Diff_no_data}
+\end{equation}
+We can so say:
+\begin{equation}
+\begin{split}
+\renewcommand{\arraystretch}{2}
+&\smas{s,m} = \smas{m,m} \\
+&\Amas{s,m} =
+\left\{\begin{array}{l@{\quad}r}
+\Amas{m,m}\sqrt{\frac{\frac{\Mm_s}{\Mm_m} + 1}{2}} & \text{if }\Mm_s < \Mm_m    \\
+\Amas{m,m}\sqrt{\frac{\Mm_s}{\Mm_m}}                    & \text{if }\Mm_s \geq \Mm_m \\
+\end{array}\right.
+\end{split}
+\label{Titan:Diff_no_data_to_Massman}
 \end{equation}
 Thus, we obtain for the derivative with respect to altitude:
 \begin{equation}
 \begin{split}
 \renewcommand{\arraystretch}{2}
-\dOverdz{\diff_{sm}} & =
+\dOverdz{\diff_{s,m}} & =
 \left\{\begin{array}{l@{\quad}r}
-\doverdz{\diff_{mm}}\sqrt{\frac{\frac{\Mm_s}{\Mm_m} + 1}{2}}  & \text{if } \Mm_s < \Mm_m    \\
-\doverdz{\diff_{mm}}\sqrt{\frac{\Mm_s}{\Mm_m}}                & \text{if } \Mm_s \geq \Mm_m \\
+\doverdz{\diff_{m,m}}\sqrt{\frac{\frac{\Mm_s}{\Mm_m} + 1}{2}}  & \text{if } \Mm_s < \Mm_m    \\
+\doverdz{\diff_{m,m}}\sqrt{\frac{\Mm_s}{\Mm_m}}                & \text{if } \Mm_s \geq \Mm_m \\
 \end{array}\right. 
 \\\\
-\dOverdz{\diff_{sm}} & =
+\dOverdz{\diff_{s,m}} & =
 \left\{\begin{array}{l@{\quad}r}
--\diff_{mm}\frac{1}{\concAtm}\sqrt{\frac{\frac{\Mm_s}{\Mm_m} + 1}{2}}\divergez{\conc}  & \text{if } \Mm_s < \Mm_m    \\
--\diff_{mm}\frac{1}{\concAtm}\sqrt{\frac{\Mm_s}{\Mm_m}}\divergez{\conc}                & \text{if } \Mm_s \geq \Mm_m \\
+-\diff_{m,m}\frac{1}{\concAtm}\sqrt{\frac{\frac{\Mm_s}{\Mm_m} + 1}{2}}\divergez{\conc}  & \text{if } \Mm_s < \Mm_m    \\
+-\diff_{m,m}\frac{1}{\concAtm}\sqrt{\frac{\Mm_s}{\Mm_m}}\divergez{\conc}                & \text{if } \Mm_s \geq \Mm_m \\
 \end{array}\right. 
 \end{split}
 \label{Titan:diffusion_no_data_derive}

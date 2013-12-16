@@ -3,21 +3,21 @@
 %%% misc
 \newcommand{\mytilde}{\raisebox{-0.3\baselineskip}{\~{}}}
 %%% math
-\newcommand{\doverd}  [2]{\ensuremath{\frac{\partial#1}{\partial#2}}}
-\newcommand{\ddoverd} [2]{\ensuremath{\frac{\partial^2#1}{\partial{#2}^2}}}
-\newcommand{\dOverd}  [2]{\doverd{\left(#1\right)}{#2}}
-\newcommand{\doverdz} [1]{\doverd{#1}{z}}
-\newcommand{\ddoverdz}[1]{\ddoverd{#1}{z}}
-\newcommand{\dOverdz} [1]{\dOverd{#1}{z}}
-\newcommand{\vect}    [1]{\ensuremath{\overrightarrow{#1}}}
-\newcommand{\diverge} [1]{\ensuremath{\vect{\nabla}\cdot\vect{#1}}}
-\newcommand{\divergex}[2]{\ensuremath{\partial_{#1}{\vect{#2}}}}
-\newcommand{\divergez}[1]{\divergex{z}{#1}}
-\newcommand{\gradien} [2]{\ensuremath{\text{grad}_{#1}\vect{#2}}}
-\newcommand{\gradienz}[1]{\gradien{z}{#1}}
-\newcommand{\vectProd}[2]{\ensuremath{\vect{#1}\cdot\vect{#2}}}
-\newcommand{\vectprod}[2]{\ensuremath{#1\cdot#2}}
-\newcommand{\coeffderiv}[3]{\ensuremath{a^{(#1)}_{#2#3}}}
+\newcommand{\doverd}        [2]{\ensuremath{\frac{\partial#1}{\partial#2}}}
+\newcommand{\ddoverd}       [2]{\ensuremath{\frac{\partial^2#1}{\partial{#2}^2}}}
+\newcommand{\dOverd}        [2]{\doverd{\left(#1\right)}{#2}}
+\newcommand{\doverdz}       [1]{\doverd{#1}{z}}
+\newcommand{\ddoverdz}      [1]{\ddoverd{#1}{z}}
+\newcommand{\dOverdz}       [1]{\dOverd{#1}{z}}
+\newcommand{\vect}          [1]{\ensuremath{\overrightarrow{#1}}}
+\newcommand{\diverge}       [1]{\ensuremath{\vect{\nabla}\cdot\vect{#1}}}
+\newcommand{\divergex}      [2]{\ensuremath{\partial_{#1}{\vect{#2}}}}
+\newcommand{\divergez}      [1]{\divergex{z}{#1}}
+\newcommand{\gradien}       [2]{\ensuremath{\text{grad}_{#1}\vect{#2}}}
+\newcommand{\gradienz}      [1]{\gradien{z}{#1}}
+\newcommand{\vectProd}      [2]{\ensuremath{\vect{#1}\cdot\vect{#2}}}
+\newcommand{\vectprod}      [2]{\ensuremath{#1\cdot#2}}
+\newcommand{\coeffderiv}    [3]{\ensuremath{a^{(#1)}_{#2#3}}}
 \newcommand{\coeffderivdiff}[2]{\coeffderiv{\conc_s\omega_s}{#1}{#2}}
 %%% global
 \newcommand{\h}        {\ensuremath{\mathrm{h}}}
@@ -41,28 +41,30 @@
 \newcommand{\dSS}      {\ensuremath{\text{d}_\text{Sun-Saturn}}}
 \newcommand{\cs}       {\ensuremath{\sigma}}
 %%%%% chemistry
-\newcommand{\conc}     {\ensuremath{n}}
-\newcommand{\concAtm}  {\ensuremath{n_\text{total}}}
-\newcommand{\mass}     {\ensuremath{m}}
-\newcommand{\Mm}       {\ensuremath{\text{M}}}
-\newcommand{\zmin}     {\ensuremath{z_\text{min}}}
-\newcommand{\mean}[1]  {\ensuremath{\langle#1\rangle}}
-\newcommand{\unit}[1]  {\ensuremath{\mathtt{#1}}}
-\newcommand{\nounit}   {\unit{no\ unit}}
+\newcommand{\conc}   {\ensuremath{n}}
+\newcommand{\concAtm}{\ensuremath{n_\text{total}}}
+\newcommand{\mass}   {\ensuremath{m}}
+\newcommand{\Mm}     {\ensuremath{\text{M}}}
+\newcommand{\zmin}   {\ensuremath{z_\text{min}}}
+\newcommand{\mean}[1]{\ensuremath{\langle#1\rangle}}
+\newcommand{\unit}[1]{\ensuremath{\mathtt{#1}}}
+\newcommand{\nounit} {\unit{no\ unit}}
 %% diffusion
-\newcommand{\diff}  {\ensuremath{D}}
-\newcommand{\eddy}  {\ensuremath{K}}
-\newcommand{\Tz}    {\ensuremath{\mathrm{T_0}}}
-\newcommand{\Pz}    {\ensuremath{\mathrm{P_0}}}
+\newcommand{\diff}    {\ensuremath{D}}
+\newcommand{\eddy}    {\ensuremath{K}}
+\newcommand{\Tz}      {\ensuremath{\mathrm{T_0}}}
+\newcommand{\Pz}      {\ensuremath{\mathrm{P_0}}}
+\newcommand{\Amas} [1]{\ensuremath{\diff_{#1}(0,1)}}
+\newcommand{\smas} [1]{\ensuremath{\beta_{#1}}}
 \newcommand{\diff@}[2]{\ensuremath{#1^\text{(#2)}}}
-\newcommand{\Pwa}   {\diff@{\mathrm{P}}{wa}}
-\newcommand{\Awa}   {\diff@{A}{wa}}
-\newcommand{\swa}   {\diff@{\beta}{wa}}
-\newcommand{\concwa}{\diff@{\conc}{wa}}
-\newcommand{\Awi}   {\diff@{A}{wi}}
-\newcommand{\swi}   {\diff@{\beta}{wi}}
+\newcommand{\Pwa}     {\diff@{\mathrm{P}}{wa}}
+\newcommand{\Awa}  [1]{\diff@{A_{#1}}{wa}}
+\newcommand{\swa}  [1]{\diff@{\beta_{#1}}{wa}}
+\newcommand{\concwa}  {\diff@{\conc}{wa}}
+\newcommand{\Awi}  [1]{\diff@{A_{#1}}{wi}}
+\newcommand{\swi}  [1]{\diff@{\beta_{#1}}{wi}}
 %% molecules
-\newcommand{\thermcoef}{\ensuremath{\alpha}}
+\newcommand{\thermcoef}   {\ensuremath{\alpha}}
 \newcommand{\conductivity}{\ensuremath{\kappa}}
 \newcommand{\viscosity}   {\ensuremath{\nu}}
 \newcommand{\visC}        {\ensuremath{C}}
@@ -78,7 +80,7 @@
 \newcommand{\actEn}   {\ensuremath{E_a}}
 \newcommand{\Runi}    {\ensuremath{\mathrm{R}}}
 \newcommand{\order}[1]{\ensuremath{{m_{#1}}}}
-\newcommand{\stoi}[1] {\ensuremath{{\nu_{#1}}}}
+\newcommand{\stoi} [1]{\ensuremath{{\nu_{#1}}}}
 \newcommand{\rate}    {\ensuremath{k}}
 %% libraries
 \newcommand{\Antioch}{\texttt{Antioch}}

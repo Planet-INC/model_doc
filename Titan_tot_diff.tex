@@ -131,11 +131,9 @@ So, using Eq.~\ref{Titan:diff_deriv_K_fac}, \ref{Titan:eddy_diff_deriv},
           + \frac{1}{\concAtm - \conc_s}
     \right]
             \doverdz{\conc_s} \\
-& \qquad - \tilde{\diff_s}\left[\sum_{k_m\neq s}\frac{1}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
-                                \frac{1}{\diff_{s,k_m}} \doverdz{\conc_{k_m}}
-         + \divergez{\conc} \sum_{k_m\neq s}
-                           \frac{1}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
-                                        \frac{\conc_{k_m}}{\diff_{s,k_m}}\right] \\
+& \qquad - \frac{\tilde{\diff_s}}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
+                \sum_{k_m\neq s}
+                                \frac{\doverdz{\conc_{k_m}} + \conc_{k_m}\divergez{\conc}}{\diff_{s,k_m}} \\
 & \qquad + \frac{1}{T}\left(
            - \eddy \left[\frac{T}{\sch_a} + \doverdz{T} + \frac{T}{2\concAtm} \divergez{\conc}\right]
            - \tilde{\diff_s}\left[
