@@ -2,6 +2,10 @@
 \makeatletter
 %%% misc
 \newcommand{\mytilde}{\raisebox{-0.3\baselineskip}{\~{}}}
+\newlength{\fakespace}
+\newcommand{\fakeequalspace}{%
+\settowidth{\fakespace}{= }%
+\hspace{\fakespace}}
 %%% math
 \newcommand{\doverd}        [2]{\ensuremath{\frac{\partial#1}{\partial#2}}}
 \newcommand{\ddoverd}       [2]{\ensuremath{\frac{\partial^2#1}{\partial{#2}^2}}}
@@ -41,14 +45,15 @@
 \newcommand{\dSS}      {\ensuremath{\text{d}_\text{Sun-Saturn}}}
 \newcommand{\cs}       {\ensuremath{\sigma}}
 %%%%% chemistry
-\newcommand{\conc}   {\ensuremath{n}}
-\newcommand{\concAtm}{\ensuremath{n_\text{total}}}
-\newcommand{\mass}   {\ensuremath{m}}
-\newcommand{\Mm}     {\ensuremath{\text{M}}}
-\newcommand{\zmin}   {\ensuremath{z_\text{min}}}
-\newcommand{\mean}[1]{\ensuremath{\langle#1\rangle}}
-\newcommand{\unit}[1]{\ensuremath{\mathtt{#1}}}
-\newcommand{\nounit} {\unit{no\ unit}}
+\newcommand{\conc}    {\ensuremath{n}}
+\newcommand{\concAtm} {\ensuremath{n_\text{total}}}
+\newcommand{\mass}    {\ensuremath{m}}
+\newcommand{\Mm}      {\ensuremath{\text{M}}}
+%%%%
+\newcommand{\zmin}    {\ensuremath{z_\text{min}}}
+\newcommand{\mean} [1]{\ensuremath{\langle#1\rangle}}
+\newcommand{\unit} [1]{\ensuremath{\mathtt{#1}}}
+\newcommand{\nounit}  {\unit{no\ unit}}
 %% diffusion
 \newcommand{\diff}    {\ensuremath{D}}
 \newcommand{\eddy}    {\ensuremath{K}}
@@ -82,9 +87,22 @@
 \newcommand{\order}[1]{\ensuremath{{m_{#1}}}}
 \newcommand{\stoi} [1]{\ensuremath{{\nu_{#1}}}}
 \newcommand{\rate}    {\ensuremath{k}}
+%%%% solving
+\newcommand{\omegadot}   {\ensuremath{\dot{\conc}^{(\chi)}}}
+\newcommand{\Rbot}       {\ensuremath{\mathrm{r_{\text{bottom}}}}}
+\newcommand{\Rtop}       {\ensuremath{\mathrm{r_{\text{top}}}}}
+\newcommand{\Nd}         {\ensuremath{\mathrm{N_d}}}
+\newcommand{\coefconc}[1]{\ensuremath{\mathtt{\conc}_{#1}}}
+\newcommand{\coefv}   [1]{\ensuremath{\mathtt{c}_{#1}}}
 %% libraries
-\newcommand{\Antioch}{\texttt{Antioch}}
-\newcommand{\GitAntioch}{\href{https://github.com/libantioch/antioch}{\Antioch\ on Github}}
+\newcommand{\@library}[1]{\texttt{#1}}
+\newcommand{\lib@git} [3]{\href{https://github.com/#1/#2}{#3}}
+%%
+\newcommand{\Antioch}   {\@library{Antioch}}
+\newcommand{\grins}     {\@library{GRINS}}
+\newcommand{\GitAntioch}{\lib@git{libantioch}{antioch}{\Antioch\ on Github}}
+\newcommand{\GitGrins}  {\lib@git{grinsfem}{grins}{\grins\ on Github}}
+%%% files
 \newcommand{\file}[1]{\textsf{#1}}
 \newcommand{\planetConstantsHeader}         {\file{\mytilde/planet/src/utilities/include/planet/planet\_constants.h}}
 \newcommand{\antiochMathConstantsHeader}    {\file{\mytilde/antioch/src/utilities/include/planet/math\_constants.h}}

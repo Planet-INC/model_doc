@@ -2,8 +2,8 @@
 \usepackage{tikz,geometry}
 \usetikzlibrary{trees,backgrounds,calc,fit}
 \geometry{
-paperwidth=28cm,paperheight=10.5cm,
-left=0pt,right=0pt,top=1pt,bottom=0pt}
+paperwidth=28cm,paperheight=13.5cm,
+left=0pt,right=0pt,top=3pt,bottom=0pt}
 \begin{document}
 \centering
 \tikzset{
@@ -11,11 +11,11 @@ limit/.style={ultra thick, loosely dashed, gray!50},
 round/.style={rounded corners=5mm,red}
 }
 \begin{tikzpicture}[every node/.append style={anchor=base}]%,fill=white,opacity=0.8}]
-\node (atm) at (0,0) {Atmosphere} [grow'=up]
-        child[sibling distance=3.5cm] {
+\node (PPH) at (0,0) {PlanetPhysicsHelper} [grow'=up]
+        child[sibling distance=4cm] {
+                        node (omegadot) {$\dot{n}(z)$} edge from parent[stealth-] 
                 child {
-                node (kin) {kinetics} [sibling distance=3.2cm]
-                        child {
+                node (kin) {kinetics} [sibling distance=3.2cm] edge from parent[-] 
                         child {
                                  node (neukineval) {kinetics evaluator}
                                          child {
@@ -34,25 +34,22 @@ round/.style={rounded corners=5mm,red}
                                                               }
                                                }
                               }
-                              }
+                     }
               }
-              }
-        child[sibling distance = 3cm] {
+        child[sibling distance = 3cm,draw=white] {
                 child {
                 child {
                 node (hvfeval) {Photon evaluator}
-                           child {
-                           child {
+                           child [draw=black]{
                              node (hvtau) {photon opacity}
                                 child {
-                                         node {Chapman}
+                                         node (chap){Chapman}
                                       }
-                                 }
-                                 }
+                                             }
                      }
                      }
-              }
-        child[sibling distance=3cm] 
+              } 
+        child[sibling distance=3.5cm,draw=white] 
               {
                 child{
                 child{
@@ -60,7 +57,7 @@ round/.style={rounded corners=5mm,red}
                 }
                 }
               }
-        child[sibling distance=1cm] { 
+        child[sibling distance=3cm,draw=white] { 
                 child { 
                 child { 
                 child { 
@@ -71,29 +68,15 @@ round/.style={rounded corners=5mm,red}
                       }
                       }
                }
-        child[sibling distance=3cm] { 
-                child { 
-                child { 
-                child { 
-                        child { 
-                                 child[level distance=1.6cm] {
-                                   node (alt) {altitude}
-                                  }
-                        }
-                 }
-                 }
-                 }
-              }
-        child[sibling distance=5cm] {
+        child[sibling distance=4cm]{
+                        node (omega) {$\omega(z)$}edge from parent[stealth-] 
           child {
-                node (diff) {diffusion}
+                node (diff) {diffusion}edge from parent[-] 
                  [sibling distance=3cm]
                   child {
                            node (moldiff) {molecular diffusion} child {
                                                                 child {
-                                                                child {
                                                                 node (bindiff) {binary diffusion}
-                                                                      }
                                                                       }
                                                                       }
                         }
@@ -105,31 +88,27 @@ round/.style={rounded corners=5mm,red}
 ;
 \coordinate (gauche) at (current bounding box.west);
 \coordinate (droite) at (current bounding box.east);
-\coordinate (l1)     at ($(alt)!0.5!(hvtau)$);
-\coordinate (l2)     at ($(temp)!0.5!(atmmix)$);
-\coordinate (l3)     at ($(atmmix)!0.5!(hvfeval)$);
-\coordinate (l4)     at ($(hvfeval)!0.5!(diff)$);
-\coordinate (l5)     at ($(diff)!0.5!(atm)$);
-\begin{pgfonlayer}{background}
-\node[fit= (neucomp) (ioncomp) (neukineval) (ionkineval),rounded corners=1cm,inner sep=5pt,fill=gray!30] {};
-\draw[round] (alt) -| (temp);
-\draw[round] (alt) |- (atmmix);
-\draw[round] (alt) |- (hvfeval);
-\draw[round] (alt) -- ($(alt)!0.4!(alt -| bindiff)$) -- ++(0,-2.5) -| (moldiff);
-\draw[round] (alt) -- ($(alt)!0.6!(alt -| bindiff)$) -- ++(0,-2) -| (diff.north);
-\draw[round] (alt) -- ($(alt)!0.8!(alt -| bindiff)$) -- ++(0,-1.5) -| (eddy);
+\coordinate (l1)     at ($(ioncomp.south)!0.5!(ionreac.north)$);
+\coordinate (l2)     at ($(ionreac.south)!0.5!(ionkineval.north)$);
+\coordinate (l3)     at ($(ionkineval.south)!0.5!(kin.north)$);
 \draw[round] (temp) -| (atmmix);
 \draw[round] (temp) |- (moldiff);
 \draw[round] (temp) |- (diff);
-\draw[round] (atmmix) -| (hvfeval);
+\draw[round] (atmmix) |- (hvfeval);
 \draw[round] (atmmix) -| (moldiff);
 \draw[round] (atmmix) -| (eddy);
 \draw[round] (atmmix) |- (diff);
-\draw[round] (ioncomp) -- ($(ioncomp.south)!0.5!(ionreac.north)$) -| (atmmix);
-\draw[round] (neucomp) |- ($(neucomp.south east)!0.5!(ionreac.north west)$) |- ($(ionreac.south)!0.5!(ionkineval.north)$) -| (atmmix);
+\draw[round] (ioncomp) |- ($(chap.south)!0.3!(hvtau.north)$) -| (atmmix);
+\draw[round] (neucomp) |- ($(chap.south)!0.5!(hvtau.north)$) -| (atmmix);
 \draw[round] (hvfeval) |- (kin);
-\foreach \level in {1,...,5}
+\begin{pgfonlayer}{background}
+\node[fit= (neucomp) (ioncomp) (neukineval) (ionkineval),rounded corners=1cm,inner sep=5pt,fill=gray!30] {\null};
+\foreach \level in {1,...,3}
   \draw[limit] ( gauche |- l\level)  -- (l\level -| droite);
 \end{pgfonlayer}
+\node (PP) at ([yshift=-2cm]PPH.south)   {PlanetPhysics};
+\node (grins) at ([yshift=-2cm]PP.south) {GRINS};
+\draw[stealth-stealth] (PPH) -- (PP);
+\draw[-stealth] (grins) -- (PP)node[pos=0.5,fill=white]{$z$};
 \end{tikzpicture}
 \end{document}
