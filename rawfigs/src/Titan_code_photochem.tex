@@ -1,0 +1,76 @@
+\documentclass{article}
+\usepackage{tikz,geometry}
+\usetikzlibrary{backgrounds,calc,fit}
+\geometry{
+paperwidth=3cm,paperheight=4cm,
+left=0pt,right=0pt,top=3pt,bottom=0pt}
+\newcommand{\kinetics}{\ensuremath{\left(\frac{\partial n_s}{\partial \mathrm{t}}\right)_{\chi}}}
+\begin{document}
+\centering
+\tikzset{
+limit/.style={ultra thick, loosely dashed, gray!50},
+round/.style={rounded corners=5mm,red},
+partof/.style={-},
+gives/.style={-stealth},
+isneeded/.style={-stealth,dashed},
+notconsidered/.style={opacity=0.2}
+}
+\begin{tikzpicture}[x=3.5cm,y=1.5cm,every node/.append style={anchor=base}]
+\path (0,-2)   node[notconsidered] (grins)      {GRINS}
+      (0,0)    node[notconsidered] (PP)         {PlanetPhysics}
+      (0,2)    node[notconsidered] (PPH)        {PlanetPhysicsHelper} 
+      (-2.5,3) node[notconsidered] (omegadot)   {\kinetics}
+      (-2.5,4) node[notconsidered] (kin)        {kinetics}
+      (-3,5)   node[notconsidered] (neukineval) {kinetics evaluator}
+      (-3,6)   node[notconsidered] (neureac)    {reaction set}
+      (-3,7)   node[notconsidered] (neucomp)    {neutral composition}
+      (-2,5)   node[notconsidered] (ionkineval) {kinetics evaluator}
+      (-2,6)   node[notconsidered] (ionreac)    {reaction set}
+      (-2,7)   node[notconsidered] (ioncomp)    {ionic composition}
+      (-1,5)   node (hvfeval)    {photon evaluator}
+      (-1,6)   node (hvtau)      {photon opacity}
+      (-1,7)   node (chap)       {Chapman}
+      (0,6)    node[notconsidered] (atmmix)     {atmospheric mixture}
+      (1,7)    node[notconsidered] (temp)       {temperature}
+      (2.5,3)  node[notconsidered] (omega)      {$\omega_s$}
+      (2.5,4)  node[notconsidered] (diff)       {diffusion}
+      (2,5)    node[notconsidered] (moldiff)    {molecular diffusion}
+      (2,7)    node[notconsidered] (bindiff)    {binary diffusion}
+      (3,5)    node[notconsidered] (eddy)       {eddy diffusion};
+\draw[partof,notconsidered] (neucomp) -- (neureac) -- (neukineval) -- (kin)
+              (ioncomp) -- (ionreac) -- (ionkineval) -- (kin)
+                          (bindiff) -- (moldiff)    -- (diff)
+                                       (eddy)       -- (diff);
+\draw[partof] (chap)    -- (hvtau)   -- (hvfeval);
+\draw[gives,notconsidered] (kin)  -- (omegadot);
+\draw[gives,notconsidered] (diff) -- (omega);
+\draw[notconsidered]        (omegadot) -- (PPH);
+\draw[notconsidered]        (omega) -- (PPH);
+\draw[round,notconsidered] (temp)    -| (atmmix);
+\draw[round,notconsidered] (temp)    |- (moldiff);
+\draw[round,notconsidered] (temp)    |- (diff);
+\draw[round,notconsidered] (atmmix)  |- (hvfeval);
+\draw[round,notconsidered] (atmmix)  -| (moldiff);
+\draw[round,notconsidered] (atmmix)  -| (eddy);
+\draw[round,notconsidered] (atmmix)  |- (diff);
+\draw[round,notconsidered] (ioncomp) |- ($(chap.south)!0.5!(hvtau.north)$) -| (atmmix);
+\draw[round,notconsidered] (neucomp) |- ($(chap.south)!0.5!(hvtau.north)$) -| (atmmix);
+\draw[round,notconsidered] (hvfeval) |- (kin);
+
+\begin{pgfonlayer}{background}
+\node[notconsidered,fit= (neucomp) (ioncomp) (neukineval) (ionkineval),rounded corners=1cm,inner sep=5pt,fill=gray!30] {\null};
+\draw[limit,notconsidered] (-1.5,7) -- ++(0,-4)
+             (-0.5,7) -- ++(0,-4)
+             (0.5,7)  -- ++(0,-4)
+             (1.5,7)  -- ++(0,-4);
+\draw[isneeded,notconsidered] (hvfeval) -- (neureac);
+\draw[isneeded,notconsidered] (hvfeval) -- (ionreac);
+\end{pgfonlayer}
+
+\draw[stealth-stealth,notconsidered] (PPH) -- (PP)node[pos=0.5,fill=white]{$z$, $\{n_s\}$, $\{z_i\}$, $\{\{n_s\}_i\}$};
+\draw[-stealth,notconsidered] (grins) -- (PP)node[pos=0.5,fill=white]{$\frac{\partial n_s}{\partial \mathrm{t}} = \kinetics + \frac{1}{r^2}\frac{\partial\left(r^2n_s\omega_s\right)}{\partial r}$};
+\pgfresetboundingbox
+\useasboundingbox (hvfeval.south west) -- (hvfeval.south east) |- (chap.north west) -| (hvfeval.south west);
+\end{tikzpicture}%
+-------
+\end{document}

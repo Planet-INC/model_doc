@@ -7,9 +7,15 @@
 \settowidth{\fakespace}{= }%
 \hspace{\fakespace}}
 %%% from report.cls, adapated
+\newcommand{\makegraph}{\relax}%
+\newcommand{\nomakegraph}{{\renewcommand{\makegraph}{\relax}}}%
+\newcommand{\make@graph}[1]{\makebox[0pt][r]{\raisebox{-1in}[0pt][0pt]{\includegraphics[width=0.9in]{#1}\rule{1ex}{0pt}}}}%}
+\renewcommand{\thesection}{\protect\makegraph\arabic{chapter}.\arabic{section}}
+\renewcommand{\thesubsection}{\arabic{chapter}.\arabic{section}.\arabic{subsection}}
 \renewcommand\section[1][\relax]{\ifx#1\relax%
+                                  \nomakegraph%
                                  \else%
-                                  \noindent{\includegraphics[bb=2.8in 2in 5in 4.2in,width=0.9in]{#1}}
+                                  \renewcommand{\makegraph}{\make@graph{#1}}
                                  \fi%
                                  \@startsection {section}{1}{\z@}%
                                  {-3.5ex \@plus -1ex \@minus -.2ex}%
