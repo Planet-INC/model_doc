@@ -1,0 +1,74 @@
+\documentclass{article}
+\usepackage{tikz,geometry}
+\usetikzlibrary{backgrounds,calc,fit}
+\geometry{
+paperwidth=7cm,paperheight=4cm,
+left=0pt,right=0pt,top=3pt,bottom=0pt}
+\newcommand{\kinetics}{\ensuremath{\left(\frac{\partial n_s}{\partial \mathrm{t}}\right)_{\chi}}}
+\begin{document}
+\centering
+\tikzset{
+limit/.style={ultra thick, loosely dashed, gray!50},
+round/.style={rounded corners=5mm,red},
+partof/.style={-},
+gives/.style={-stealth},
+isneeded/.style={-stealth,dashed}
+}
+\begin{tikzpicture}[x=3.5cm,y=1.5cm,every node/.append style={anchor=base}]
+\path %(0,-2)   node (grins)      {GRINS}
+     % (0,0)    node (PP)         {PlanetPhysics}
+     % (0,2)    node (PPH)        {PlanetPhysicsHelper} 
+     % (-2.5,3) node (omegadot)   {\kinetics}
+     % (-2.5,4) node (kin)        {kinetics}
+      (-3,5)   node (neukineval) {kinetics evaluator}
+      (-3,6)   node (neureac)    {reaction set}
+      (-3,7)   node (neucomp)    {neutral composition}
+      (-2,5)   node (ionkineval) {kinetics evaluator}
+      (-2,6)   node (ionreac)    {reaction set}
+      (-2,7)   node (ioncomp)    {ionic composition}
+     % (-1,5)   node (hvfeval)    {photon evaluator}
+     % (-1,6)   node (hvtau)      {photon opacity}
+     % (-1,7)   node (chap)       {Chapman}
+     % (0,6)    node (atmmix)     {atmospheric mixture}
+     % (1,7)    node (temp)       {temperature}
+     % (2.5,3)  node (omega)      {$\omega_s$}
+     % (2.5,4)  node (diff)       {diffusion}
+     % (2,5)    node (moldiff)    {molecular diffusion}
+     % (2,7)    node (bindiff)    {binary diffusion}
+     % (3,5)    node (eddy)       {eddy diffusion};
+;
+\draw[partof] (neucomp) -- (neureac) -- (neukineval)%-- (kin)
+              (ioncomp) -- (ionreac) -- (ionkineval)%-- (kin)
+            % (chap)    -- (hvtau)   -- (hvfeval)
+            %              (bindiff) -- (moldiff)    -- (diff)
+            %                           (eddy)       -- (diff);
+;
+%\draw[gives] (kin)  -- (omegadot);
+%\draw[gives] (diff) -- (omega);
+%\draw        (omegadot) -- (PPH);
+%\draw        (omega) -- (PPH);
+%\draw[round] (temp)    -| (atmmix);
+%\draw[round] (temp)    |- (moldiff);
+%\draw[round] (temp)    |- (diff);
+%\draw[round] (atmmix)  |- (hvfeval);
+%\draw[round] (atmmix)  -| (moldiff);
+%\draw[round] (atmmix)  -| (eddy);
+%\draw[round] (atmmix)  |- (diff);
+%\draw[round] (ioncomp) |- ($(chap.south)!0.5!(hvtau.north)$) -| (atmmix);
+%\draw[round] (neucomp) |- ($(chap.south)!0.5!(hvtau.north)$) -| (atmmix);
+%\draw[round] (hvfeval) |- (kin);
+
+\begin{pgfonlayer}{background}
+\node[fit= (neucomp) (ioncomp) (neukineval) (ionkineval),rounded corners=1cm,inner sep=5pt,fill=gray!30] {\null};
+%\draw[limit] (-1.5,7) -- ++(0,-4)
+%             (-0.5,7) -- ++(0,-4)
+%             (0.5,7)  -- ++(0,-4)
+%             (1.5,7)  -- ++(0,-4);
+%\draw[isneeded] (hvfeval) -- (neureac);
+%\draw[isneeded] (hvfeval) -- (ionreac);
+\end{pgfonlayer}
+
+%\draw[stealth-stealth] (PPH) -- (PP)node[pos=0.5,fill=white]{$z$, $\{n_s\}$, $\{z_i\}$, $\{\{n_s\}_i\}$};
+%\draw[-stealth] (grins) -- (PP)node[pos=0.5,fill=white]{$\frac{\partial n_s}{\partial \mathrm{t}} = \kinetics + \frac{1}{r^2}\frac{\partial\left(r^2n_s\omega_s\right)}{\partial r}$};
+\end{tikzpicture}
+\end{document}

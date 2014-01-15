@@ -6,6 +6,18 @@
 \newcommand{\fakeequalspace}{%
 \settowidth{\fakespace}{= }%
 \hspace{\fakespace}}
+%%% from report.cls, adapated
+\renewcommand\section[1][\relax]{\ifx#1\relax%
+                                 \else%
+                                  \noindent{\includegraphics[bb=2.8in 2in 5in 4.2in,width=0.9in]{#1}}
+                                 \fi%
+                                 \@startsection {section}{1}{\z@}%
+                                 {-3.5ex \@plus -1ex \@minus -.2ex}%
+                                 {2.3ex \@plus.2ex}%
+                                 {\normalfont\Large\bfseries}
+                                }
+\newcommand{\object@code}[1]{\texttt{#1}}
+\newcommand{\graphInTitle}[1]{\hspace{1cm}\includegraphics[width=5cm]{#1}}
 %%% math
 \newcommand{\doverd}        [2]{\ensuremath{\frac{\partial#1}{\partial#2}}}
 \newcommand{\ddoverd}       [2]{\ensuremath{\frac{\partial^2#1}{\partial{#2}^2}}}
@@ -130,6 +142,19 @@
 {\begin{displaymath}
 \refstepcounter{chemReac}\tag{\thechemReac}}
 {\end{displaymath}}
+%%%%%%%
+% equation with ref to object
+%%%%%%%
+\newenvironment{equationCode}[1]
+{%
+\def\youpi{#1}%
+\begin{equation}
+\tikz[remember picture,overlay,baseline]\coordinate(\youpi 1);%
+\begin{tikzpicture}[overlay,remember picture]
+\node[anchor=base east,xshift=-0.5ex] at (\youpi 1 -| current page.east) {\object@code{\youpi}};
+\end{tikzpicture}
+}
+{\end{equation}}
 %%%%%%%
 % notations
 %%%%%%%

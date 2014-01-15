@@ -28,32 +28,32 @@ Thus the calculations is made in three steps:
 
 \subsection{Photon flux at altitude \texorpdfstring{$z$}{z}}
 
-\begin{equation}
+\begin{equationCode}{PhotonEvaluator}
 \fhv(z,\lambda) = \fhvtop(\lambda) \exp\left(-\tau(z,\lambda)\right)
-\end{equation}
+\end{equationCode}
 with \fhvtop\ the photon flux at the top of the atmosphere, and
-\begin{equation}
+\begin{equationCode}{PhotonOpacity}
 \tau(z,\lambda) = \chapman\sum_s\sigma_s(\lambda)\int_z^\infty n_s(z')\dd z'
-\end{equation}
+\end{equationCode}
 with $n_s(z')$ the molar density of species $s$ at altitude $z'$.
 the Chapman function depends on the
 incident angle $\chi$.\\
 For $\chi \le 75^\circ$
-\begin{equation}
+\begin{equationCode}{Chapman}
 \chapman =  \frac{1}{\cos(\chi)},
-\end{equation}
+\end{equationCode}
 for $75^\circ < \chi \le 90^\circ$
-\begin{equation}
+\begin{equationCode}{Chapman}
 \chapman = \sqrt{\frac{\pi \x}{2}} 
                 \left(1 - \erf\left(\sqrt{\frac{\x}{2}}|\cos(\chi)|\right)\right)\exp\left(\frac{\x}{2}\cos^2(\chi)\right),
-\end{equation}
+\end{equationCode}
 for $90^\circ < \chi$
-\begin{equation}
+\begin{equationCode}{Chapman}
 \begin{split}
 \chapman = & \sqrt{2\pi \x}\bigg[\sqrt{\sin(\chi)}\exp\left(\x\left(1-\sin(\chi)\right)\right) \\
            &  -\frac{1}{2}\exp\left(\frac{\x}{2}\cos^2(\chi)\left(1-\erf\left(\sqrt{\frac{\x}{2}}|\cos(\chi)|\right)\right)\right)\bigg]
 \end{split}
-\end{equation}
+\end{equationCode}
 And the definition of \x\ is given by
 \begin{equation}
 \x(z) = \frac{\RTitan + z}{\sch(z)}
