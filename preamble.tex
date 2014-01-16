@@ -1,6 +1,7 @@
 \graphicspath{{./figs/}}
 \makeatletter
 %%% misc
+\@addtoreset{chapter}{part}%because I want my chapter to be in parts
 \newcommand{\mytilde}{\raisebox{-0.3\baselineskip}{\~{}}}
 \newlength{\fakespace}
 \newcommand{\fakeequalspace}{%
@@ -90,6 +91,7 @@
 \newcommand{\concwa}  {\diff@{\conc}{wa}}
 \newcommand{\Awi}  [1]{\diff@{A_{#1}}{wi}}
 \newcommand{\swi}  [1]{\diff@{\beta_{#1}}{wi}}
+\newcommand{\Jeans}   {\ensuremath{J}}
 %% molecules
 \newcommand{\thermcoef}   {\ensuremath{\alpha}}
 \newcommand{\conductivity}{\ensuremath{\kappa}}
@@ -155,10 +157,17 @@
 %%%%%%%
 % equation with ref to object
 %%%%%%%
+\newlength{\EqCodew}
 \newenvironment{equationCode}[1]
 {%
-\def\youpi{#1}%
+\settowidth{\EqCodew}{#1}%
+\if\EqCodew>1in
+  \def\codesize{\footnotesize}%
+\else
+  \def\codesize{\normalsize}%
+\fi
 \begin{equation}
+\def\youpi{#1}%
 \tikz[remember picture,overlay,baseline]\coordinate(\youpi 1);%
 \begin{tikzpicture}[overlay,remember picture]
 \node[anchor=base east,xshift=-0.5ex] at (\youpi 1 -| current page.east) {\object@code{\youpi}};

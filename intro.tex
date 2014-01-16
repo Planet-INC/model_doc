@@ -15,3 +15,43 @@ We use the following notations:
 \begin{notation}
 \gradien{x}{y} = \vect{\left(\doverd{y}{x}\right)}
 \end{notation}
+
+\chapter{Units}
+\renewcommand{\arraystretch}{1.5}
+\begin{longtable}{cccc}\toprule
+Variable & Unit (SI) & Variable & Unit (SI) \\\midrule
+\multicolumn{4}{l}{\underline{\bf Constants}} \\
+\kb     & \unit{m^2\,kg\,s^{-2}\,K^{-1}} &
+\Guni   & \unit{m^3\,kg^{-1}\,s^{-2}}    \\
+\RTitan & \unit{m}                       &
+\MTitan & \unit{kg}                      \\
+\h      & \unit{m^2\,kg\,s^{-1}}         &
+\Nav    & \unit{mol^{-1}}                \\
+\gloc   & \unit{m\,s^{-2}}               \\
+\multicolumn{4}{l}{\underline{\bf Parameters for a species or mixture}} \\
+\conc    & \unit{m^{-3}}         &
+\mass    & \unit{kg}             \\
+\cs      & \unit{m^{-2}}         &
+\sch     & \unit{m}              \\
+\x       & \nounit               &
+\Mm      & \unit{kg\,mol^{-1}}   \\
+\Amas{s} & \unit{m^2\,s^{-1}}    &
+\smas{s} & \nounit               \\
+\diff    & \unit{m^2\,s^{-1}}    &
+\eddy    & \unit{m^2\,s^{-1}}    \\
+$\tilde{\diff}$ 
+         & \unit{m^2\,s^{-1}}    &
+$\omega_s$ 
+         & \unit{m\,s^{-1}} \\
+\Jeans   & \unit{m^{-2}\,s^{-1}} \\
+\multicolumn{4}{l}{\underline{\bf Other parameters}}\\
+$T$     & \unit{K} &
+$z$     & \unit{m} \\
+$P$     & \unit{Pa} &
+\flux   & \footnote{\unit{bin} is typically \unit{nm}, this is the window range of wavelength}
+          \unit{photon\,m^{-2}\,s^{-1}\,bin^{-1}}/\unit{W\,m^{-2}\,bin^{-1}} \\
+\fe     & \footnote{\unit{bin} is typically \unit{eV}, this is the window range of energy}
+          \unit{electron\,m^{-2}\,s^{-1}\,bin^{-1}} &
+\dSS    & \footnote{Alright this one is not SI, but that's Saturn-Sun distance\dots}\unit{AU}
+\\\bottomrule
+\end{longtable}
