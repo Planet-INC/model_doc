@@ -10,25 +10,27 @@
 %%% from report.cls, adapated
 %%% added the makegraph stuff and
 %% redefined \thesubsection to protect it and below
-\newcommand{\makegraph}{\relax}
-\newcommand{\makeno@graph}{\make@@graph{\relax}}%
-\newcommand{\make@graph}[1]{\makebox[0pt][r]{\raisebox{-1in}[0pt][0pt]{#1}}}%
-\newcommand{\make@@graph}[1]{\ifx#1\relax
-                                \renewcommand{\makegraph}{\make@graph{\rule{1ex}{0pt}}}%
-                                \else
-                                \renewcommand{\makegraph}{\make@graph{\includegraphics[width=0.9in]{#1}\rule{1ex}{0pt}}}%
-                              \fi
+\newcommand{\makegraph}      {\relax}
+\newcommand{\makeno@graph}   {\renewcommand{\makegraph}{\relax}}
+\newlength{\graphsize}
+\newcommand{\print@graph} [1]{{\includegraphics[width=0.9in]{#1}}}
+\newcommand{\make@graph}  [1]{\renewcommand{\makegraph}{\noindent\make@@graph{\print@graph{#1}\rule{1ex}{0pt}}}}%
+\newcommand{\make@@graph} [1]{\frame{\makebox[0pt][r]{\raisebox{-0.5\graphsize}[0pt][0pt]{#1}}}}%
+\newcommand{\make@@@graph}[1]{\ifx#1\relax%
+                               \makeno@graph%
+                                \else%
+                               \settoheight{\graphsize}{\print@graph{#1}}\make@graph{#1}%
+                              \fi%
                             }%
-\renewcommand{\thesection}{\protect\makegraph\arabic{chapter}.\arabic{section}}
+\renewcommand{\thesection}{\arabic{chapter}.\arabic{section}}
 \renewcommand{\thesubsection}{\arabic{chapter}.\arabic{section}.\arabic{subsection}}
-\renewcommand\section[1][\relax]{\make@@graph{#1}%
+\renewcommand\section[1][\relax]{\make@@@graph{#1}%
                                  \@startsection {section}{1}{\z@}%
                                  {-3.5ex \@plus -1ex \@minus -.2ex}%
                                  {2.3ex \@plus.2ex}%
-                                 {\normalfont\Large\bfseries}
+                                 {\makegraph\normalfont\Large\bfseries}
                                 }
-\newcommand{\object@code}[1]{\texttt{#1}}
-\newcommand{\graphInTitle}[1]{\hspace{1cm}\includegraphics[width=5cm]{#1}}
+\newcommand{\object@code} [1]{\texttt{#1}}
 %%% math
 \newcommand{\doverd}        [2]{\ensuremath{\frac{\partial#1}{\partial#2}}}
 \newcommand{\ddoverd}       [2]{\ensuremath{\frac{\partial^2#1}{\partial{#2}^2}}}
@@ -137,14 +139,15 @@
 \newenvironment{remark}
 {%
 \renewcommand{\labelitemi}{\textemdash}
+\addtolength{\leftmargin}{15pt}
 \par
 \noindent\rule{\linewidth}{0.4pt}\\*%
 \underline{\bf Remark}:%
-\flushright\begin{minipage}{0.95\linewidth}%
+\begin{adjustwidth}{12pt}{}
 \small\sf%
 }
-{\end{minipage}\\*[3pt]
-\rule{\linewidth}{0.4pt}}
+{\end{adjustwidth}
+\noindent\rule{\linewidth}{0.4pt}}
 %%%%%%%
 % chemical equation
 %%%%%%%

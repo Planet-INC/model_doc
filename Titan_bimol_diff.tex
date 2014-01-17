@@ -124,29 +124,30 @@ species $s$:
 This is full of uncertainties, no idea of the impact, this will have to be discussed, inverse the measurements
 sometime. See where the measurements are made and where we use the models found by regression.
 From \citet{Wakeham1973,Massman1998}, we have the following data and
-fits:
-\begin{center}
-\includegraphics[width=\linewidth]{DiffusionMeas}
-\begin{tabular}{lcccc}\toprule
-                & \multicolumn{2}{c}{\citet{Wakeham1973}} & \multicolumn{2}{c}{\citet{Massman1998}} \\\cmidrule(lr){2-3}\cmidrule(lr){4-5}
-Couple          & $A$ (cm$^2$s$^{-1}$)             &  $s$                       & $D(0,1)$ (cm$^2$s$^{-1}$)  & $\beta$ \\\midrule
-\ce{CH4 - N2}   & $\numprint{1.04}\,10^{-5}$       & \numprint{1.76}            & \numprint{0.1892}          & \numprint{1.81} \\
-\ce{C2H6 - N2}  & $\numprint{0.77}\,10^{-5}$       & \numprint{1.73} \\
-\ce{C3H8 - N2}  & $\numprint{0.89}\,10^{-5}$       & \numprint{1.66} \\
-\ce{C4H10 - N2} & $\numprint{1.00}\,10^{-5}$       & \numprint{1.61} \\
+fits:\medskip\\
+\centerline{\makebox[0pt]{%
+\raisebox{-1.5cm}{\includegraphics[width=10cm]{DiffusionMeas}}\hspace{5mm}%
+\begin{tabular}[b]{lcccc}\toprule
+                       & \multicolumn{2}{c}{\citet{Wakeham1973}}            & \multicolumn{2}{c}{\citet{Massman1998}} \\\cmidrule(lr){2-3}\cmidrule(lr){4-5}
+Couple                 & $A$ (cm$^2$s$^{-1}$)             &  $s$            & $D(0,1)$ (cm$^2$s$^{-1}$)  & $\beta$ \\\midrule
+\ce{CH4   \bond{-} N2} & $\numprint{1.04}\,10^{-5}$       & \numprint{1.76} & \numprint{0.1892}          & \numprint{1.81} \\
+\ce{C2H6  \bond{-} N2} & $\numprint{0.77}\,10^{-5}$       & \numprint{1.73} \\
+\ce{C3H8  \bond{-} N2} & $\numprint{0.89}\,10^{-5}$       & \numprint{1.66} \\
+\ce{C4H10 \bond{-} N2} & $\numprint{1.00}\,10^{-5}$       & \numprint{1.61} \\
 \bottomrule
 \end{tabular}
-\end{center}
+}}
 {Raw data and fits as given in \citet{Wakeham1973,Massman1998}.
-Black: \citet{Wakeham1973} fits; red: \citet{Massman1998} fit with $P = \mathrm{P_W} = 1.0133~$bar.
+Black: \citet{Wakeham1973} fits; red: \citet{Massman1998} fit with $P = \mathrm{P_W} = \numprint{1.0133}~$bar.
 The uncertainty on the data is 4\%. The gray zone is Titan's atmosphere conditions.}
+\medskip
 
 \begin{center}
 \begin{tabular}{cccccccc}\toprule
-\multicolumn{2}{c}{\ce{CH4 - N2}} &
-\multicolumn{2}{c}{\ce{C2H6 - N2}} &
-\multicolumn{2}{c}{\ce{C3H8 - N2}} &
-\multicolumn{2}{c}{\ce{C4H10 - N2}} \\\cmidrule(lr){1-2}\cmidrule(lr){3-4}\cmidrule(lr){5-6}\cmidrule(lr){7-8}
+\multicolumn{2}{c}{\ce{CH4   \bond{-} N2}} &
+\multicolumn{2}{c}{\ce{C2H6  \bond{-} N2}} &
+\multicolumn{2}{c}{\ce{C3H8  \bond{-} N2}} &
+\multicolumn{2}{c}{\ce{C4H10 \bond{-} N2}} \\\cmidrule(lr){1-2}\cmidrule(lr){3-4}\cmidrule(lr){5-6}\cmidrule(lr){7-8}
 $T$ (K) & $D_{12}$ & 
 $T$ (K) & $D_{12}$ & 
 $T$ (K) & $D_{12}$ & 
@@ -165,5 +166,5 @@ $T$ (K) & $D_{12}$ \\
 \bottomrule
 \end{tabular}
 \end{center}
-{\label{diffWakehamRaw}Raw data from \citet[Tab.~1]{Wakeham1973}.}
+\centerline{\label{diffWakehamRaw}Raw data from \citet[Tab.~1]{Wakeham1973}.}
 \end{remark}
