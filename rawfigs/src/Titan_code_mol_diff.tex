@@ -27,25 +27,27 @@ notconsidered/.style={opacity=0.2}
       (-2,5)   node[notconsidered] (ionkineval) {kinetics evaluator}
       (-2,6)   node[notconsidered] (ionreac)    {reaction set}
       (-2,7)   node[notconsidered] (ioncomp)    {ionic composition}
-      (-1,5)   node (hvfeval)    {photon evaluator}
-      (-1,6)   node (hvtau)      {photon opacity}
-      (-1,7)   node (chap)       {Chapman}
+      (-1,5)   node[notconsidered] (hvfeval)    {photon evaluator}
+      (-1,6)   node[notconsidered] (hvtau)      {photon opacity}
+      (-1,7)   node[notconsidered] (chap)       {Chapman}
       (0,6)    node[notconsidered] (atmmix)     {atmospheric mixture}
       (1,7)    node[notconsidered] (temp)       {temperature}
       (2.5,3)  node[notconsidered] (omega)      {$\omega_s$}
       (2.5,4)  node[notconsidered] (diff)       {diffusion}
-      (2,5)    node[notconsidered] (moldiff)    {molecular diffusion}
-      (2,7)    node[notconsidered] (bindiff)    {binary diffusion}
+      (2,5)    node (moldiff)    {molecular diffusion}
+      (2,7)    node (bindiff)    {binary diffusion}
       (3,5)    node[notconsidered] (eddy)       {eddy diffusion};
 \draw[partof,notconsidered] (neucomp) -- (neureac) -- (neukineval) -- (kin)
-              (ioncomp) -- (ionreac) -- (ionkineval) -- (kin)
-                          (bindiff) -- (moldiff)    -- (diff)
-                                       (eddy)       -- (diff);
-\draw[partof] (chap)    -- (hvtau)   -- (hvfeval);
+                            (ioncomp) -- (ionreac) -- (ionkineval) -- (kin)
+                            (chap)    -- (hvtau)   -- (hvfeval)
+                                                      (moldiff)    -- (diff)
+                                                      (eddy)       -- (diff);
+\draw[partof]  (bindiff) -- (moldiff);
+
 \draw[gives,notconsidered] (kin)  -- (omegadot);
 \draw[gives,notconsidered] (diff) -- (omega);
-\draw[notconsidered]        (omegadot) -- (PPH);
-\draw[notconsidered]        (omega) -- (PPH);
+\draw[notconsidered]       (omegadot) -- (PPH);
+\draw[notconsidered]       (omega)   -- (PPH);
 \draw[round,notconsidered] (temp)    -| (atmmix);
 \draw[round,notconsidered] (temp)    |- (moldiff);
 \draw[round,notconsidered] (temp)    |- (diff);
@@ -58,7 +60,7 @@ notconsidered/.style={opacity=0.2}
 \draw[round,notconsidered] (hvfeval) |- (kin);
 
 \begin{pgfonlayer}{background}
-\node[notconsidered,fit= (neucomp) (ioncomp) (neukineval) (ionkineval),rounded corners=1cm,inner sep=5pt,fill=gray!30] {\null};
+\node[fit= (neucomp) (ioncomp) (neukineval) (ionkineval),rounded corners=1cm,inner sep=5pt,fill=gray!30] (ant) {\null};
 \draw[limit,notconsidered] (-1.5,7) -- ++(0,-4)
              (-0.5,7) -- ++(0,-4)
              (0.5,7)  -- ++(0,-4)
@@ -70,7 +72,6 @@ notconsidered/.style={opacity=0.2}
 \draw[stealth-stealth,notconsidered] (PPH) -- (PP)node[pos=0.5,fill=white]{$z$, $\{n_s\}$, $\{z_i\}$, $\{\{n_s\}_i\}$};
 \draw[-stealth,notconsidered] (grins) -- (PP)node[pos=0.5,fill=white]{$\frac{\partial n_s}{\partial \mathrm{t}} = \kinetics + \frac{1}{r^2}\frac{\partial\left(r^2n_s\omega_s\right)}{\partial r}$};
 \pgfresetboundingbox
-\useasboundingbox (hvfeval.south west) -- (hvfeval.south east) |- (chap.north west) -| (hvfeval.south west);
-\end{tikzpicture}%
--------
+\useasboundingbox (moldiff.south west) -- (moldiff.south east) -- (bindiff.north east) -- (bindiff.north west) -- cycle;
+\end{tikzpicture}
 \end{document}

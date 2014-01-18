@@ -39,7 +39,7 @@ $\conc \in \mathcal{U}$, any function $V \in \mathcal{V}$.
                                                                           \right] r^2 \dd r
 \end{split}
 \end{equation}
-now we integrate by parts, see appendix~\ref{Titan:the_demo} for some
+now we integrate by parts, see appendix~\ref{math:int_by_part} for some
 remembering.
 \begin{equation}
 \begin{split}
@@ -94,12 +94,6 @@ with $\coefconc{n,i} \in \mathcal{R}$ and true $\forall \coefv{i} \in \mathcal{R
 
 At this point, we link to \grins\footnote{\GitGrins}: the planetary code provides $\omegadot_s$ and
 $\omega_s$ for any $s$ species and $r$ \grins\ asks.
-The $V$ function is arbitrary, typically, a triangle function is used (see Fig.~\ref{grinsV}), defined
+The $V$ function is arbitrary, typically, a hat function is used (see Fig.~\ref{sec:math:hat_function}), defined
 by a value of zero at nodes $i-1$ and $i+1$ and 1 at node $i$, which translate to a value of
 1 at altitude $z_i$ (or coordinate $r_i$), and zero at altitudes $z_{i-1}$ and $z_{i+1}$.
-\begin{figure}
-\centering
-\includegraphics{grinsV}
-\caption{\label{grinsV}Functions $\phi$: a triangle function defined as 1 on the concerned
-mesh and zero on the others.}
-\end{figure}

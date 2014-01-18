@@ -1,0 +1,32 @@
+An atmospheric molecule, and by extension, an atmosphere, is characterized by
+its scale height, i.e. the distance over which the density is divided by $e$, and
+its mean free path, i.e. the mean length a molecule can cover before undergoing
+a collision.
+
+\begin{equation}
+\sch(z) = \frac{\kb T(z)}{\gloc(z)\mass}
+\label{scale_height}
+\end{equation}
+with \kb\ the Boltzmann constant, 
+\mass\ the molecule mass ($\mass = \frac{\Mm}{\Nav}$, with
+\Mm\ the molar mass and \Nav\ the Avogadro number), 
+$\gloc(z)$ the gravitationnal field at altitude $z$, given by the equation
+\begin{equation}
+\gloc(z) = \frac{\Guni\cdot\MPlanet}{\left(\RPlanet + z\right)^2}
+\label{gfield}
+\end{equation}
+
+The mean free path is a collision process. Thus the molecule is approximated
+by a hard sphere (rigid molecule model), and its hard sphere radius enables
+to model a collision cross-section between two molecules $i$ and $j$:
+\begin{equation}
+\sigma^{(ij)}_\text{col} = \pi\left(r_i + r_j\right)^2
+\label{sigma_collision}
+\end{equation}
+The mean free path of species $s$ is then expressed as:
+\begin{equation}
+\mfp_s = \frac{1}{\sum_{i=1}^{N}\conc_i\sigma^{(si)}_\text{col}\sqrt{1 + \frac{\mass_s}{\mass_i}}}
+\label{mean_free_path}
+\end{equation}
+The exobase is the altitude at wich the mean free path is equal to the scale height. At this
+altitude, collisions can be neglected.

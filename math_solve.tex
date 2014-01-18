@@ -1,0 +1,97 @@
+\subsection{The equation}
+
+Let's consider an equation to solve:
+\begin{equation}
+\begin{split}
+& \ddoverd{u}{x} = 0,\qquad x \in [0,1] \\
+& u(0) = 0, \; u(1) = 0
+\end{split}
+\label{sec:math:eq}
+\end{equation}
+This is a simple equation to solve.
+We multiply by a function $v$ from a space $\mathcal{V}$
+(see~\ref{sec:math:ipp} for integration by parts):
+\begin{equation}
+\begin{split}
+            & \ddoverd{u}{x} = 0 \\
+\Rightarrow & \ddoverd{u}{x} v = 0 \\
+\Rightarrow & \int_0^1\ddoverd{u}{x} v \dd x = 0 \\
+\Rightarrow & -\int_0^1\doverd{u}{x}\doverd{v}{x} \dd x + \left[\doverd{u}{x}v\right]_0^1 = 0 \qquad \forall v \in \mathcal{H}\\
+\end{split}
+\end{equation}
+$\mathcal{H}$ is the ensemble of functions having a finite countable numbers of
+derivable points.
+There is a choice in the $v$ function, and in this case, as we know the solutions
+at the boundary conditions, we can get rid of them with a function $v$ such as
+$v(0) = v(1) = 0$. We obtain thus
+\begin{equation}
+\int_0^1\doverd{u}{x}\doverd{v}{x} \dd x = 0, \qquad \forall v \in \mathcal{H}_0^1
+\label{sec:math:weak_form}
+\end{equation}
+with $\mathcal{H}_0^1$ the ensemble of the functions having a finite countable numbers
+of derivable points and null at the points $0$ and $1$.
+
+Now we need to discretize it. We consider a mesh of $N$ points between $0$ and $1$, we
+express then:
+\begin{equation}
+\begin{split}
+& u(x) = \sum_{i=1}^{N} \ui_i \phi_i \\
+& v(x) = \sum_{i=1}^{N} \vi_i \phi_i
+\end{split}
+\label{sec:math:discretization}
+\end{equation}
+with $\{\phi\}$ the basis functions.
+
+\subsection{Description of \texorpdfstring{$\phi$}{the basis functions}}
+
+We need any function derivable in any countable number of points. A nice
+choice is a hat function:
+\begin{equation}
+\left\{\begin{array}{l@{,\qquad}r}
+\phi_i(x) = \frac{1}{x_i - x_{i-1}} - \frac{x_{i-1}}{x_i - x_{i-1}} & x \in [x_{i-1},x_i] \\
+\phi_i(x) = \frac{1}{x_i - x_{i+1}} - \frac{x_{i+1}}{x_i - x_{i+1}} & x \in ]x_i,x_{i+1}] \\
+\phi_i(x) = 0                                                       & \text{otherwise}
+\end{array}\right.
+\end{equation}
+\begin{figure}
+\centering
+\includegraphics{hat_function}
+\caption{\label{sec:math:hat_function}A hat function: here is $\phi_i$.}
+\end{figure}
+
+\subsection{Discretization and solving}
+
+Using the set of basis functions (Eq.~\ref{sec:math:discretization}), we rewrite 
+Eq.~\ref{sec:math:weak_form}.
+\begin{equation}
+\begin{split}
+\int_0^1\sum_{i=1}^N\ui_i\doverd{\phi_i}{x}\sum_{j=1}^N\vi_j\doverd{\phi_j}{x} \dd x & = 0 \\
+\sum_{i=1}^N\sum_{j=1}^N\ui_i\vi_j\int_0^1\doverd{\phi_i}{x}\doverd{\phi_j}{x} \dd x & = 0 \\
+\end{split}
+\label{sec:math:weak_discrete}
+\end{equation}
+Now if you look at the functions $\phi$, you'll see that the integrals are null except
+around the considered node:
+\begin{equation}
+\int_0^1\doverd{\phi_i}{x} \dd x = \int_{x_{i-1}}^{x_{i+1}}\doverd{\phi_i}{x} \dd x
+\end{equation}
+So basically, you can define a nice matrix:
+\begin{equation}
+\matrice{K},\; K_{ij} = \int_{x_{i-1}}^{x_{i+1}}\doverd{\phi_i}{x}\doverd{\phi_j}{x} \dd x
+\end{equation}
+and using the $v$ function such as $\forall i \in [1,N], \; \vi_i = 1$, noting
+\matrice{u} the $\ui_i$ column vector, we can
+rewrite~\ref{sec:math:weak_discrete}:
+\begin{equation}
+\matrice{K} \matrice{u} = \matrice{b}
+\end{equation}
+with $\matrice{b} = 0$. So now it all comes down to a linear solve, and that's what
+\libmesh\ does nicely. \grins\ provides the formulation.
+
+\subsection{Some definitions}
+To better cope with \grins\ and \libmesh, let's give some definitions here:
+\\\begin{tabular}{ll}\toprule
+$\doverd{\phi_i}{x}\doverd{\phi_j}{x}$ & \matrice{K}\\
+$\phi_i\phi_j$                         & mass term\\
+\bottomrule
+\end{tabular}

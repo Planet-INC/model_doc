@@ -13,7 +13,19 @@
 \tableofcontents
 
 \part{Introduction}
-\input{intro}
+\begin{figure}
+\centering
+\includegraphics{Haye2005-Fig3-20}
+\caption{Adapted from \cite{Haye2005}}
+\end{figure}
+\chapter{Notations}
+\input{intro_notations}
+
+\chapter{Units}
+\input{intro_units}
+
+\chapter{Atmospheric characteristics}
+\input{intro_atmosphere}
 
 \part{Titan}
 \chapter{Hello Titan}
@@ -35,12 +47,16 @@
 \input{Titan_solve}
 
 \appendix
-\chapter{Demonstrations}
-\label{Titan:the_demo}
-\input{Titan_math}
 \chapter{Derivatives}
 \label{Titan:the_derivatives}
 \input{Titan_derivative}
+\chapter{Demonstrations}
+\section{Integration by parts}
+\label{math:int_by_part}
+\input{math_ipp}%% because ``integration by part'' is << intégration par parties >>
+\section{Solving an equation}
+\label{math:solving}
+\input{math_solve}
 \clearpage
 \bibliographystyle{unsrtnat}
 \bibliography{ref}

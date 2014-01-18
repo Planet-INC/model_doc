@@ -61,6 +61,9 @@
 \newcommand{\gloc}     {\ensuremath{g}}
 \newcommand{\x}        {\ensuremath{a}}
 \newcommand{\sch}      {\ensuremath{H}}
+\newcommand{\mfp}      {\ensuremath{l}}
+\newcommand{\RPlanet}  {\ensuremath{\text{R}_\text{Planet}}}
+\newcommand{\MPlanet}  {\ensuremath{\text{m}_\text{Planet}}}
 %%%%% hv
 \newcommand{\flux}     {\ensuremath{\Phi}}
 \newcommand{\fhv}      {\ensuremath{\flux^{\h\nu}}}
@@ -120,14 +123,20 @@
 \newcommand{\Nd}         {\ensuremath{\mathrm{N_d}}}
 \newcommand{\coefconc}[1]{\ensuremath{\mathtt{\conc}_{#1}}}
 \newcommand{\coefv}   [1]{\ensuremath{\mathtt{c}_{#1}}}
+%%%% math solve
+\newcommand{\ui}        {\ensuremath{\mathtt{u}}}
+\newcommand{\vi}        {\ensuremath{\mathtt{v}}}
+\newcommand{\matrice}[1]{\ensuremath{\mathbf{#1}}}
 %% libraries
 \newcommand{\@library}[1]{\texttt{#1}}
 \newcommand{\lib@git} [3]{\href{https://github.com/#1/#2}{#3}}
 %%
 \newcommand{\Antioch}   {\@library{Antioch}}
 \newcommand{\grins}     {\@library{GRINS}}
+\newcommand{\libmesh}   {\@library{Libmesh}}
 \newcommand{\GitAntioch}{\lib@git{libantioch}{antioch}{\Antioch\ on Github}}
 \newcommand{\GitGrins}  {\lib@git{grinsfem}{grins}{\grins\ on Github}}
+\newcommand{\GitLibmesh}{\lib@git{libMesh}{libmesh}{\libmesh\ on Github}}
 %%% files
 \newcommand{\file}[1]{\textsf{#1}}
 \newcommand{\planetConstantsHeader}         {\file{\mytilde/planet/src/utilities/include/planet/planet\_constants.h}}
@@ -160,21 +169,18 @@
 %%%%%%%
 % equation with ref to object
 %%%%%%%
+%% first, renew the tag
 \newlength{\EqCodew}
+\newcommand{\print@Object}{\relax}
 \newenvironment{equationCode}[1]
 {%
-\settowidth{\EqCodew}{#1}%
-\if\EqCodew>1in
-  \def\codesize{\footnotesize}%
-\else
-  \def\codesize{\normalsize}%
+\renewcommand{\theequation}{\arabic{chapter}.\arabic{equation}\protect\print@Object}
+\settowidth{\EqCodew}{\object@code{#1}}%
+\ifdim\EqCodew>1.2in
+  \setlength{\EqCodew}{1.2in}%
 \fi
+\renewcommand{\print@Object}{\makebox[0pt][l]{\rule{1.1ex}{0pt}\resizebox{\EqCodew}{!}{\object@code{#1}}}}
 \begin{equation}
-\def\youpi{#1}%
-\tikz[remember picture,overlay,baseline]\coordinate(\youpi 1);%
-\begin{tikzpicture}[overlay,remember picture]
-\node[anchor=base east,xshift=-0.5ex] at (\youpi 1 -| current page.east) {\object@code{\youpi}};
-\end{tikzpicture}
 }
 {\end{equation}}
 %%%%%%%
