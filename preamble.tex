@@ -126,15 +126,16 @@
 \newcommand{\vi}        {\ensuremath{\mathtt{v}}}
 \newcommand{\matrice}[1]{\ensuremath{\mathbf{#1}}}
 %% libraries
+\gdef\make@library#1{\expandafter\gdef\csname#1\endcsname{\@library{#1}}}
 \newcommand{\@library}[1]{\texttt{#1}}
 \newcommand{\lib@git} [3]{\href{https://github.com/#1/#2}{#3}}
 %%
-\newcommand{\Antioch}   {\@library{Antioch}}
-\newcommand{\grins}     {\@library{GRINS}}
-\newcommand{\libmesh}   {\@library{Libmesh}}
+\make@library{Antioch}%%defines \Antioch
+\make@library{GRINS}%%defines   \GRINS
+\make@library{LibMesh}%%defines \LibMesh
 \newcommand{\GitAntioch}{\lib@git{libantioch}{antioch}{\Antioch\ on Github}}
-\newcommand{\GitGrins}  {\lib@git{grinsfem}{grins}{\grins\ on Github}}
-\newcommand{\GitLibmesh}{\lib@git{libMesh}{libmesh}{\libmesh\ on Github}}
+\newcommand{\GitGrins}  {\lib@git{GRINSfem}{GRINS}{\GRINS\ on Github}}
+\newcommand{\GitLibmesh}{\lib@git{libMesh}{LibMesh}{\LibMesh\ on Github}}
 %%% files
 \newcommand{\file}[1]{\textsf{#1}}
 \newcommand{\planetConstantsHeader}         {\file{\mytilde/planet/src/utilities/include/planet/planet\_constants.h}}
