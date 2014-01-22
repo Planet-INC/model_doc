@@ -119,11 +119,12 @@
 \newcommand{\Rbot}       {\ensuremath{\mathrm{r_{\text{bottom}}}}}
 \newcommand{\Rtop}       {\ensuremath{\mathrm{r_{\text{top}}}}}
 \newcommand{\Nd}         {\ensuremath{\mathrm{N_d}}}
-\newcommand{\coefconc}[1]{\ensuremath{\mathtt{\conc}_{#1}}}
-\newcommand{\coefv}   [1]{\ensuremath{\mathtt{c}_{#1}}}
+\newcommand{\coeftype}[1]{\ensuremath{\mathtt{#1}}}
+\newcommand{\coefconc}[1]{\ensuremath{\coeftype{\conc}_{#1}}}
+\newcommand{\coefv}   [1]{\ensuremath{\coeftype{c}_{#1}}}
 %%%% math solve
-\newcommand{\ui}        {\ensuremath{\mathtt{u}}}
-\newcommand{\vi}        {\ensuremath{\mathtt{v}}}
+\newcommand{\ui}        {\ensuremath{\coeftype{u}}}
+\newcommand{\vi}        {\ensuremath{\coeftype{v}}}
 \newcommand{\matrice}[1]{\ensuremath{\mathbf{#1}}}
 %% libraries
 \gdef\make@library#1{\expandafter\gdef\csname#1\endcsname{\@library{#1}}}
