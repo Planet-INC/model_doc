@@ -16,85 +16,10 @@ and we develop thanks to equations~\ref{Titan:diffusion} and \ref{Titan:kinetics
                                  & = \dOverdz{\conc_s\omega_s} + \frac{2\conc_s\omega_s}{r} + \sum_{r\in \text{reactions}} \stoi{s,r} \rate_{r}\prod_{i\in\text{reactants}}\conc_i^{|\stoi{i,r}|} 
 \end{split}
 \end{equation}
-Let's make the weak form:
+Finally:
 \begin{equation}
 \doverd{\conc_s}{t} = \omegadot_s + \dOverdz{\conc_s\omega_s} + \frac{2}{r}\conc_s\omega_s
 \label{Titan:photochem_eq}
 \end{equation}
 with \omegadot\ the contribution of the chemistry.
-We are in spherical coordinates, and we want to integrate.
-So we consider the functions \conc:
-$\conc \in \mathcal{U}$, any function $V \in \mathcal{V}$.
-\begin{equation}
-\begin{split}
-& \int_0^{2\pi}\int_0^\pi\int_{\Rbot}^{\Rtop}\left[  \doverd{\conc_s}{t} 
-                                                   - \omegadot_s 
-                                                   - \dOverdz{\conc_s\omega_s}
-                                                   - \frac{2}{r}\conc_s\omega_s
-                                             \right]r^2\sin(\theta)V\,\dd r\, \dd \theta\, \dd \phi = 0\\
-\Rightarrow &
-\int_{\Rbot}^{\Rtop}\doverd{\conc_s}{t} V r^2 \dd r = \int_{\Rbot}^{\Rtop}\left[
-                                                     \omegadot_s V
-                                                   + \dOverdz{\conc_s\omega_s} V
-                                                   + \frac{2}{r}\conc_s\omega_s V
-                                                                          \right] r^2 \dd r
-\end{split}
-\end{equation}
-now we integrate by parts, see appendix~\ref{math:int_by_part} for some
-remembering.
-\begin{equation}
-\begin{split}
-\int_{\Rbot}^{\Rtop}\dOverdz{\conc_s\omega_s} V r^2 \dd r & = 
-  - \int_{\Rbot}^{\Rtop}\conc_s\omega_s \left(\doverd{V}{r}r^2 + 2 r V\right) \dd r \\
- &\fakeequalspace + \left(\conc_s\omega_s V r^2\right)|_{\Rtop} - \left(\conc_s\omega_s V r^2\right)|_{\Rbot}
-  \\[\baselineskip]
- & =
-   - \int_{\Rbot}^{\Rtop}\conc_s\omega_s \doverdz{V}r^2  \dd r
-    - 2 \int_{\Rbot}^{\Rtop}\conc_s\omega_s  r V \dd r \\
-& \fakeequalspace + \left(\conc_s\omega_s V r^2\right)|_{\Rtop} - \left(\conc_s\omega_s V r^2\right)|_{\Rbot} \\[2\baselineskip]
-\color{red}
-\int_{\Rbot}^{\Rtop}\dOverdz{\conc_s\omega_s} V r^2 \dd r & \color{red} = 
-  - \int_{\Rbot}^{\Rtop}\conc_s\omega_s \doverd{V}{r}r^2 \dd r \\
- &\color{red}\fakeequalspace + \left(\conc_s\omega_s V \right)|_{\Rtop} - \left(\conc_s\omega_s V \right)|_{\Rbot}
-\end{split}
-\end{equation}
-So
-\begin{equation}
-\begin{split}
-\int_{\Rbot}^{\Rtop} \doverd{\conc_s}{t} V r^2 \dd r & = 
-        \int_{\Rbot}^{\Rtop}\left[\omegadot_s V
-                                  + \frac{2}{r}\conc_s\omega_s V
-                                  - \conc_s\omega_s\doverd{V}{r}
-                                  - \frac{2}{r} \conc_s\omega_s V\right] r^2 \dd r \\
-            &\fakeequalspace      + \left(\conc_s\omega_s V r^2\right)|_{\Rtop} - \left(\conc_s\omega_s V r^2\right)|_{\Rbot} \\[\baselineskip]
- & = \int_{\Rbot}^{\Rtop}\left(\omegadot_s V - \conc_s\omega_s \doverd{V}{r}\right)r^2\dd r \\
- &\fakeequalspace      + \left(\conc_s\omega_s V r^2\right)|_{\Rtop} - \left(\conc_s\omega_s V r^2\right)|_{\Rbot} 
-\end{split}
-\end{equation}
-With the notations:
-\begin{equation}
-\begin{split}
-\forall s, \conc_s & = \sum_{i=0}^{\Nd} \coefconc{s,i} \phi_i \\
-            V      & = \sum_{i=0}^{\Nd} \coefv{i} \phi_i \\
-\end{split}
-\end{equation}
-with $\coefconc{n,i} \in \mathcal{R}$ and true $\forall \coefv{i} \in \mathcal{R}$. 
-\begin{equation}
-\begin{split}
-& \int_{\Rbot}^{\Rtop}\left[\dOverd{\sum_{i=0}^{\Nd}\coefconc{s,i}\phi_i}{t} \sum_{i=0}^{\Nd}\coefv{i} \phi_i
-  - \omegadot_s \sum_{i=0}^{\Nd}\coefv{i}\phi_i 
-  + \omega_s \left(\sum_{i=0}^{\Nd}\coefconc{s,i}\phi_i\right)\left(\sum_{i=0}^{\Nd}\coefv{i}\doverd{\phi_i}{r}\right)\right]r^2\dd r \\
-& - \left(\conc_s\omega_s V r^2\right)|_{\Rtop} + \left(\conc_s\omega_s V r^2\right)|_{\Rbot} = 0\\[\baselineskip]
-\Rightarrow
-& \sum_{i=0}^{\Nd} \coefv{i} \int_{\Rbot}^{\Rtop} \left[ \left(\sum_{j=0}^{\Nd}\coefconc{s,j}\doverd{\phi_j}{t}\right) \phi_i
-   - \omegadot_s \phi_i
-   + \omega_s \left(\sum_{j=0}^{\Nd}\coefconc{s,j}\phi_j\right)\doverd{\phi_i}{r}\right]r^2\dd r \\
-&  - \left(\conc_s\omega_s V r^2\right)|_{\Rtop} + \left(\conc_s\omega_s V r^2\right)|_{\Rbot} = 0
-\end{split}
-\end{equation}
-
-At this point, we link to \GRINS\footnote{\GitGrins}: the planetary code provides $\omegadot_s$ and
-$\omega_s$ for any $s$ species and $r$ \GRINS\ asks.
-The $V$ function is arbitrary, typically, a hat function is used (see Fig.~\ref{sec:math:hat_function}), defined
-by a value of zero at nodes $i-1$ and $i+1$ and 1 at node $i$, which translate to a value of
-1 at altitude $z_i$ (or coordinate $r_i$), and zero at altitudes $z_{i-1}$ and $z_{i+1}$.
+See appendix~\ref{math:photo_solve} for the details of the solving.

@@ -103,15 +103,19 @@ $\phi_i\phi_j$                         & mass term\\
 \newcommand{\dVs}   {\ensuremath{r^2\sin(\theta)\dd\theta\dd\varphi\dd r}}
 
 \subsection{Photochemical equation}
+\label{math:photo_solve}
 The photochemical equation, Eq.~\ref{Titan:photochem_eq}, can be written as:
 \begin{equation}
 \doverd{u}{t} - \chi - \doverd{(u\omega)}{r} - \frac{2}{r}(u\omega) = 0
 \end{equation}
 We will thus operate the integration by parts on the $\doverd{(u\omega)}{r}$ term.
-$r$ is here $\RPlanet + \text{altitude}$, thus $r$ in spherical coordinates, therefore
+$r$ is here $\RPlanet + \text{altitude}$, thus $r$ is a spherical coordinate.
+
+\subsubsection{In three dimensions}
+
 $\dd V = \sin(\theta)r^2\dd\theta\dd\phi\dd r = \dd x \dd y \dd z$.
-So here is the $v$ function, and what we really need is an integration on
-the atmosphere, caring mostly for a column:
+So here is the $v$ function, and what we need is an integration on
+the atmosphere:
 \begin{equation}
 \intvol\left[\doverd{u}{t}v - \chi v - \doverd{(u\omega)}{r}v - \frac{2}{r}(u\omega)v\right] \dd V = 0
 \end{equation}
@@ -121,6 +125,7 @@ with $V$ a volume element,
 - \intvol\chi v \dd V 
 - \intvol\doverd{(u\omega)}{r}v \dd V 
 - \intvol\frac{2}{r}(u\omega)v \dd V = 0
+\label{math:photo_3D_start}
 \end{equation}
 thus
 \begin{equation}
@@ -130,10 +135,11 @@ thus
 - \left[u\omega v\right]^{\text{up bound.}}_{\text{low bound.}}
 - \intvol\frac{2}{r}(u\omega)v \dd V = 0
 \end{equation}
-So, again stating:
+Using the formulation:
 \begin{equation}
 u = \sum_{i=1}^N \ui_i \phi_i,\qquad v = \sum_{i=1}^N\vi_i \phi_i
 \end{equation}
+with $\ui \in \mathcal{R}$ and true $\forall \vi \in \mathcal{R}$. 
 we finally have:
 \begin{equation}
 \begin{split}
@@ -159,10 +165,77 @@ $\dd V = r^2\sin(\theta)\dd r\dd\theta\dd\varphi$.
 with a little rearranging:
 \begin{equation}
 \begin{split}
-  \sum_{i=1}^N\sum_{j=1}^N\ui_i\vi_j\intr\doverd{\phi_i}{t}\phi_j \dVs \\
-- \sum_{i=1}^N\chi\vi_i\intr\phi_i \dVs \\
-+ \omega\sum_{i=1}^N\sum_{j=1}^N\ui_i\vi_j\intr\phi_i\doverd{\phi_j}{r} \dVs \\
-- 2\omega\sum_{i=1}^N\sum_{j=1}^N\ui_i\vi_j\intr\phi_i\phi_jr\sin(\theta)\dd\theta\dd\varphi\dd r \\
-- \left[u\omega v\right]^{\{r,\theta,\varphi\}_1}_{\{r,\theta,\varphi\}_0} & = 0
+  \underbrace{\sum_{i=1}^N\sum_{j=1}^N\ui_i\vi_j\intr\doverd{\phi_i}{t}\phi_j \dVs}_\text{ mass\_residual}                    \\
+- \underbrace{\sum_{i=1}^N\vi_i\intr\chi\phi_i \dVs}_\text{ element\_time\_derivative}                                        \\
++ \underbrace{\sum_{i=1}^N\sum_{j=1}^N\ui_i\vi_j\intr\omega\phi_i\doverd{\phi_j}{r} \dVs}_\text{ element\_time\_derivative}   \\
+- \underbrace{2\sum_{i=1}^N\sum_{j=1}^N\ui_i\vi_j\intr\omega\phi_i\phi_jr\sin(\theta)\dd\theta\dd\varphi\dd r}_\text{ element\_time\_derivative}
+- \underbrace{\left[u\omega v\right]^{\{r,\theta,\varphi\}_1}_{\{r,\theta,\varphi\}_0}}_\text{ side\_time\_derivative}
+& = 0
 \end{split}
 \end{equation}
+
+\subsubsection{In one dimension}
+
+We can make the assumption that the only interesting dimension is $r$, and
+not caring for the other parameters ($\theta$ and $\varphi$). Either everything
+is considered independant or we really solve only a 1D problem, still in spherical
+coordinates, thus this is equivalent in developping $\dd V$ in Eq.~\ref{math:photo_3D_start}, integrating
+over $\theta$ and $\varphi$, which would give a constant we can get rid of.
+\begin{equation}
+\int_{r_0}^{r_1}\left[   \doverd{u}{t} v 
+                       - \chi v - \doverd{(u\omega)}{r} v
+                       - \frac{2}{r}u\omega v
+                \right] r^2 \dd r = 0
+\end{equation}
+now we integrate by parts:
+\begin{equation}
+\begin{split}
+\int_{r_0}^{r_1}\doverd{(u\omega)}{r} v r^2 \dd r 
+   & = - \int_{r_0}^{r_1}u\omega \left(\doverd{v}{r}r^2 + 2 r v\right) \dd r + \left[u\omega v r^2\right]_{r_0}^{r_1}
+        \\[\baselineskip]
+   & = - \int_{r_0}^{r_1}u\omega \doverd{v}{r} r^2  \dd r - 2 \int_{r_0}^{r_1}u\omega  r v \dd r  + \left[u\omega v r^2\right]_{r_0}^{r_1}
+\end{split}
+\end{equation}
+So
+\begin{equation}
+\begin{split}
+\int_{r_0}^{r_1} \left[   \doverd{u}{t} v r^2 \dd r
+                        - \chi v
+                        - \frac{2}{r} u\omega v
+                        + u\omega\doverd{v}{r}
+                        + \frac{2}{r} u\omega v
+                 \right] r^2 \dd r 
+     - \left[u\omega v r^2\right]_{r_0}^{r_1}   & = 0 \\
+\int_{r_0}^{r_1} \left[   \doverd{u}{t} v r^2 \dd r
+                        - \chi v
+                        + u\omega\doverd{v}{r}
+                 \right] r^2 \dd r 
+     - \left[u\omega v r^2\right]_{r_0}^{r_1}   & = 0 
+\end{split}
+\end{equation}
+using again the notations:
+\begin{equation}
+u = \sum_{i=0}^{N} \ui_i \phi_i, \qquad v = \sum_{i=0}^{N} \vi_i \phi_i
+\end{equation}
+We obtain:
+\begin{equation}
+ \int_{r_0}^{r_1}\left[
+                  \sum_{i=0}^{N}\ui_i\doverd{\phi_i}{t} \sum_{j=0}^{N}\vi_j \phi_j
+                 - \chi \sum_{i=0}^{N}\vi_i\phi_i 
+                 + \sum_{i=0}^{N}\ui_i\phi_i\sum_{j=0}^{N}\vi_j\doverd{\phi_j}{r}\right]r^2\dd r
+ - \left[u\omega v r^2\right]_{r_0}^{r_1} = 0
+\end{equation}
+The rearrangement gives:
+\begin{equation}
+\begin{split}
+  \underbrace{\sum_{i=1}^{N}\sum_{j=0}^{N}\ui_i\vi_j\int_{r_0}^{r_1}\doverd{\phi_i}{t}\phi_jr^2\dd r}_\text{mass\_residual}      
+- \underbrace{\sum_{i=0}^{N}\vi_i\int_{r_0}^{r_1}\chi\phi_i r^2\dd r}_\text{element\_time\_derivative}                           
++ \underbrace{\sum_{i=0}^{N}\sum_{j=0}^{N}\ui_i\vi_j\int_{r_0}^{r_1}\phi_i\doverd{\phi_j}{r}r^2\dd r}_\text{element\_time\_derivative}       \\
+ - \underbrace{\left[u\omega v r^2\right]_{r_0}^{r_1}}_\text{side\_time\_derivative}  & = 0
+\end{split}
+\end{equation}
+
+
+At this point, we link to \GRINS\footnote{\GitGrins}: the planetary code provides $\chi$, $u$ and
+$\omega$ for any $s$ species and $r$ \GRINS\ asks. \LibMesh\footnote{\GitLibmesh} is the underlying library that
+does all the calculations.
