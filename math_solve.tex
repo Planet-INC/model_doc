@@ -16,11 +16,11 @@ We multiply by a function $v$ from a space $\mathcal{V}$
             & \ddoverd{u}{x} = 0 \\
 \Rightarrow & \ddoverd{u}{x} v = 0 \\
 \Rightarrow & \int_0^1\ddoverd{u}{x} v \dd x = 0 \\
-\Rightarrow & -\int_0^1\doverd{u}{x}\doverd{v}{x} \dd x + \left[\doverd{u}{x}v\right]_0^1 = 0 \qquad \forall v \in \mathcal{H}\\
+\Rightarrow & -\int_0^1\doverd{u}{x}\doverd{v}{x} \dd x + \left[\doverd{u}{x}v\right]_0^1 = 0 \qquad \forall v \in \mathcal{H}^1\\
 \end{split}
 \end{equation}
-$\mathcal{H}$ is the ensemble of functions having a finite countable numbers of
-derivable points.
+$\mathcal{H}^1$ is the ensemble of functions with at least one square-integrable
+first derivative.
 There is a choice in the $v$ function, and in this case, as we know the solutions
 at the boundary conditions, we can get rid of them with a function $v$ such as
 $v(0) = v(1) = 0$. We obtain thus
@@ -29,7 +29,7 @@ $v(0) = v(1) = 0$. We obtain thus
 \label{sec:math:weak_form}
 \end{equation}
 with $\mathcal{H}_0^1$ the ensemble of the functions having a finite countable numbers
-of derivable points and null at the points $0$ and $1$.
+of differentiable points and null at the points $0$ and $1$.
 
 Now we need to discretize it. We consider a mesh of $N$ points between $0$ and $1$, we
 express then:
@@ -44,7 +44,8 @@ with $\{\phi\}$ the basis functions.
 
 \subsection{Description of \texorpdfstring{$\phi$}{the basis functions}}
 
-We need any function derivable in any countable number of points. A nice
+We need any function differentiable in any countable number of points such as
+it is null at $0$ and $1$. A nice
 choice is a hat function:
 \begin{equation}
 \left\{\begin{array}{l@{,\qquad}r}
@@ -98,9 +99,11 @@ $\phi_i\phi_j$                         & mass term\\
 \end{tabular}
 
 %%%% local defs
-\newcommand{\intvol}{\ensuremath{\int_{\text{atm}}}}
-\newcommand{\intr}  {\ensuremath{\int_{\varphi_0}^{\varphi_1}\int_{\theta_0}^{\theta_1}\int_{r_0}^{r_1}}}
-\newcommand{\dVs}   {\ensuremath{r^2\sin(\theta)\dd\theta\dd\varphi\dd r}}
+\newcommand{\intvol}  {\ensuremath{\int_{\text{atm}}}}
+\newcommand{\intr}    {\ensuremath{\int_{\varphi_0}^{\varphi_1}\int_{\theta_0}^{\theta_1}\int_{r_0}^{r_1}}}
+\newcommand{\inttheta}{\ensuremath{\int_{\theta_0}^{\theta_1}}}
+\newcommand{\intphy}  {\ensuremath{\int_{\varphi_0}^{\varphi_1}}}
+\newcommand{\dVs}     {\ensuremath{r^2\sin(\theta)\dd\theta\dd\varphi\dd r}}
 
 \subsection{Photochemical equation}
 \label{math:photo_solve}
@@ -127,39 +130,50 @@ with $V$ a volume element,
 - \intvol\frac{2}{r}(u\omega)v \dd V = 0
 \label{math:photo_3D_start}
 \end{equation}
-thus
+thus, developping $V$ in spherical coordinates:
 \begin{equation}
-  \intvol\doverd{u}{t}v\dd V 
-- \intvol\chi v \dd V 
-+ \intvol(u\omega)\doverd{v}{r} \dd V 
-- \left[u\omega v\right]^{\text{up bound.}}_{\text{low bound.}}
-- \intvol\frac{2}{r}(u\omega)v \dd V = 0
+\begin{split}
+  \intr\doverd{u}{t}v\dVs
+- \intr\chi v \dVs \\
+- \intr\doverd{(u\omega)}{r}v \dVs
+- \intr\frac{2}{r}(u\omega)v \dVs & = 0
+\end{split}
+\label{math:photo_3D_dev}
+\end{equation}
+Thus, integration by parts in the $r$ direction will give:
+\begin{equation}
+\begin{split}
+  \intr\doverd{u}{t}v\dVs 
+- \intr\chi v \dVs \\
++ \intr(u\omega)\left(\doverd{v}{r} + 2rv\right) \dVs
+- \inttheta\intphy\left[u\omega v r^2\right]^{r_1}_{r_0}\sin(\theta)\dd\theta\dd\varphi \\
+- \intr\frac{2}{r}(u\omega)v \dVs 
+& = 0
+\end{split}
+\end{equation}
+Which finally gives:
+\begin{equation}
+\begin{split}
+  \intr\doverd{u}{t}v\dVs 
+- \intr\chi v \dVs \\
++ \intr(u\omega)\doverd{v}{r}\dVs
+- \inttheta\intphy\left[u\omega v r^2\right]^{r_1}_{r_0}\sin(\theta)\dd\theta\dd\varphi 
+& = 0
+\end{split}
+\label{math:photo_3D_fin}
 \end{equation}
 Using the formulation:
 \begin{equation}
 u = \sum_{i=1}^N \ui_i \phi_i,\qquad v = \sum_{i=1}^N\vi_i \phi_i
 \end{equation}
 with $\ui \in \mathcal{R}$ and true $\forall \vi \in \mathcal{R}$. 
-we finally have:
+we rewrite Eq.~\ref{math:photo_3D_fin}
 \begin{equation}
 \begin{split}
-  \intvol\sum_{i=1}^N\ui_i\doverd{\phi_i}{t}\sum_{j=1}^N\vi_j \phi_j \dd V 
-- \intvol\sum_{i=1}^N\chi\vi_i\phi_i \dd V 
-+ \intvol\omega\sum_{i=1}^N\ui_i\phi_i\sum_{j=1}^N\vi_j\doverd{\phi_j}{r} \dd V \\
-- \intvol\frac{2}{r}\omega\sum_{i=1}^N\ui_i\phi_i\sum_{j=1}^N\vi_j\phi_j\dd V 
-- \left[u\omega v\right]^{\text{up bound.}}_{\text{low bound.}} & = 0
-\end{split}
-\end{equation}
-$r$ is defined in spherical coordinates, so we develop $\dd V$ in spherical coordinates $r$,
-$\theta$ and $\varphi$:
-$\dd V = r^2\sin(\theta)\dd r\dd\theta\dd\varphi$.
-\begin{equation}
-\begin{split}
-  \intr \sum_{i=1}^N\ui_i\doverd{\phi_i}{t}\sum_{j=1}^N\vi_j \phi_j \dVs \\
-- \intr \sum_{i=1}^N\chi\vi_i\phi_i \dVs \\
-+ \intr \omega\sum_{i=1}^N\ui_i\phi_i\sum_{j=1}^N\vi_j\doverd{\phi_j}{r} \dVs \\
-- \intr 2\omega\sum_{i=1}^N\ui_i\phi_i\sum_{j=1}^N\vi_j\phi_jr\sin(\theta)\dd\theta\dd\varphi\dd r \\
-- \left[u\omega v\right]^{\{r,\theta,\varphi\}_1}_{\{r,\theta,\varphi\}_0} & = 0
+  \intr\sum_{i=1}^N\ui_i\doverd{\phi_i}{t}\sum_{j=1}^N\vi_j \phi_j \dVs \\
+- \intr\sum_{i=1}^N\chi\vi_i\phi_i \dVs \\
++ \intr\omega\sum_{i=1}^N\ui_i\phi_i\sum_{j=1}^N\vi_j\doverd{\phi_j}{r} \dVs \\
+- \inttheta\intphy\left[u\omega v r^2\right]^{r_1}_{r_0}\sin(\theta)\dd\theta\dd\varphi & = 0
 \end{split}
 \end{equation}
 with a little rearranging:
@@ -168,8 +182,7 @@ with a little rearranging:
   \underbrace{\sum_{i=1}^N\sum_{j=1}^N\ui_i\vi_j\intr\doverd{\phi_i}{t}\phi_j \dVs}_\text{ mass\_residual}                    \\
 - \underbrace{\sum_{i=1}^N\vi_i\intr\chi\phi_i \dVs}_\text{ element\_time\_derivative}                                        \\
 + \underbrace{\sum_{i=1}^N\sum_{j=1}^N\ui_i\vi_j\intr\omega\phi_i\doverd{\phi_j}{r} \dVs}_\text{ element\_time\_derivative}   \\
-- \underbrace{2\sum_{i=1}^N\sum_{j=1}^N\ui_i\vi_j\intr\omega\phi_i\phi_jr\sin(\theta)\dd\theta\dd\varphi\dd r}_\text{ element\_time\_derivative}
-- \underbrace{\left[u\omega v\right]^{\{r,\theta,\varphi\}_1}_{\{r,\theta,\varphi\}_0}}_\text{ side\_time\_derivative}
+- \underbrace{\inttheta\intphy\left[u\omega v r^2\right]^{r_1}_{r_0}\sin(\theta)\dd\theta\dd\varphi}_\text{ side\_time\_derivative}
 & = 0
 \end{split}
 \end{equation}
@@ -179,8 +192,8 @@ with a little rearranging:
 We can make the assumption that the only interesting dimension is $r$, and
 not caring for the other parameters ($\theta$ and $\varphi$). Either everything
 is considered independant or we really solve only a 1D problem, still in spherical
-coordinates, thus this is equivalent in developping $\dd V$ in Eq.~\ref{math:photo_3D_start}, integrating
-over $\theta$ and $\varphi$, which would give a constant we can get rid of.
+coordinates, thus this is equivalent in integrating $\dd\theta\dd\varphi$ in Eq.~\ref{math:photo_3D_dev}, 
+which would give a constant we can get rid of.
 \begin{equation}
 \int_{r_0}^{r_1}\left[   \doverd{u}{t} v 
                        - \chi v - \doverd{(u\omega)}{r} v
