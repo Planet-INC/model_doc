@@ -209,7 +209,7 @@ We obtain:
  \int_{r_0}^{r_1}\left[
                   \sum_{i=0}^{N}\ui_i\doverd{\phi_i}{t} \sum_{j=0}^{N}\vi_j \phi_j
                  - \chi \sum_{i=0}^{N}\vi_i\phi_i 
-                 + \sum_{i=0}^{N}\ui_i\phi_i\sum_{j=0}^{N}\vi_j\doverd{\phi_j}{r}\right]r^2\dd r
+                 + \sum_{i=0}^{N}\ui_i\phi_i\omega\sum_{j=0}^{N}\vi_j\doverd{\phi_j}{r}\right]r^2\dd r
  - \left[u\omega v r^2\right]_{r_0}^{r_1} = 0
 \end{equation}
 The rearrangement gives:
@@ -217,7 +217,7 @@ The rearrangement gives:
 \begin{split}
   \underbrace{\sum_{i=1}^{N}\sum_{j=0}^{N}\ui_i\vi_j\int_{r_0}^{r_1}\doverd{\phi_i}{t}\phi_jr^2\dd r}_\text{mass\_residual}
 - \underbrace{\sum_{i=0}^{N}\vi_i\int_{r_0}^{r_1}\chi\phi_i r^2\dd r}_\text{element\_time\_derivative} \\
-+ \underbrace{\sum_{i=0}^{N}\sum_{j=0}^{N}\ui_i\vi_j\int_{r_0}^{r_1}\phi_i\doverd{\phi_j}{r}r^2\dd r}_\text{element\_time\_derivative}
++ \underbrace{\sum_{i=0}^{N}\sum_{j=0}^{N}\ui_i\vi_j\int_{r_0}^{r_1}\omega\phi_i\doverd{\phi_j}{r}r^2\dd r}_\text{element\_time\_derivative}
  - \underbrace{\left[u\omega v r^2\right]_{r_0}^{r_1}}_\text{side\_time\_derivative}  & = 0
 \end{split}
 \end{equation}
