@@ -1,5 +1,7 @@
 \section{Photochemistry solver}
 
+\subsection{Equation}
+
 The photochemical solving solves the diffusion and the chemistry, thus we solve:
 \begin{equation}
 \doverd{\conc_s}{t} = \left(\doverd{\conc_s}{t}\right)_\text{diff} + \left(\doverd{\conc_s}{t}\right)_\text{kin}
@@ -23,3 +25,11 @@ Finally:
 \end{equation}
 with \omegadot\ the contribution of the chemistry.
 See appendix~\ref{math:photo_solve} for the details of the solving.
+
+\subsection{Boundary conditions}
+
+The lower bondary condition is given by the input parameters, the molar densities
+are constrained. The upper boundary condition is given as a flux constrain. The
+upper boundary is above the exobase, the limit above which we can consider that
+the processes happening are collisionless. Thus the upper boundary condition
+is expressed at the exobase, stating that $\doverdz{\conc}$ is the Jeans' flux.

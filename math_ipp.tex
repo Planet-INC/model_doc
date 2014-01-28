@@ -10,3 +10,17 @@ Let $u$ and $v$ be two derivable functions:
 \end{split}
 \label{sec:math:ipp}
 \end{equation}
+From a 3-D perspective:
+\begin{equation}
+\begin{split}
+ & \begin{split}
+     \int_\Omega \nabla\cdot(a\vect{b}) & = \int_{\partial\Omega}a\vect{b}\cdot\vect{n} \\
+                                        & = \int_{\Omega}b\diverge{a} + \int_\Omega a\diverge{b}
+   \end{split} \\
+\Rightarrow &
+\int_\Omega a\diverge{b} = \int_{\partial\Omega}a\vect{b}\cdot\vect{n} - \int_{\Omega}b\diverge{a}
+\end{split}
+\label{sec:math:ipp_3D}
+\end{equation}
+With $\Omega$ begin a space, $\partial\Omega$ its surface and \vect{n} the outward unit
+surface normal to $\partial\Omega$.

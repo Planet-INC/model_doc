@@ -101,65 +101,41 @@ $\phi_i\phi_j$                         & mass term\\
 %%%% local defs
 \newcommand{\intvol}  {\ensuremath{\int_{\text{atm}}}}
 \newcommand{\intr}    {\ensuremath{\int_{\varphi_0}^{\varphi_1}\int_{\theta_0}^{\theta_1}\int_{r_0}^{r_1}}}
-\newcommand{\inttheta}{\ensuremath{\int_{\theta_0}^{\theta_1}}}
-\newcommand{\intphy}  {\ensuremath{\int_{\varphi_0}^{\varphi_1}}}
 \newcommand{\dVs}     {\ensuremath{r^2\sin(\theta)\dd\theta\dd\varphi\dd r}}
+\newcommand{\intboundary}{\ensuremath{\int_{\mathcal{S}_\text{atm}}}}
+\newcommand{\dboundary}  {\ensuremath{{\dd\mathcal{S}_\text{atm}}}}
 
 \subsection{Photochemical equation}
 \label{math:photo_solve}
 The photochemical equation, Eq.~\ref{Titan:photochem_eq}, can be written as:
 \begin{equation}
-\doverd{u}{t} - \chi - \doverd{(u\omega)}{r} - \frac{2}{r}(u\omega) = 0
+\doverd{u}{t} - \chi - \diverge{u\omega} = 0
 \end{equation}
-We will thus operate the integration by parts on the $\doverd{(u\omega)}{r}$ term.
-$r$ is here $\RPlanet + \text{altitude}$, thus $r$ is a spherical coordinate.
+with $\vect{u\omega} = u\vect{\omega}$, 
+we will thus operate the integration by parts on the \diverge{u\omega} term.
 
 \subsubsection{In three dimensions}
 
-$\dd V = \sin(\theta)r^2\dd\theta\dd\phi\dd r = \dd x \dd y \dd z$.
 So here is the $v$ function, and what we need is an integration on
 the atmosphere:
 \begin{equation}
-\intvol\left[\doverd{u}{t}v - \chi v - \doverd{(u\omega)}{r}v - \frac{2}{r}(u\omega)v\right] \dd V = 0
+\intvol\left[\doverd{u}{t}v - \chi v - \diverge{u\omega} v\right] \dd V = 0
+\label{math:solve:3D_photo}
 \end{equation}
-with $V$ a volume element,
+with $V$ a volume element
 \begin{equation}
   \intvol\doverd{u}{t}v\dd V 
 - \intvol\chi v \dd V 
-- \intvol\doverd{(u\omega)}{r}v \dd V 
-- \intvol\frac{2}{r}(u\omega)v \dd V = 0
+- \intvol\diverge{u\omega}v \dd V  = 0
 \label{math:photo_3D_start}
 \end{equation}
-thus, developping $V$ in spherical coordinates:
+Thus, integration by parts will give,
+using that $\left(\diverge{u\omega}\right) v = \diverge{vu\omega}$:
 \begin{equation}
-\begin{split}
-  \intr\doverd{u}{t}v\dVs
-- \intr\chi v \dVs \\
-- \intr\doverd{(u\omega)}{r}v \dVs
-- \intr\frac{2}{r}(u\omega)v \dVs & = 0
-\end{split}
-\label{math:photo_3D_dev}
-\end{equation}
-Thus, integration by parts in the $r$ direction will give:
-\begin{equation}
-\begin{split}
-  \intr\doverd{u}{t}v\dVs 
-- \intr\chi v \dVs \\
-+ \intr(u\omega)\left(\doverd{v}{r} + 2rv\right) \dVs
-- \inttheta\intphy\left[u\omega v r^2\right]^{r_1}_{r_0}\sin(\theta)\dd\theta\dd\varphi \\
-- \intr\frac{2}{r}(u\omega)v \dVs 
-& = 0
-\end{split}
-\end{equation}
-Which finally gives:
-\begin{equation}
-\begin{split}
-  \intr\doverd{u}{t}v\dVs 
-- \intr\chi v \dVs \\
-+ \intr(u\omega)\doverd{v}{r}\dVs
-- \inttheta\intphy\left[u\omega v r^2\right]^{r_1}_{r_0}\sin(\theta)\dd\theta\dd\varphi 
-& = 0
-\end{split}
+  \intvol\doverd{u}{t}v\dd V
+- \intvol\chi v \dd V 
++ \intvol u\omega \diverge{v} \dd V 
+- \intboundary u\vect{\omega}\vect{s}v \dboundary = 0
 \label{math:photo_3D_fin}
 \end{equation}
 Using the formulation:
@@ -170,35 +146,33 @@ with $\ui \in \mathcal{R}$ and true $\forall \vi \in \mathcal{R}$.
 we rewrite Eq.~\ref{math:photo_3D_fin}
 \begin{equation}
 \begin{split}
-  \intr\sum_{i=1}^N\ui_i\doverd{\phi_i}{t}\sum_{j=1}^N\vi_j \phi_j \dVs \\
-- \intr\sum_{i=1}^N\chi\vi_i\phi_i \dVs \\
-+ \intr\omega\sum_{i=1}^N\ui_i\phi_i\sum_{j=1}^N\vi_j\doverd{\phi_j}{r} \dVs \\
-- \inttheta\intphy\left[u\omega v r^2\right]^{r_1}_{r_0}\sin(\theta)\dd\theta\dd\varphi & = 0
-\end{split}
-\end{equation}
-with a little rearranging:
-\begin{equation}
-\begin{split}
-  \underbrace{\sum_{i=1}^N\sum_{j=1}^N\ui_i\vi_j\intr\doverd{\phi_i}{t}\phi_j \dVs}_\text{ mass\_residual}                    \\
-- \underbrace{\sum_{i=1}^N\vi_i\intr\chi\phi_i \dVs}_\text{ element\_time\_derivative}                                        \\
-+ \underbrace{\sum_{i=1}^N\sum_{j=1}^N\ui_i\vi_j\intr\omega\phi_i\doverd{\phi_j}{r} \dVs}_\text{ element\_time\_derivative}   \\
-- \underbrace{\inttheta\intphy\left[u\omega v r^2\right]^{r_1}_{r_0}\sin(\theta)\dd\theta\dd\varphi}_\text{ side\_time\_derivative}
-& = 0
+  \underbrace{\sum_{i=1}^N\sum_{j=1}^N\ui_i\vi_j\intvol\doverd{\phi_i}{t}\phi_j\dd V}_{\text{mass\_residual}}
+- \underbrace{\sum_{j=1}^N\vi_j\intvol\chi \phi_j \dd V}_\text{element\_time\_derivative} \\
++ \underbrace{\sum_{i=1}^N\sum_{j=1}^N\ui_i\vi_j\intvol \phi_i\omega \diverge{\phi_j} \dd V}_\text{element\_time\_derivative}
+- \underbrace{\intboundary u\vect{\omega}\vect{s}v \dboundary}_\text{side\_time\_derivative} & = 0
 \end{split}
 \end{equation}
 
 \subsubsection{In one dimension}
 
-We can make the assumption that the only interesting dimension is $r$, and
-not caring for the other parameters ($\theta$ and $\varphi$). Either everything
-is considered independant or we really solve only a 1D problem, still in spherical
-coordinates, thus this is equivalent in integrating $\dd\theta\dd\varphi$ in Eq.~\ref{math:photo_3D_dev}, 
-which would give a constant we can get rid of.
+We can make the assumption that the only interesting dimension is the altitude, and
+not caring for the other dimensions. Either everything
+is considered independant or we really solve only a 1D problem, still,
+the natural coordinate system is the spherical
+coordinates system, thus we re-write Eq.~\ref{math:solve:3D_photo}, 
+we integrate on $\theta$ and $\varphi$,
+which gives a constant we can get rid of.
+\begin{equation}
+\intr\left[   \doverd{u}{t} v 
+                       - \chi v - \frac{1}{r^2}\doverd{(r^2u\omega)}{r} v
+                \right] \dVs = 0
+\end{equation}
+thus
 \begin{equation}
 \int_{r_0}^{r_1}\left[   \doverd{u}{t} v 
                        - \chi v - \doverd{(u\omega)}{r} v
                        - \frac{2}{r}u\omega v
-                \right] r^2 \dd r = 0
+                \right] r^2\dd r = 0
 \end{equation}
 now we integrate by parts:
 \begin{equation}
@@ -241,9 +215,9 @@ We obtain:
 The rearrangement gives:
 \begin{equation}
 \begin{split}
-  \underbrace{\sum_{i=1}^{N}\sum_{j=0}^{N}\ui_i\vi_j\int_{r_0}^{r_1}\doverd{\phi_i}{t}\phi_jr^2\dd r}_\text{mass\_residual}      
-- \underbrace{\sum_{i=0}^{N}\vi_i\int_{r_0}^{r_1}\chi\phi_i r^2\dd r}_\text{element\_time\_derivative}                           
-+ \underbrace{\sum_{i=0}^{N}\sum_{j=0}^{N}\ui_i\vi_j\int_{r_0}^{r_1}\phi_i\doverd{\phi_j}{r}r^2\dd r}_\text{element\_time\_derivative}       \\
+  \underbrace{\sum_{i=1}^{N}\sum_{j=0}^{N}\ui_i\vi_j\int_{r_0}^{r_1}\doverd{\phi_i}{t}\phi_jr^2\dd r}_\text{mass\_residual}
+- \underbrace{\sum_{i=0}^{N}\vi_i\int_{r_0}^{r_1}\chi\phi_i r^2\dd r}_\text{element\_time\_derivative} \\
++ \underbrace{\sum_{i=0}^{N}\sum_{j=0}^{N}\ui_i\vi_j\int_{r_0}^{r_1}\phi_i\doverd{\phi_j}{r}r^2\dd r}_\text{element\_time\_derivative}
  - \underbrace{\left[u\omega v r^2\right]_{r_0}^{r_1}}_\text{side\_time\_derivative}  & = 0
 \end{split}
 \end{equation}
