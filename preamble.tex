@@ -28,6 +28,34 @@
                                  {2.3ex \@plus.2ex}%
                                  {\makegraph\normalfont\Large\bfseries}
                                 }
+%%%%%
+%%
+%%%
+%%meta-meta-macro
+\newcommand{\make@}[3][upshape]{%
+\expandafter\gdef\csname font@#2\endcsname##1{% create font@something macro
+{\csname#1\endcsname\csname#3\endcsname{##1}}%
+}%
+\expandafter\gdef\csname make@#2\endcsname##1{% create make@something meta macro
+\expandafter\gdef\csname ##1\endcsname{\csname font@#2\endcsname{##1}}%
+}
+\expandafter\gdef\csname#2\endcsname##1{\csname font@#2\endcsname{##1}}%create the \something macro
+}
+%% libraries
+\make@{library}{tt}
+\newcommand{\lib@git} [3]{\href{https://github.com/#1/#2}{#3}}
+%%
+\make@library{Antioch}%%defines \Antioch
+\make@library{GRINS}%%defines   \GRINS
+\make@library{LibMesh}%%defines \LibMesh
+\newcommand{\GitAntioch}{\lib@git{libantioch}{antioch}{\Antioch\ on Github}}
+\newcommand{\GitGrins}  {\lib@git{GRINSfem}{GRINS}{\GRINS\ on Github}}
+\newcommand{\GitLibmesh}{\lib@git{libMesh}{LibMesh}{\LibMesh\ on Github}}
+%%% files
+\newcommand{\file}[1]{\textsf{#1}}
+\newcommand{\planetConstantsHeader}         {\file{\mytilde/planet/src/utilities/include/planet/planet\_constants.h}}
+\newcommand{\antiochMathConstantsHeader}    {\file{\mytilde/antioch/src/utilities/include/planet/math\_constants.h}}
+\newcommand{\antiochPhysicalConstantsHeader}{\file{\mytilde/antioch/src/utilities/include/planet/physical\_constants.h}}
 \newcommand{\object@code} [1]{\texttt{#1}}
 %%% math
 \newcommand{\doverd}        [2]{\ensuremath{\frac{\partial#1}{\partial#2}}}
@@ -126,22 +154,6 @@
 \newcommand{\ui}        {\ensuremath{\coeftype{u}}}
 \newcommand{\vi}        {\ensuremath{\coeftype{v}}}
 \newcommand{\matrice}[1]{\ensuremath{\mathbf{#1}}}
-%% libraries
-\gdef\make@library#1{\expandafter\gdef\csname#1\endcsname{\@library{#1}}}
-\newcommand{\@library}[1]{\texttt{#1}}
-\newcommand{\lib@git} [3]{\href{https://github.com/#1/#2}{#3}}
-%%
-\make@library{Antioch}%%defines \Antioch
-\make@library{GRINS}%%defines   \GRINS
-\make@library{LibMesh}%%defines \LibMesh
-\newcommand{\GitAntioch}{\lib@git{libantioch}{antioch}{\Antioch\ on Github}}
-\newcommand{\GitGrins}  {\lib@git{GRINSfem}{GRINS}{\GRINS\ on Github}}
-\newcommand{\GitLibmesh}{\lib@git{libMesh}{LibMesh}{\LibMesh\ on Github}}
-%%% files
-\newcommand{\file}[1]{\textsf{#1}}
-\newcommand{\planetConstantsHeader}         {\file{\mytilde/planet/src/utilities/include/planet/planet\_constants.h}}
-\newcommand{\antiochMathConstantsHeader}    {\file{\mytilde/antioch/src/utilities/include/planet/math\_constants.h}}
-\newcommand{\antiochPhysicalConstantsHeader}{\file{\mytilde/antioch/src/utilities/include/planet/physical\_constants.h}}
 %%%%%%%
 % remarks
 %%%%%%%
