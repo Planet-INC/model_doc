@@ -64,9 +64,9 @@ notconsidered/.style={opacity=0.2}
              (-0.5,7) -- ++(0,-4)
              (0.5,7)  -- ++(0,-4)
              (1.5,7)  -- ++(0,-4);
-\draw[isneeded,notconsidered] (hvfeval) -- (neureac);
-\draw[isneeded,notconsidered] (hvfeval) -- (ionreac);
 \end{pgfonlayer}
+\draw[isneeded,notconsidered] (hvfeval) ..controls ++(-0.5,-1)   and ++(0.5,-0.5) .. (neukineval);
+\draw[isneeded,notconsidered] (hvfeval) ..controls ++(-0.5,-0.7) and ++(0,-0.5) .. (ionkineval);
 
 \draw[stealth-stealth,notconsidered] (PPH) -- (PP)node[pos=0.5,fill=white]{$z$, $\{n_s\}$, $\{z_i\}$, $\{\{n_s\}_i\}$};
 \draw[-stealth,notconsidered] (grins) -- (PP)node[pos=0.5,fill=white]{$\frac{\partial n_s}{\partial \mathrm{t}} = \kinetics + \frac{1}{r^2}\frac{\partial\left(r^2n_s\omega_s\right)}{\partial r}$};

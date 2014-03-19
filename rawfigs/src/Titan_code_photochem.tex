@@ -63,8 +63,8 @@ notconsidered/.style={opacity=0.2}
              (-0.5,7) -- ++(0,-4)
              (0.5,7)  -- ++(0,-4)
              (1.5,7)  -- ++(0,-4);
-\draw[isneeded,notconsidered] (hvfeval) -- (neureac);
-\draw[isneeded,notconsidered] (hvfeval) -- (ionreac);
+\draw[isneeded,notconsidered] (hvfeval) ..controls ++(-0.5,-1)   and ++(0.5,-0.5) .. (neukineval);
+\draw[isneeded,notconsidered] (hvfeval) ..controls ++(-0.5,-0.7) and ++(0,-0.5) .. (ionkineval);
 \end{pgfonlayer}
 
 \draw[stealth-stealth,notconsidered] (PPH) -- (PP)node[pos=0.5,fill=white]{$z$, $\{n_s\}$, $\{z_i\}$, $\{\{n_s\}_i\}$};
