@@ -4,7 +4,10 @@ The most general model of diffusion is the model of \citet{Massman1998}, given
 in Eq.~\ref{Titan:diffusion_Massman} for the diffusion of species $s$ through
 species $m$.
 \begin{equationCode}{BinaryDiffusion}
-\diff_{s,m}(T,P) = \Amas{s,m} \frac{\Pz}{P}\left(\frac{T}{\Tz}\right)^{\smas{s,m}}
+\begin{split}
+\diff_{s,m}(T,P)   &     = \Amas{s,m} \frac{\Pz}{P}\left(\frac{T}{\Tz}\right)^{\smas{s,m}} \\
+\uu [cm^2\,s^{-1}] & \uu = [cm^2\,s^{-1}] \frac{[Pa]}{[Pa]} \left(\frac{[K]}{[K]}\right)^{[-]}
+\end{split}
 \label{Titan:diffusion_Massman}
 \end{equationCode}
 with \Pz\ and \Tz\ being constants (resp. $1~\unit{atm}$ and $0\unit{^\circ C}$).
@@ -99,13 +102,19 @@ The diffusion coefficient for one species $s$ is calculated as diffusing through
 a medium composed of the species $\{j_m\}$, the index $i$ meaning all the
 species:
 \begin{equationCode}{MolecularDiffusionEvaluator}
-\diff_s = \frac{\concAtm - \conc_s}{\displaystyle\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
+\begin{split}
+\diff_s             &     = \frac{\concAtm - \conc_s}{\displaystyle\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}} \\
+\uu [cm^2\,s^{-1}]  & \uu = \frac{[cm^{-3}] - [cm^{-3}]}{\frac{[cm^{-3}]}{[cm^2\,s^{-1}]}}
+\end{split}
 \label{Titan:Ds}
 \end{equationCode}
 
 The final diffusion coefficient is given by the equation~\ref{Titan:Ds-tilde}.
 \begin{equationCode}{MolecularDiffusionEvaluator}
-\tilde{\diff_s} = \frac{\diff_s}{1-\frac{\conc_s}{\concAtm}\left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}
+\begin{split}
+\tilde{\diff_s}     &     = \frac{\diff_s}{1-\frac{\conc_s}{\concAtm}\left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)} \\
+\uu  [cm^2\,s^{-1}] & \uu = \frac{[cm^2\,s^{-1}]}{[-] - \frac{[cm^{-3}]}{[cm^{-3}]}\left([-] - \frac{[g\,mol^{-1}]}{[g\,mol^{-1}]}\right)}
+\end{split}
 \label{Titan:Ds-tilde}
 \end{equationCode}
 avec \mean{\Mm_{\neq s}} the mean molecular mass of the atmosphere without

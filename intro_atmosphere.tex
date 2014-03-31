@@ -2,9 +2,11 @@ An atmospheric molecule, and by extension, an atmosphere, is characterized by
 its scale height, i.e. the distance over which the density is divided by $e$, and
 its mean free path, i.e. the mean length a molecule can cover before undergoing
 a collision.
-
 \begin{equation}
-\sch(z) = \frac{\kb T(z)}{\gloc(z)\mass}
+\begin{split}
+\sch(z)  &    = \frac{\kb T(z)}{\gloc(z)\mass} \\
+\uu [km] &\uu = 10^{-3} \frac{[\ukb] [K]}{[m\,s^{-2}][kg]} 
+\end{split}
 \label{scale_height}
 \end{equation}
 with \kb\ the Boltzmann constant, 
@@ -12,7 +14,10 @@ with \kb\ the Boltzmann constant,
 \Mm\ the molar mass and \Nav\ the Avogadro number), 
 $\gloc(z)$ the gravitationnal field at altitude $z$, given by the equation
 \begin{equation}
-\gloc(z) = \frac{\Guni\cdot\MPlanet}{\left(\RPlanet + z\right)^2}
+\begin{split}
+\gloc(z)        &     = \frac{\Guni\cdot\MPlanet}{\left(\RPlanet + z\right)^2} \\
+\uu [m\,s^{-2}] & \uu = \frac{[\uGuni] [kg]}{\left([km] + [km]\right)^2}
+\end{split}
 \label{gfield}
 \end{equation}
 
@@ -20,12 +25,18 @@ The mean free path is a collision process. Thus the molecule is approximated
 by a hard sphere (rigid molecule model), and its hard sphere radius enables
 to model a collision cross-section between two molecules $i$ and $j$:
 \begin{equation}
-\sigma^{(ij)}_\text{col} = \pi\left(r_i + r_j\right)^2
+\begin{split}
+\sigma^{(ij)}_\text{col} & = \pi\left(r_i + r_j\right)^2 \\
+\uu [cm^2]               & = \left([cm] + [cm]\right)^2
+\end{split}
 \label{sigma_collision}
 \end{equation}
 The mean free path of species $s$ is then expressed as:
 \begin{equation}
-\mfp_s = \frac{1}{\sum_{i=1}^{N}\conc_i\sigma^{(si)}_\text{col}\sqrt{1 + \frac{\mass_s}{\mass_i}}}
+\begin{split}
+\mfp_s   &     = \frac{1}{\sum_{i=1}^{N}\conc_i\sigma^{(si)}_\text{col}\sqrt{1 + \frac{\mass_s}{\mass_i}}} \\
+\uu [km] & \uu = 10^{-5}\left([cm^{-3}] [cm^2] \left([-] + [kg][kg]^{-1}\right)^{\frac{1}{2}}\right)^{-1}
+\end{split}
 \label{mean_free_path}
 \end{equation}
 The exobase is the altitude at wich the mean free path is equal to the scale height. At this
