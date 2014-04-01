@@ -109,7 +109,7 @@ $\phi_i\phi_j$                         & mass term\\
 \label{math:photo_solve}
 The photochemical equation, Eq.~\ref{Titan:photochem_eq}, can be written as:
 \begin{equation}
-\doverd{u}{t} - \chi - \diverge{u\omega} = 0
+\doverd{u}{t} - \chi + \diverge{u\omega} = 0
 \end{equation}
 with $\vect{u\omega} = u\vect{\omega}$, 
 we will thus operate the integration by parts on the \diverge{u\omega} term.
@@ -119,14 +119,14 @@ we will thus operate the integration by parts on the \diverge{u\omega} term.
 So here is the $v$ function, and what we need is an integration on
 the atmosphere:
 \begin{equation}
-\intvol\left[\doverd{u}{t}v - \chi v - \diverge{u\omega} v\right] \dd V = 0
+\intvol\left[\doverd{u}{t}v - \chi v + \diverge{u\omega} v\right] \dd V = 0
 \label{math:solve:3D_photo}
 \end{equation}
 with $V$ a volume element
 \begin{equation}
   \intvol\doverd{u}{t}v\dd V 
 - \intvol\chi v \dd V 
-- \intvol\diverge{u\omega}v \dd V  = 0
++ \intvol\diverge{u\omega}v \dd V  = 0
 \label{math:photo_3D_start}
 \end{equation}
 Thus, integration by parts will give,
@@ -134,8 +134,8 @@ using that $\left(\diverge{u\omega}\right) v = \diverge{vu\omega}$:
 \begin{equation}
   \intvol\doverd{u}{t}v\dd V
 - \intvol\chi v \dd V 
-+ \intvol u\omega \diverge{v} \dd V 
-- \intboundary u\vect{\omega}\vect{s}v \dboundary = 0
+- \intvol u\omega \diverge{v} \dd V 
++ \intboundary u\vect{\omega}\vect{s}v \dboundary = 0
 \label{math:photo_3D_fin}
 \end{equation}
 Using the formulation:
@@ -148,8 +148,8 @@ we rewrite Eq.~\ref{math:photo_3D_fin}
 \begin{split}
   \underbrace{\sum_{i=1}^N\sum_{j=1}^N\ui_i\vi_j\intvol\doverd{\phi_i}{t}\phi_j\dd V}_{\text{mass\_residual}}
 - \underbrace{\sum_{j=1}^N\vi_j\intvol\chi \phi_j \dd V}_\text{element\_time\_derivative} \\
-+ \underbrace{\sum_{i=1}^N\sum_{j=1}^N\ui_i\vi_j\intvol \phi_i\omega \diverge{\phi_j} \dd V}_\text{element\_time\_derivative}
-- \underbrace{\intboundary u\vect{\omega}\vect{s}v \dboundary}_\text{side\_time\_derivative} & = 0
+- \underbrace{\sum_{i=1}^N\sum_{j=1}^N\ui_i\vi_j\intvol \phi_i\omega \diverge{\phi_j} \dd V}_\text{element\_time\_derivative}
++ \underbrace{\intboundary u\vect{\omega}\vect{s}v \dboundary}_\text{side\_time\_derivative} & = 0
 \end{split}
 \end{equation}
 
@@ -164,14 +164,14 @@ we integrate on $\theta$ and $\varphi$,
 which gives a constant we can get rid of.
 \begin{equation}
 \intr\left[   \doverd{u}{t} v 
-                       - \chi v - \frac{1}{r^2}\doverd{(r^2u\omega)}{r} v
+                       - \chi v + \frac{1}{r^2}\doverd{(r^2u\omega)}{r} v
                 \right] \dVs = 0
 \end{equation}
 thus
 \begin{equation}
 \int_{r_0}^{r_1}\left[   \doverd{u}{t} v 
-                       - \chi v - \doverd{(u\omega)}{r} v
-                       - \frac{2}{r}u\omega v
+                       - \chi v + \doverd{(u\omega)}{r} v
+                       + \frac{2}{r}u\omega v
                 \right] r^2\dd r = 0
 \end{equation}
 now we integrate by parts:
@@ -188,16 +188,16 @@ So
 \begin{split}
 \int_{r_0}^{r_1} \left[   \doverd{u}{t} v r^2 \dd r
                         - \chi v
-                        - \frac{2}{r} u\omega v
-                        + u\omega\doverd{v}{r}
                         + \frac{2}{r} u\omega v
+                        - u\omega\doverd{v}{r}
+                        - \frac{2}{r} u\omega v
                  \right] r^2 \dd r 
-     - \left[u\omega v r^2\right]_{r_0}^{r_1}   & = 0 \\
+     + \left[u\omega v r^2\right]_{r_0}^{r_1}   & = 0 \\
 \int_{r_0}^{r_1} \left[   \doverd{u}{t} v r^2 \dd r
                         - \chi v
-                        + u\omega\doverd{v}{r}
+                        - u\omega\doverd{v}{r}
                  \right] r^2 \dd r 
-     - \left[u\omega v r^2\right]_{r_0}^{r_1}   & = 0 
+     + \left[u\omega v r^2\right]_{r_0}^{r_1}   & = 0 
 \end{split}
 \end{equation}
 using again the notations:
@@ -209,16 +209,16 @@ We obtain:
  \int_{r_0}^{r_1}\left[
                   \sum_{i=0}^{N}\ui_i\doverd{\phi_i}{t} \sum_{j=0}^{N}\vi_j \phi_j
                  - \chi \sum_{i=0}^{N}\vi_i\phi_i 
-                 + \sum_{i=0}^{N}\ui_i\phi_i\omega\sum_{j=0}^{N}\vi_j\doverd{\phi_j}{r}\right]r^2\dd r
- - \left[u\omega v r^2\right]_{r_0}^{r_1} = 0
+                 - \sum_{i=0}^{N}\ui_i\phi_i\omega\sum_{j=0}^{N}\vi_j\doverd{\phi_j}{r}\right]r^2\dd r
+ + \left[u\omega v r^2\right]_{r_0}^{r_1} = 0
 \end{equation}
 The rearrangement gives:
 \begin{equation}
 \begin{split}
   \underbrace{\sum_{i=1}^{N}\sum_{j=0}^{N}\ui_i\vi_j\int_{r_0}^{r_1}\doverd{\phi_i}{t}\phi_jr^2\dd r}_\text{mass\_residual}
 - \underbrace{\sum_{i=0}^{N}\vi_i\int_{r_0}^{r_1}\chi\phi_i r^2\dd r}_\text{element\_time\_derivative} \\
-+ \underbrace{\sum_{i=0}^{N}\sum_{j=0}^{N}\ui_i\vi_j\int_{r_0}^{r_1}\omega\phi_i\doverd{\phi_j}{r}r^2\dd r}_\text{element\_time\_derivative}
- - \underbrace{\left[u\omega v r^2\right]_{r_0}^{r_1}}_\text{side\_time\_derivative}  & = 0
+- \underbrace{\sum_{i=0}^{N}\sum_{j=0}^{N}\ui_i\vi_j\int_{r_0}^{r_1}\omega\phi_i\doverd{\phi_j}{r}r^2\dd r}_\text{element\_time\_derivative}
++ \underbrace{\left[u\omega v r^2\right]_{r_0}^{r_1}}_\text{side\_time\_derivative}  & = 0
 \end{split}
 \end{equation}
 
