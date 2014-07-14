@@ -1,0 +1,26 @@
+\documentclass{article}
+\usepackage{geometry,tikz,pgfplots}
+\pgfplotsset{compat=newest}
+\geometry{paperwidth=8cm,paperheight=7cm}
+\pagestyle{empty}
+\begin{document}
+\begin{tikzpicture}[overlay,remember picture]
+\begin{axis}[at={(current page.center)}, anchor=outer center,
+             xlabel = $x$,
+             ylabel = $f(x)$,
+             axis lines=center,
+             clip=false,
+             xtick={2,4,...,10},
+             extra x ticks={9,6.3846,5.50419},
+             extra x tick labels={$x_0$,$x_1$,$x_2$}
+            ]
+\addplot[red,mark=none,smooth,samples=50,domain=3:10] {x^2 - 5*x - 2};
+\addplot[blue,mark=none,samples=2,domain=6:9.5] {13*x-83};
+\addplot[blue,mark=none,samples=2,domain=5:7] {7.7692*x-42.76331};
+\foreach \x/\y in {2.5/-8.25,9/34,6.3846/6.8402,5.50419/0.77515}
+  \addplot[error bars/.cd, y dir=minus,y fixed relative = 1,error bar style={dashed}] coordinates {(\x,\y)};
+%%
+%\addplot[stealth-stealth,mark=none,domain=1.5:3.5,samples=2] {-8.25};
+\end{axis}
+\end{tikzpicture}
+\end{document}

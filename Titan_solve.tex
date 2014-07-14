@@ -34,3 +34,40 @@ upper boundary is above the exobase, the limit above which we can consider that
 the processes happening are collisionless. Thus the upper boundary condition
 is expressed on the fluxes, stating that \doverdz{\conc} is the Jeans' flux
 at the upper bound.
+
+\section{Ionospheric solver}
+
+The ionosphere is at steady-state with respect to the
+neutral system. Thus we want to solve, neutral species
+densities being constant:
+\begin{equation}
+\forall i \in \text{ ions system },\quad \doverdt{\conc_i} = 0
+\label{ionosphere:steady_state}
+\end{equation}
+%
+This is a somewhat ``easy'' solve, thus a Newton method is the
+most appropriate, as it has the optimal convergence rate.
+Newton's method is an iterative method, the idea is to start
+at a first guess, solve for value of $x$ at which the tangent is
+equal to zero, which will be the next guess (see Fig.~\ref{Newton:solve}).
+\begin{figure}
+\centering
+\includegraphics{Newton}
+\caption{\label{Newton:solve}From a first guess $x_0$, we iteratively
+comes to the solution. The iteration is defined as $x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}$.}
+\end{figure}
+We solve the ensemble of equations:
+\begin{equation}
+\underbrace{\mat{\doverd{\conc_i}{\conc_j}}}_{\mat{f'(x)}} 
+                \underbrace{\left(\mat{\conc}_{n+1} - \mat{\conc}_n\right)}_{\mat{X}} + 
+                \underbrace{\mat{\doverdt{\conc}}}_{\mat{f(x)}} = 0
+\label{ionosphere:Newton}
+\end{equation}
+thus
+\begin{equation}
+\mat{\conc}_{n+1} = \mat{\conc}_n + \mat{X}
+\label{ionosphere:Newton:iter}
+\end{equation}
+
+\Eigen\footnote{\EigenTux} solves the matrix system defined in Eq.~\ref{ionosphere:Newton}, \PINC\ calculates
+the needed values, \textit{i.e.} the jacobian and mole sources.

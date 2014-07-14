@@ -45,18 +45,36 @@
 \make@{library}{tt}
 \newcommand{\lib@git} [3]{\href{https://github.com/#1/#2}{#3}}
 %%
-\make@library{Antioch}%%defines \Antioch
-\make@library{GRINS}%%defines   \GRINS
-\make@library{LibMesh}%%defines \LibMesh
+\make@library{Antioch} %%defines \Antioch
+\make@library{GRINS}   %%defines \GRINS
+\make@library{LibMesh} %%defines \LibMesh
+\make@library{Eigen}   %%defines \Eigen
+\newcommand{\PINC}{\library{Planet\_INC}}
 \newcommand{\GitAntioch}{\lib@git{libantioch}{antioch}{\Antioch\ on Github}}
 \newcommand{\GitGrins}  {\lib@git{GRINSfem}{GRINS}{\GRINS\ on Github}}
 \newcommand{\GitLibmesh}{\lib@git{libMesh}{LibMesh}{\LibMesh\ on Github}}
+\newcommand{\EigenTux}  {\href{eigen.tuxfamily.org/}{\Eigen\ on tuxfamily}}
+
 %%% files
 \newcommand{\file}[1]{\textsf{#1}}
 \newcommand{\planetConstantsHeader}         {\file{\mytilde/planet/src/utilities/include/planet/planet\_constants.h}}
 \newcommand{\antiochMathConstantsHeader}    {\file{\mytilde/antioch/src/utilities/include/planet/math\_constants.h}}
 \newcommand{\antiochPhysicalConstantsHeader}{\file{\mytilde/antioch/src/utilities/include/planet/physical\_constants.h}}
 \newcommand{\object@code} [1]{\texttt{#1}}
+
+%%% versions
+\newcounter{vmajor}
+\newcounter{vmedium}
+\newcounter{vminor}
+
+\newcommand{\version}[3]{%
+\setcounter{vmajor}{#1}
+\setcounter{vmedium}{#2}
+\setcounter{vminor}{#3}
+}
+%
+\newcommand{\theversion}{\font@library{\thevmajor.\thevmedium.\thevminor}}
+
 %%% math
 \newcommand{\doverd}        [2]{\ensuremath{\frac{\partial#1}{\partial#2}}}
 \newcommand{\ddoverd}       [2]{\ensuremath{\frac{\partial^2#1}{\partial{#2}^2}}}
@@ -64,6 +82,7 @@
 \newcommand{\doverdz}       [1]{\doverd{#1}{z}}
 \newcommand{\ddoverdz}      [1]{\ddoverd{#1}{z}}
 \newcommand{\dOverdz}       [1]{\dOverd{#1}{z}}
+\newcommand{\doverdt}       [1]{\ensuremath{\frac{\dd #1}{\dd t}}}
 \newcommand{\vect}          [1]{\ensuremath{\overrightarrow{#1}}}
 \newcommand{\diverge}       [1]{\ensuremath{\vect{\nabla}\cdot(\vect{#1})}}
 \newcommand{\divergex}      [2]{\ensuremath{\partial_{#1}{\vect{#2}}}}
@@ -74,6 +93,7 @@
 \newcommand{\vectprod}      [2]{\ensuremath{#1\cdot#2}}
 \newcommand{\coeffderiv}    [3]{\ensuremath{a^{(#1)}_{#2#3}}}
 \newcommand{\coeffderivdiff}[2]{\coeffderiv{\conc_s\omega_s}{#1}{#2}}
+\newcommand{\mat}           [1]{\ensuremath{\left[\mathbf{#1}\right]}}
 %%% global
 \newcommand{\h}        {\ensuremath{\mathrm{h}}}
 \newcommand{\dd}       {\ensuremath{\mathrm{d}}}
