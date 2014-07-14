@@ -50,24 +50,57 @@ most appropriate, as it has the optimal convergence rate.
 Newton's method is an iterative method, the idea is to start
 at a first guess, solve for value of $x$ at which the tangent is
 equal to zero, which will be the next guess (see Fig.~\ref{Newton:solve}).
+
+The tangent at $x_n$ is an affine function, thus of the form
+$ax + b$, with $a = f'(x_n) = \doverd{f}{x}(x_n)$. This function
+admits the point $(x_n,f(x_n))$ as a solution, thus:
+\begin{equation}
+\begin{split}
+              & f'(x_n) x_n + b = f(x_n) \\
+\Rightarrow\; & b = f(x_n) - f'(x_n) x_n
+\end{split}
+\label{Newton:tangent}
+\end{equation}
+Thus, the tangent admits one root at:
+\begin{equation}
+\begin{split}
+              & f'(x_n) x_\text{root} + f(x_n) - f'(x_n) x_n = 0 \\
+\Rightarrow\; & f'(x_n) \left(x_\text{root} - x_n \right) + f(x_n) = 0
+\end{split}
+\label{Newton:tangent:root}
+\end{equation}
+the root being $x_{n+1}$.
+
+Numerically, what happens is solving the equation
+\begin{equation}
+f'(x_n)X - f(x) = 0,
+\label{Newton:solving}
+\end{equation}
+with $X = x_{n+1} - x_n$, then, trivially get $x_{n+1}$ from
+$X$ and $x_n$.
 \begin{figure}
 \centering
 \includegraphics{Newton}
 \caption{\label{Newton:solve}From a first guess $x_0$, we iteratively
 comes to the solution. The iteration is defined as $x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}$.}
 \end{figure}
-We solve the ensemble of equations:
+
+In an atmospheric case, $x$ is the molar composition, thus the
+vector of densities (\mat{\conc_0,\dots,\conc_N}), 
+the function $f$ is the molar rate 
+and the function $f'$ is the Jacobian matrix. Thus
+the solving equation is:
 \begin{equation}
-\underbrace{\mat{\dOverd{\doverdt{\conc_i}}{\conc_j}}}_{\mat{f'(x)}} 
-                \underbrace{\left(\mat{\conc}_{n+1} - \mat{\conc}_n\right)}_{\mat{X}} + 
-                \underbrace{\mat{\doverdt{\conc}}}_{\mat{f(x)}} = 0
-\label{ionosphere:Newton}
-\end{equation}
-thus
-\begin{equation}
-\mat{\conc}_{n+1} = \mat{\conc}_n + \mat{X}
-\label{ionosphere:Newton:iter}
+\left[
+\begin{array}{ccc}
+\dOverd{\doverdt{\conc_0}}{\conc_0} & \dots  & \dOverd{\doverdt{\conc_0}}{\conc_N} \\
+ \vdots                             & \ddots & \vdots \\
+\dOverd{\doverdt{\conc_N}}{\conc_0} & \dots  & \dOverd{\doverdt{\conc_N}}{\conc_N} \\
+\end{array}
+\right] 
+\left[X_0,\dots,X_n\right]^{\perp} - \left[\doverdt{\conc_0},\dots,\doverdt{\conc_N}\right] = 0
+\label{Newton:matrix_solve}
 \end{equation}
 
-\Eigen\footnote{\EigenTux} solves the matrix system defined in Eq.~\ref{ionosphere:Newton}, \PINC\ calculates
-the needed values, \textit{i.e.} the jacobian and mole sources.
+\Eigen\footnote{\EigenTux} solves the matrix system defined in Eq.~\ref{Newton:matrix_solve}, \PINC\ calculates
+the needed values, \textit{i.e.} the jacobian matrix and mole sources vector.
