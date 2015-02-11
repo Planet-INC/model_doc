@@ -2,7 +2,26 @@ Eddy diffusion
 \begin{equationCode}{EddyDiffusionEvaluator}
 \begin{split}
 \eddy              &     = \eddy_0  \sqrt{\frac{\concAtm(\zmin)}{\concAtm(z)}} \\
-\uu [cm^2\,s^{-1}] & \uu = [cm^2\,s^{-1}] \left(\frac{[cm^{-3}]}{[cm^{-3}]}\right)^{\frac{1}{2}}
+\uu [cm^2\,s^{-1}] & \uu = [cm^2\,s^{-1}] \left(\frac{[cm^{-3}]}{[cm^{-3}]}\right)^{\frac{1}{2}} \\
 \end{split}
 \label{Titan:eddy_diff}
+\end{equationCode}
+
+The derivatives are:
+\begin{equationCode}{EddyDiffusionEvaluator}
+\begin{split}
+\doverd{\eddy}{\conc_k} & = - \frac{\eddy}{2\concAtm(z)} \\
+\uu \frac{[cm^2\,s^{-1}]}{[cm^{-3}]} & \uu = -\frac{[cm^2\,s^{-1}]}{[cm^{-3}]}
+\end{split}
+\label{Titan:eddy_diff_der_n}
+\end{equationCode}
+%
+and
+%
+\begin{equationCode}{EddyDiffusionEvaluator}
+\begin{split}
+\doverd{\eddy}{T} & = 0 \\
+\uu \frac{[cm^2\,s^{-1}]}{[K]} & \uu = [cm^2\,s^{-1}\,K^{-1}]
+\end{split}
+\label{Titan:eddy_diff_der_T}
 \end{equationCode}

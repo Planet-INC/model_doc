@@ -7,6 +7,15 @@
 \newcommand{\fakeequalspace}{%
 \settowidth{\fakespace}{= }%
 \hspace{\fakespace}}
+\newcommand{\mathdashrule}{%
+\newcount\r%
+\r=0
+\loop\advance\r by1\rule{5mm}{0.4pt}\hspace{2.5mm}\ifnum\r < 2\repeat%
+\rule{5mm}{0.4pt}\hspace{1.25mm} & 
+\hspace{1.25mm}%
+\loop\advance\r by1\rule{5mm}{0.4pt}\hspace{2.5mm}\ifnum\r < 4\repeat%
+\rule{5mm}{0.4pt}%
+}
 %%% from report.cls, adapated
 %%% added the makegraph stuff and
 %% redefined \thesubsection to protect it and below
@@ -138,7 +147,7 @@
 \newcommand{\Pz}      {\ensuremath{\mathrm{P_0}}}
 \newcommand{\Amas} [1]{\ensuremath{\diff_{#1}(0,1)}}
 \newcommand{\smas} [1]{\ensuremath{\beta_{#1}}}
-\newcommand{\diff@}[2]{\ensuremath{#1^\text{(#2)}}}
+\newcommand{\diff@}[2]{\ensuremath{#1^{\text{(#2)}}}}
 \newcommand{\Pwa}     {\diff@{\mathrm{P}}{wa}}
 \newcommand{\Awa}  [1]{\diff@{A_{#1}}{wa}}
 \newcommand{\swa}  [1]{\diff@{\beta_{#1}}{wa}}

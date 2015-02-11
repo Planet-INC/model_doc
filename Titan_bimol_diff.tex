@@ -6,17 +6,41 @@ species $m$.
 \begin{equationCode}{BinaryDiffusion}
 \begin{split}
 \diff_{s,m}(T,P)   &     = \Amas{s,m} \frac{\Pz}{P}\left(\frac{T}{\Tz}\right)^{\smas{s,m}} \\
-\uu [cm^2\,s^{-1}] & \uu = [cm^2\,s^{-1}] \frac{[Pa]}{[Pa]} \left(\frac{[K]}{[K]}\right)^{[-]}
+\uu [cm^2\,s^{-1}] & \uu = [cm^2\,s^{-1}] \frac{[Pa]}{[Pa]} \left(\frac{[K]}{[K]}\right)^{[-]} \\
 \end{split}
 \label{Titan:diffusion_Massman}
 \end{equationCode}
+%%%
+The derivative with respect to densities is given by
+%%%
+\begin{equationCode}{BinaryDiffusion}
+\begin{split}
+\doverd{\diff_{s,m}}{\conc_k}      & = - \diff_{s,m}(T,P)\frac{1}{\concAtm}\\
+\uu \frac{[cm^2\,s^{-1}]}{[cm^{-3}]} & \uu = [cm^{-2}\,s^{-1}]\frac{[cm^{-3}]}{[cm^{-3}]^2}\\ 
+\end{split}
+\label{Titan:diffusion_Massman_dn}
+\end{equationCode}
+%%%
+and with respect to temperature by
+%%%
+\begin{equationCode}{BinaryDiffusion}
+\begin{split}
+\doverd{\diff_{s,m}}{T}       & =   \diff_{s,m}(T,P)\frac{\smas{s,m} - 1}{T}\\
+\uu \frac{[cm^2\,s^{-1}]}{[K]} & \uu = [cm^{-2}\,s^{-1}]\frac{[-]}{[K]}\\ 
+\end{split}
+\label{Titan:diffusion_Massman_dT}
+\end{equationCode}
+%
 with \Pz\ and \Tz\ being constants (resp. $1~\unit{atm}$ and $0\unit{^\circ C}$).
 \citet{Wakeham1973} use a simplified model, basiquelly the same at $P=\numprint{1.0133}~\unit{bar}$, thus
 their model is easily defined in terms of \citet{Massman1998} model. In \citet{WilsonPhD,Haye2005},
 we have another model, using concentration instead of pressure. The conversion is done
 using the ideal gas constant relation (Eq.~\ref{idealGas}).
 \begin{equation}
-P = \concAtm\kb T
+\begin{split}
+P        & = \concAtm\kb T \\
+\uu [Pa] & = \uu 10^{6} [cm^{-3}][\ukb] [K]
+\end{split}
 \label{idealGas}
 \end{equation}
 with \kb\ being the Boltzmann constant.
@@ -36,6 +60,7 @@ and
 \end{equation}
 with $\Tref = 1~\unit{K}$, measurements were performed at $\Pwa =\concwa \kb T = \numprint{1.0133}~\unit{bar}$.
 Tab.~\ref{Titan:diffusion_corres} show the correspondencies.
+%
 \begin{table}
 \centering
 \begin{tabular}{r@{\;}c@{}c@{}ccc}\toprule %just to fit in the page
@@ -67,8 +92,27 @@ Tab.~\ref{Titan:diffusion_corres} show the correspondencies.
 %%%
 \\\bottomrule
 \end{tabular}
-\caption{\label{Titan:diffusion_corres}Correspondancies between the different diffusion models.}
+\caption{\label{Titan:diffusion_corres}Correspondancies between the different diffusion models. Be aware
+of the special situation of the Wakeham model.}
 \end{table}
+%
+Let's note that on all generality, the diffusion coefficient depends
+on temperature and pressure or the total number of moles. Indeed these
+three quantities are related by the ideal gas equation \eqref{idealGas}. The
+Wakeham equation is the most general one, as only the temperature dependance
+is explicit. Thus there is a choice to be made when transfering from one
+model to the other: do we make a dependance over pressure or number of mole?
+This choice will alter the temperature dependance, therefore the expression of
+the derivative
+with respect to temperature will depend on that choice:
+\begin{equation}
+\begin{split}
+\doverd{\diff_{i,j}}{T}  & = \doverd{\Awa{i,j}}{T} \left(\frac{T}{\Tref}\right)^{\swa{i,j}} + \swa{i,j}\Awa{i,j}\frac{T^{\swa{i,j} - 1}}{\Tref^{\swa{i,j}}} \\
+                         & = \doverd{\Awa{i,j}}{P/\concAtm}\doverd{P/\concAtm}{T} \left(\frac{T}{\Tref}\right)^{\swa{i,j}} + \swa{i,j}\Awa{i,j}\frac{T^{\swa{i,j} - 1}}{\Tref^{\swa{i,j}}} \\
+                         & = \doverd{\Awa{i,j}}{P}\concAtm\kb \left(\frac{T}{\Tref}\right)^{\swa{i,j}} + \swa{i,j}\Awa{i,j}\frac{T^{\swa{i,j} - 1}}{\Tref^{\swa{i,j}}} \\
+                         & = - \doverd{\Awa{i,j}}{\concAtm}\frac{P}{\kb T^2} \left(\frac{T}{\Tref}\right)^{\swa{i,j}} + \swa{i,j}\Awa{i,j}\frac{T^{\swa{i,j} - 1}}{\Tref^{\swa{i,j}}} \\
+\end{split}
+\end{equation}
 
 \subsection{No data model}
 
@@ -76,52 +120,155 @@ In the case of no data, we use the relations~\ref{Titan:Diff_no_data}
 \begin{equation}
 \renewcommand{\arraystretch}{2}
 \diff_{s,m}(T,P) =
-\left\{\begin{array}{l@{\quad}r}
-\diff_{m,m}(T,P)\sqrt{\frac{\frac{\Mm_s}{\Mm_m} + 1}{2}} & \text{if }\Mm_s < \Mm_m    \\
-\diff_{m,m}(T,P)\sqrt{\frac{\Mm_s}{\Mm_m}}               & \text{if }\Mm_s \geq \Mm_m \\
-\end{array}\right.
+                   \left\{\begin{array}{l@{\quad}r}
+                          \diff_{m,m}(T,P)\sqrt{\frac{\frac{\Mm_s}{\Mm_m} + 1}{2}} & \text{if }\Mm_s < \Mm_m    \\
+                          \diff_{m,m}(T,P)\sqrt{\frac{\Mm_s}{\Mm_m}}               & \text{if }\Mm_s \geq \Mm_m \\
+                   \end{array}\right.
 \label{Titan:Diff_no_data}
 \end{equation}
+%
 We can so say:
+%
 \begin{equation}
 \begin{split}
 \renewcommand{\arraystretch}{2}
-&\smas{s,m} = \smas{m,m} \\ 
-&\Amas{s,m} =
-\left\{\begin{array}{l@{\quad}r}
-\Amas{m,m}\sqrt{\frac{\frac{\Mm_s}{\Mm_m} + 1}{2}} & \text{if }\Mm_s < \Mm_m    \\
-\Amas{m,m}\sqrt{\frac{\Mm_s}{\Mm_m}}                    & \text{if }\Mm_s \geq \Mm_m \\
-\end{array}\right.
+ & \smas{s,m} = \smas{m,m} \\ 
+ & \Amas{s,m} =
+               \left\{\begin{array}{l@{\quad}r}
+                      \Amas{m,m}\sqrt{\frac{\frac{\Mm_s}{\Mm_m} + 1}{2}} & \text{if }\Mm_s < \Mm_m    \\
+                      \Amas{m,m}\sqrt{\frac{\Mm_s}{\Mm_m}}               & \text{if }\Mm_s \geq \Mm_m \\
+               \end{array}\right.
 \end{split}
 \label{Titan:Diff_no_data_to_Massman}
 \end{equation}
 
+The derivatives are:
+\begin{equation}
+\doverd{\diff_{s,m}}{T} = \doverd{\diff_{m,m}}{T} \times
+               \left\{\begin{array}{l@{\quad}r}
+                      \sqrt{\frac{\frac{\Mm_s}{\Mm_m} + 1}{2}} & \text{if }\Mm_s < \Mm_m    \\
+                      \sqrt{\frac{\Mm_s}{\Mm_m}}               & \text{if }\Mm_s \geq \Mm_m \\
+               \end{array}\right.
+\end{equation}
+%
+and
+%
+\begin{equation}
+\doverd{\diff_{s,m}}{\conc_k} = \doverd{\diff_{m,m}}{\conc_k} \times
+               \left\{\begin{array}{l@{\quad}r} 
+                      \sqrt{\frac{\frac{\Mm_s}{\Mm_m} + 1}{2}} & \text{if }\Mm_s < \Mm_m    \\
+                      \sqrt{\frac{\Mm_s}{\Mm_m}}               & \text{if }\Mm_s \geq \Mm_m \\
+               \end{array}\right.
+\end{equation}
+
+
 \subsection{Bimolecular diffusion coefficient}
 
 The diffusion coefficient for one species $s$ is calculated as diffusing through
-a medium composed of the species $\{j_m\}$, the index $i$ meaning all the
-species:
+a medium composed of the species $\{j_m\}$:
 \begin{equationCode}{MolecularDiffusionEvaluator}
 \begin{split}
 \diff_s             &     = \frac{\concAtm - \conc_s}{\displaystyle\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}} \\
-\uu [cm^2\,s^{-1}]  & \uu = \frac{[cm^{-3}] - [cm^{-3}]}{\frac{[cm^{-3}]}{[cm^2\,s^{-1}]}}
+\uu [cm^2\,s^{-1}]  & \uu = \frac{[cm^{-3}] - [cm^{-3}]}{\frac{[cm^{-3}]}{[cm^2\,s^{-1}]}} \\
 \end{split}
 \label{Titan:Ds}
+\end{equationCode}
+%%
+The derivative with respect to densities:
+%%
+\begin{equationCode}{MolecularDiffusionEvaluator}
+\begin{split}
+\doverd{\diff_s}{\conc_k} & = \frac{\diff_s}{\displaystyle\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
+                                \left(\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}^2}\doverd{\diff_{s,j_m}}{\conc_k} 
+                                      \underbrace{- \frac{1}{\diff_{s,k}}}_{\text{if }k \in \{j_m\}}
+                                \right)
+                              + \underbrace{\frac{\diff_s}{\concAtm - \conc_s}}_{\text{if } s \neq k}
+\\
+\uu \frac{[cm^2\,s^{-1}]}{[cm^{-3}]} & \uu =
+                              \frac{[cm^{2}\,s^{-1}]}{{\left(\displaystyle\sum_{j_m \neq s}\frac{[cm^{-3}]}{[cm^2\,s^{-1}]}\right)}^2}
+                                \left(\sum_{j_m \neq s}\frac{[cm^{-3}]}{[cm^2\,s^{-1}]^2}\frac{[cm^2\,s^{-1}]}{[cm^{-3}]} - \underbrace{\uu\frac{1}{[cm^2\,s^{-1}]}}_{\text{if }k \in j_m}\right) \\[5pt]
+                                     & \uu\fakeequalspace +
+                              \underbrace{\uu\frac{[cm^2\,s^{-1}]}{{[cm^{-3}] - [cm^{-3}]}}}_{\text{if } s \neq k} \\
+\end{split}
+\label{Titan:Ds_dn}
+\end{equationCode}
+%%
+and with respect to temperature
+\begin{equationCode}{MolecularDiffusionEvaluator}
+\begin{split}
+\doverd{\diff_s}{T} & = \diff_s \frac{\displaystyle\sum_{j_m \neq s} \frac{\conc_{j_m}}{\diff_{j_m,s}^2} \doverd{\diff_{j_m,s}}{T}}
+                                     {\displaystyle\sum_{j_m \neq s} \frac{\conc_{j_m}}{\diff_{j_m,s}}} \\
+\uu \frac{[cm^2\,s^{-1}]}{[K]} & \uu = [cm^2\,s^{-1}] \frac{\displaystyle\sum_{j_m \neq s} \frac{[cm^{-3}]}{[cm^2\,s^{-1}]^2}\frac{[cm^2\,s^{-1}]}{[K]} }
+                                                           {\displaystyle\sum_{j_m \neq s} \frac{[cm^{-3}]}{[cm^2\,s^{-1}]}}
+\end{split}
+\label{Titan:Ds_dT}
 \end{equationCode}
 
 The final diffusion coefficient is given by the equation~\ref{Titan:Ds-tilde}.
 \begin{equationCode}{MolecularDiffusionEvaluator}
 \begin{split}
 \tilde{\diff_s}     &     = \frac{\diff_s}{1-\frac{\conc_s}{\concAtm}\left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)} \\
-\uu  [cm^2\,s^{-1}] & \uu = \frac{[cm^2\,s^{-1}]}{[-] - \frac{[cm^{-3}]}{[cm^{-3}]}\left([-] - \frac{[g\,mol^{-1}]}{[g\,mol^{-1}]}\right)}
+\uu  [cm^2\,s^{-1}] & \uu = \frac{[cm^2\,s^{-1}]}{[-] - \frac{[cm^{-3}]}{[cm^{-3}]}\left([-] - \frac{[g\,mol^{-1}]}{[g\,mol^{-1}]}\right)} \\
 \end{split}
 \label{Titan:Ds-tilde}
 \end{equationCode}
-avec \mean{\Mm_{\neq s}} the mean molecular mass of the atmosphere without
+%%
+The derivative are given by
+%%
+\begin{equationCode}{MolecularDiffusionEvaluator}
+\begin{split}
+\doverd{\tilde{\diff_s}}{\conc_k} 
+                          & = \frac{\tilde{\diff_s}}{\diff_s}\doverd{\diff_s}{\conc_k}
+                              - \frac{\tilde{\diff_s}}{1-\frac{\conc_s}{\concAtm}\left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)} \\
+                          & \fakeequalspace
+                                \left( \left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}} \right)
+                                        \left(\underbrace{-\frac{1}{\concAtm}}_{\text{if } k = s} + \frac{\conc_s}{\concAtm^2}\right)
+                                       + \frac{\conc_s}{\concAtm}\frac{\Mm_s}{\mean{\Mm_{\neq s}}^2}\doverd{\mean{\Mm_{\neq s}}}{\conc_k}
+                                \right) \\[5pt]
+\uu \frac{[cm^2\,s^{-1}]}{[cm^{-3}]} & \uu = \frac{[cm^2\,s^{-1}]}{[cm^2\,s^{-1}]}\frac{[cm^2\,s^{-1}]}{[cm^{-3}]}
+                                             - \frac{[cm^2\,s^{-1}]}{[-] - \frac{[cm^{-3}]}{[cm^{-3}]}\left([-] - \frac{[g\,mol^{-1}]}{[g\,mol^{-1}]}\right)} \\
+                                     & \uu \fakeequalspace
+                                              \left(\left([-] - \frac{[g\,mol^{-1}]}{[g\,mol^{-1}]}\right)
+                                                    \left(\underbrace{\uu-\frac{[-]}{[cm^{-3}]}}_{\text{if }s = k} + 
+                                                           \frac{[cm^{-3}]}{[cm^{-3}]^2}\right)
+                                                   + \frac{[cm^{-3}]}{[cm^{-3}]}\frac{[g\,mol^{-1}]}{[g\,mol^{-1}]^2}\frac{[g\,mol^{-1}]}{[cm^{-3}]}
+                                              \right)
+\end{split}
+\label{Titan:Ds-tilde_dn}
+\end{equationCode}
+%%%
+and
+%%%
+\begin{equationCode}{MolecularDiffusionEvaluator}
+\begin{split}
+\doverd{\tilde{\diff_s}}{T}    & = \doverd{\diff_s}{T} \frac{1}{1 - \frac{\conc_s}{\concAtm}\left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)} \\
+\uu \frac{[cm^2\,s^{-1}]}{[K]} & \uu = \frac{[cm^2\,s^{-1}]}{[K]} \frac{[-]}{[-] - \frac{[cm^{-3}]}{[cm^{-3}]}\left([-] - \frac{[g\,mol^{-1}]}{[g\,mol^{-1}]}\right)}
+\end{split}
+\label{Titan:Ds-tilde_dT}
+\end{equationCode}
+%%
+with \mean{\Mm_{\neq s}} the mean molecular mass of the atmosphere without
 species $s$:
 \begin{equation}
-\mean{\Mm_{\neq s}}   = \sum_{i\neq s} \frac{\conc_i}{\concAtm - \conc_s}\Mm_i
-                      = \frac{\vectProd{\Mm}{\conc} - \conc_s\Mm_s}{\concAtm - \conc_s}
+\begin{split}
+\mean{\Mm_{\neq s}} &  = \sum_{i\neq s} \frac{\conc_i}{\concAtm - \conc_s}\Mm_i
+                       = \frac{\vectProd{\Mm}{\conc} - \conc_s\Mm_s}{\concAtm - \conc_s} \\
+\uu [g\,mol^{-1}]   & \uu = \sum_{i\neq s} \frac{[cm^{-3}]}{[cm^{-3}] - [cm^{-3}]}[g\,mol^{-1}] \\
+\end{split}
+\end{equation}
+%%%
+with the derivative being
+%%
+\begin{equation}
+\begin{split}
+\doverd{\mean{\Mm_{\neq s}}}{\conc_k} & = \sum_{i\neq s}\left(\underbrace{\frac{1}{\concAtm - \conc_s}}_{\text{if } k = i, k\neq s}
+                                                              - \underbrace{\frac{\conc_i}{\left(\concAtm - \conc_s\right)^2}}_{\text{if } k \neq s}\right)\Mm_i \\[5pt]
+                                      & = \left\{\begin{array}{ll}
+                                           \frac{\Mm_k - \mean{\Mm_{\neq s}}}{\concAtm - \conc_s}
+                                                                &  \text{if } k  \neq s \\
+                                              0                 &   \text{else}
+                                          \end{array}\right.
+\end{split}
 \end{equation}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

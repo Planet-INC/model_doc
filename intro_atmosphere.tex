@@ -5,7 +5,7 @@ a collision.
 \begin{equation}
 \begin{split}
 \sch(z)  &    = \frac{\kb T(z)}{\gloc(z)\mass} \\
-\uu [km] &\uu = 10^{-3} \frac{[\ukb] [K]}{[m\,s^{-2}][kg]} 
+\uu [km] &\uu = 10^{-3} \frac{[\ukb] [K]}{[m\,s^{-2}][kg]}
 \end{split}
 \label{scale_height}
 \end{equation}
@@ -19,6 +19,20 @@ $\gloc(z)$ the gravitationnal field at altitude $z$, given by the equation
 \uu [m\,s^{-2}] & \uu = 10^{-6} \frac{[\uGuni] [kg]}{\left([km] + [km]\right)^2}
 \end{split}
 \label{gfield}
+\end{equation}
+%
+The atmospheric scale height is thus expressed with the mean atmospheric
+mass \mean{m}, given by:
+\begin{equation}
+\begin{split}
+\mean{m} & = \sum_s \mass_s \frac{\conc_s}{\concAtm} \\\\
+\doverd{\mean{m}}{\conc_k} & = \frac{\mass_s}{\concAtm} - \frac{\mean{m}}{\concAtm}
+\end{split}
+\end{equation}
+%
+Giving therefore:
+\begin{equation}
+\doverd{\sch_a}{\conc_k} =  \sch_a\left(\frac{1}{\concAtm} - \frac{\mass_s}{\sum_i\mass_i\conc_i}\right)
 \end{equation}
 
 The mean free path is a collision process. Thus the molecule is approximated

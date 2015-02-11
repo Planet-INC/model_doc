@@ -1,6 +1,7 @@
-\begin{equationCode}{DiffusionEvaluator}
+The total diffusion is written as \citep{Haye2005,Hebrard_PhD}:
+\begin{equation}
 \begin{split}
-\conc_s \omega_s & = -\tilde{\diff} 
+\conc_s \omega_s & = -\tilde{\diff_s} 
                 \left[
                       \doverdz{\conc_s} + \frac{\conc_s}{\sch_s} + 
                       \frac{\conc_s}{T}\doverdz{T}\left(1 + \frac{\concAtm - \conc_s}{\concAtm}\thermcoef_{T_s}\right)
@@ -11,7 +12,7 @@
                 \right] \\
 \uu [cm^{-3}\,km\,s^{-1}] & \uu = 10^{-10}
                      \Bigg\{
-                      [cm^2\,s^{-1}] \\
+                      - [cm^2\,s^{-1}] \\
                 & \fakeequalspace
                 \uu \left[
                        \frac{[cm^{-3}]}{[km]} + \frac{[cm^{-3}]}{[km]} +
@@ -25,4 +26,62 @@
                       & \uu = 10^{-10} [cm^{-3}][cm^2\,s^{-1}][km]^{-1}
 \end{split}
 \label{Titan:omega_diff}
+\end{equation}
+
+We write it as:
+\begin{equation}
+\begin{split}
+\conc_s\omega_s = & \underbrace{- \left( \tilde{\diff_s} + \eddy \right)}_{\omega_{As}} \doverdz{\conc_s} \\
+                  & \underbrace{- \left[
+                                    \frac{\tilde{\diff_s}}{\sch_s} + \frac{\tilde{\diff_s}}{T}\doverdz{T}\left(1 + \frac{\concAtm - \conc_s}{\concAtm}\thermcoef_{T_s}\right)
+                                  + \frac{\eddy}{\sch_a} + \frac{\eddy}{T}\doverdz{T}
+                    \right]}_{\omega_{Bs}}\conc_s \\
+\end{split}
+\end{equation}
+%%
+thus the interesting quantities are:
+\begin{equationCode}{DiffusionEvaluator}
+\begin{split}
+\omega_{As} &  = -\tilde{\diff_s} - \eddy \\[5pt]
+\uu [cm^2\,s^{-1}] & \uu = - [cm^2\,s^{-1}] - [cm^2\,s^{-1}]
+\end{split}
+\end{equationCode}
+%%
+and
+%%
+\begin{equationCode}{DiffusionEvaluator}
+\begin{split}
+\omega_{Bs} & = \frac{\tilde{\diff_s}}{\sch_s} + \frac{\tilde{\diff_s}}{T}\doverdz{T}\left(1 + \frac{\concAtm - \conc_s}{\concAtm}\thermcoef_{T_s}\right)
+                               + \frac{\eddy}{\sch_a} + \frac{\eddy}{T}\doverdz{T} \\[5pt]
+\uu [cm^2\,s^{-1}\,km^{-1}] & \uu = \frac{[cm^2\,s^{-1}]}{[km]} + \frac{[cm^2\,s^{-1}]}{[K]}\frac{[K]}{[km]}\left([-] + \frac{[cm^{-3}] - [cm^{-3}]}{[cm^{-3}]}[-]\right) \\
+                            & \uu \fakeequalspace   + \frac{[cm^2\,s^{-1}]}{[km]} + \frac{[cm^2\,s^{-1}]}{[K]}\frac{[K]}{[km]}
+\end{split}
+\end{equationCode}
+%%
+The derivatives are thus:
+%%
+\begin{equationCode}{DiffusionEvaluator}
+\begin{split}
+\doverd{\omega_{As}}{\conc_k} & = -\doverd{\tilde{\diff_s}}{\conc_k} - \doverd{\eddy}{\conc_k}  \\
+\uu \frac{[cm^2\,s^{-1}]}{[cm^{-3}]} & \uu = - \frac{[cm^2\,s^{-1}]}{[cm^{-3}]} - \frac{[cm^2\,s^{-1}]}{[cm^{-3}]}
+\end{split}
+\end{equationCode}
+and
+\begin{equationCode}{DiffusionEvaluator}
+\begin{split}
+\doverd{\omega_{Bs}}{\conc_k} & = - \doverd{\tilde{\diff_s}}{\conc_k}\frac{1}{\sch_s}
+                                  - \doverd{\tilde{\diff_s}}{\conc_k}\frac{1}{T}\doverdz{T}\left(1 + \frac{\concAtm - \conc_s}{\concAtm}\thermcoef_{T_s}\right) \\
+                              & \fakeequalspace
+                                  - \frac{\tilde{\diff_s}}{T}\doverdz{T}\thermcoef_{T_s}\left(\underbrace{\frac{1}{\concAtm}}_{\text{if } s = k} - \frac{\conc_s}{\concAtm^2}  \right) \\
+                              & \fakeequalspace   
+                                  - \doverd{\eddy}{\conc_k}\frac{1}{\sch_a} + \doverd{\sch_a}{\conc_k}\frac{\eddy}{\sch_a^2} 
+                                  - \doverd{\eddy}{\conc_k}\frac{1}{T}\doverdz{T} \\[10pt]
+\uu\frac{[cm^2\,s^{-1}\,km^{-1}]}{[cm^{-3}]} & \uu = - \frac{[cm^2\,s^{-1}]}{[cm^{-3}]}\frac{[-]}{[km]}
+                                  - \frac{[cm^2\,s^{-1}]}{[cm^{-3}]}\frac{[-]}{[K]}\frac{[K]}{[km]}\left([-] + \frac{[cm^{-3}] - [cm^{-3}]}{[cm^{-3}]}[-]\right) \\
+                              & \uu \fakeequalspace
+                                  - \frac{[cm^2\,s^{-1}]}{[K]}\frac{[K]}{[km]}[-]\left(\underbrace{\uu\frac{[-]}{[cm^{-3}]}}_{\text{if } s = k} - \frac{[cm^{-3}]}{[cm^{-3}]^2}  \right) \\
+                              & \uu \fakeequalspace
+                                  - \frac{[cm^2\,s^{-1}]}{[cm^{-3}]}\frac{[-]}{[km]} + \frac{[km]}{[cm^{-3}]}\frac{[cm^2\,s^{-1}]}{[km]^2} 
+                                  - \frac{[cm^2\,s^{-1}]}{[cm^{-3}]}\frac{[-]}{[K]}\frac{[K]}{[km]}
+\end{split}
 \end{equationCode}
