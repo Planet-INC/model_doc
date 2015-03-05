@@ -5,8 +5,8 @@ in Eq.~\ref{Titan:diffusion_Massman} for the diffusion of species $s$ through
 species $m$.
 \begin{equationCode}{BinaryDiffusion}
 \begin{split}
-\diff_{s,m}(T,P)   &     = \Amas{s,m} \frac{\Pz}{P}\left(\frac{T}{\Tz}\right)^{\smas{s,m}} \\
-\uu [cm^2\,s^{-1}] & \uu = [cm^2\,s^{-1}] \frac{[Pa]}{[Pa]} \left(\frac{[K]}{[K]}\right)^{[-]} \\
+\diff_{s,m}(T,P)   &     = \Amas{s,m} \frac{\Pz}{P}\left(\frac{T}{\Tz}\right)^{\smas{s,m}} \\[5pt]
+\uu [cm^2\,s^{-1}] & \uu = [cm^2\,s^{-1}] \frac{[Pa]}{[Pa]} \left(\frac{[K]}{[K]}\right)^{[-]}
 \end{split}
 \label{Titan:diffusion_Massman}
 \end{equationCode}
@@ -15,18 +15,18 @@ The derivative with respect to densities is given by
 %%%
 \begin{equationCode}{BinaryDiffusion}
 \begin{split}
-\doverd{\diff_{s,m}}{\conc_k}      & = - \diff_{s,m}(T,P)\frac{1}{\concAtm}\\
-\uu \frac{[cm^2\,s^{-1}]}{[cm^{-3}]} & \uu = [cm^{-2}\,s^{-1}]\frac{[cm^{-3}]}{[cm^{-3}]^2}\\ 
+\doverd{\diff_{s,m}}{\conc_k}      & = - \diff_{s,m}(T,P)\frac{1}{\concAtm}\\[5pt]
+\uu \frac{[cm^2\,s^{-1}]}{[cm^{-3}]} & \uu = [cm^{-2}\,s^{-1}]\frac{[-]}{[cm^{-3}]}
 \end{split}
 \label{Titan:diffusion_Massman_dn}
 \end{equationCode}
 %%%
-and with respect to temperature by
+and with respect to temperature by (see Eq.~\ref{Titan:dD_dT_details})
 %%%
 \begin{equationCode}{BinaryDiffusion}
 \begin{split}
-\doverd{\diff_{s,m}}{T}       & =   \diff_{s,m}(T,P)\frac{\smas{s,m} - 1}{T}\\
-\uu \frac{[cm^2\,s^{-1}]}{[K]} & \uu = [cm^{-2}\,s^{-1}]\frac{[-]}{[K]}\\ 
+\doverd{\diff_{s,m}}{T}       & =   \diff_{s,m}(T,P)\frac{\smas{s,m} - 1}{T}\\[5pt]
+\uu \frac{[cm^2\,s^{-1}]}{[K]} & \uu = [cm^{-2}\,s^{-1}]\frac{[-]}{[K]}
 \end{split}
 \label{Titan:diffusion_Massman_dT}
 \end{equationCode}
@@ -112,6 +112,7 @@ with respect to temperature will depend on that choice:
                          & = \doverd{\Awa{i,j}}{P}\concAtm\kb \left(\frac{T}{\Tref}\right)^{\swa{i,j}} + \swa{i,j}\Awa{i,j}\frac{T^{\swa{i,j} - 1}}{\Tref^{\swa{i,j}}} \\
                          & = - \doverd{\Awa{i,j}}{\concAtm}\frac{P}{\kb T^2} \left(\frac{T}{\Tref}\right)^{\swa{i,j}} + \swa{i,j}\Awa{i,j}\frac{T^{\swa{i,j} - 1}}{\Tref^{\swa{i,j}}} \\
 \end{split}
+\label{Titan:dD_dT_details}
 \end{equation}
 
 \subsection{No data model}
@@ -177,38 +178,27 @@ a medium composed of the species $\{j_m\}$:
 The derivative with respect to densities:
 %%
 \begin{equation}
-\begin{split}
-\doverd{\diff_s}{\conc_k} & = \diff_s\Bigg[\frac{1}{\concAtm - \conc_s} 
+\doverd{\diff_s}{\conc_k}  = \diff_s\Bigg[\underbrace{\frac{1}{\concAtm - \conc_s}}_{\text{if }s \neq k}
                              + \frac{1}{\displaystyle\sum_{j_m \neq s} \frac{\conc_{j_m}}{\diff_{j_m,s}}}
-                                        \displaystyle\sum_{j_m \neq s} \frac{\conc_{j_m}}{\diff_{j_m,s}^2}\doverd{\diff_{j_m,s}}{\conc_k} \\
-                          & \fakeequalspace  
+                                        \displaystyle\sum_{j_m \neq s} \frac{\conc_{j_m}}{\diff_{j_m,s}^2}\doverd{\diff_{j_m,s}}{\conc_k} 
                                 \underbrace{
                                       - \frac{1}{\diff_{s,k}\displaystyle\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
-                                         }_{\text{if }k \in \{j_m\}}\Bigg] \qquad \text{ if }s \neq k \\
-                          & = 0 \qquad \text{else}
-\\
-\uu \frac{[cm^2\,s^{-1}]}{[cm^{-3}]} & \uu = [cm^{2}\,s^{-1}] \Bigg[\frac{[-]}{[cm^{-3}] - [cm^{-3}]} 
-                                             + \frac{[-]}{\displaystyle\sum_{j_m \neq s} \frac{[cm^{-3}]}{[cm^2\,s^{-1}]}}
-                                                \displaystyle\sum_{j_m \neq s} \frac{[cm^{-3}]}{[cm^2\,s^{-1}]^2}\frac{[cm^2\,s^{-1}]}{[cm^{-3}]} \\
-                                     & \uu\fakeequalspace
-                              \underbrace{\uu -\frac{[-]}
-                                                    {[cm^2\,s^{-1}]\displaystyle\sum_{j_m \neq s}\frac{[cm^{-3}]}{[cm^2\,s^{-1}]}}
-                                         }_{\text{if }k \in \{j_m\}}\Bigg] \qquad \text{if }s \neq k \\
-\end{split}
+                                         }_{\text{if }k \in \{j_m\}}\Bigg]
 \label{Titan:Ds_dn_raw}
 \end{equation}
 Using Eq.~\ref{Titan:diffusion_Massman_dn}
 \begin{equationCode}{MolecularDiffusionEvaluator}
 \begin{split}
-\doverd{\diff_s}{\conc_k} & = \diff_s\left[\frac{1}{\concAtm - \conc_s} - \frac{1}{\concAtm}
+\doverd{\diff_s}{\conc_k} & = \diff_s\left[\underbrace{\frac{1}{\concAtm - \conc_s}}_{\text{if }s \neq k} - \frac{1}{\concAtm}
                               \underbrace{
                                       - \frac{1}{\diff_{s,k}\displaystyle\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
-                                         }_{\text{if }k \in \{j_m\}}\right] \qquad \text{if }s \neq k \\
+                                         }_{\text{if }k \in \{j_m\}}\right]
+\\
 \uu \frac{[cm^2\,s^{-1}]}{[cm^{-3}]} 
-                          & \uu = [cm^2\,s^{-1}]\left[\frac{[-]}{[cm^{-3}] - [cm^{-3}]} - \frac{[-]}{[cm^{-3}]}
+                          & \uu = [cm^2\,s^{-1}]\left[\underbrace{\uu\frac{[-]}{[cm^{-3}] - [cm^{-3}]}}_{\text{if } s \neq k} - \frac{[-]}{[cm^{-3}]}
                                   \underbrace{\uu
                                       - \frac{[-]}{[cm^2\,s^{-3}]\displaystyle\sum_{j_m \neq s}\frac{[cm^{-3}]}{[cm^2\,s^{-1}]}}
-                                         }_{\text{if }k \in \{j_m\}}\right] \qquad \text{if }s \neq k \\
+                                         }_{\text{if }k \in \{j_m\}}\right]
 \end{split}
 \label{Titan:Ds_dn}
 \end{equationCode}

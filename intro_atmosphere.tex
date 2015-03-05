@@ -4,7 +4,7 @@ its mean free path, i.e. the mean length a molecule can cover before undergoing
 a collision.
 \begin{equation}
 \begin{split}
-\sch(z)  &    = \frac{\kb T(z)}{\gloc(z)\mass} \\
+\sch(z)  &    = \frac{\kb T(z)}{\gloc(z)\mass} \\[5pt]
 \uu [km] &\uu = 10^{-3} \frac{[\ukb] [K]}{[m\,s^{-2}][kg]}
 \end{split}
 \label{scale_height}
@@ -15,7 +15,7 @@ with \kb\ the Boltzmann constant,
 $\gloc(z)$ the gravitationnal field at altitude $z$, given by the equation
 \begin{equation}
 \begin{split}
-\gloc(z)        &     = \frac{\Guni\cdot\MPlanet}{\left(\RPlanet + z\right)^2} \\
+\gloc(z)        &     = \frac{\Guni\cdot\MPlanet}{\left(\RPlanet + z\right)^2} \\[5pt]
 \uu [m\,s^{-2}] & \uu = 10^{-6} \frac{[\uGuni] [kg]}{\left([km] + [km]\right)^2}
 \end{split}
 \label{gfield}
@@ -25,14 +25,25 @@ The atmospheric scale height is thus expressed with the mean atmospheric
 mass \mean{m}, given by:
 \begin{equation}
 \begin{split}
-\mean{m} & = \sum_s \mass_s \frac{\conc_s}{\concAtm} \\\\
+\mean{m} & = \sum_s \mass_s \frac{\conc_s}{\concAtm} \\[5pt]
+\uu [kg] & \uu = \sum_s [kg] \frac{[cm^{-3}]}{[cm^{-3}]}
+\end{split}
+\end{equation}
+%
+\begin{equation}
+\begin{split}
 \doverd{\mean{m}}{\conc_k} & = \frac{\mass_s}{\concAtm} - \frac{\mean{m}}{\concAtm}
+\\[5pt]
+\uu \frac{[kg]}{[cm^{-3}]} & \uu = \frac{[kg]}{[cm^{-3}]} - \frac{[kg]}{[cm^{-3}]}
 \end{split}
 \end{equation}
 %
 Giving therefore:
 \begin{equation}
-\doverd{\sch_a}{\conc_k} =  \sch_a\left(\frac{1}{\concAtm} - \frac{\mass_s}{\sum_i\mass_i\conc_i}\right)
+\begin{split}
+\doverd{\sch_a}{\conc_k}   &     =  \sch_a\left(\frac{1}{\concAtm} - \frac{\mass_s}{\sum_i\mass_i\conc_i}\right) \\[5pt]
+\uu \frac{[km]}{[cm^{-3}]} & \uu =  [km]\left(\frac{[-]}{[cm^{-3}]} - \frac{[kg]}{\sum_i[kg][cm^{-3}]}\right)
+\end{split}
 \end{equation}
 
 The mean free path is a collision process. Thus the molecule is approximated
