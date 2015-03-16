@@ -183,7 +183,7 @@ The derivative with respect to densities:
                                         \displaystyle\sum_{j_m \neq s} \frac{\conc_{j_m}}{\diff_{j_m,s}^2}\doverd{\diff_{j_m,s}}{\conc_k} 
                                 \underbrace{
                                       - \frac{1}{\diff_{s,k}\displaystyle\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
-                                         }_{\text{if }k \in \{j_m\}}\Bigg]
+                                         }_{\text{if }k \in \{j_m \neq s\}}\Bigg]
 \label{Titan:Ds_dn_raw}
 \end{equation}
 Using Eq.~\ref{Titan:diffusion_Massman_dn}
@@ -192,24 +192,30 @@ Using Eq.~\ref{Titan:diffusion_Massman_dn}
 \doverd{\diff_s}{\conc_k} & = \diff_s\left[\underbrace{\frac{1}{\concAtm - \conc_s}}_{\text{if }s \neq k} - \frac{1}{\concAtm}
                               \underbrace{
                                       - \frac{1}{\diff_{s,k}\displaystyle\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
-                                         }_{\text{if }k \in \{j_m\}}\right]
+                                         }_{\text{if }k \in \{j_m \neq s\}}\right]
 \\
 \uu \frac{[cm^2\,s^{-1}]}{[cm^{-3}]} 
                           & \uu = [cm^2\,s^{-1}]\left[\underbrace{\uu\frac{[-]}{[cm^{-3}] - [cm^{-3}]}}_{\text{if } s \neq k} - \frac{[-]}{[cm^{-3}]}
                                   \underbrace{\uu
                                       - \frac{[-]}{[cm^2\,s^{-3}]\displaystyle\sum_{j_m \neq s}\frac{[cm^{-3}]}{[cm^2\,s^{-1}]}}
-                                         }_{\text{if }k \in \{j_m\}}\right]
+                                         }_{\text{if }k \in \{j_m \neq s\}}\right]
 \end{split}
 \label{Titan:Ds_dn}
 \end{equationCode}
 %%
 and with respect to temperature
+\begin{equation}
+\doverd{\diff_s}{T}  = \diff_s \frac{\displaystyle\sum_{j_m \neq s} \frac{\conc_{j_m}}{\diff_{j_m,s}^2} \doverd{\diff_{j_m,s}}{T}}
+                                     {\displaystyle\sum_{j_m \neq s} \frac{\conc_{j_m}}{\diff_{j_m,s}}} 
+\label{Titan:Ds_dT_raw}
+\end{equation}
+wich gives, using Eq.~\ref{Titan:diffusion_Massman_dT}:
 \begin{equationCode}{MolecularDiffusionEvaluator}
 \begin{split}
-\doverd{\diff_s}{T} & = \diff_s \frac{\displaystyle\sum_{j_m \neq s} \frac{\conc_{j_m}}{\diff_{j_m,s}^2} \doverd{\diff_{j_m,s}}{T}}
-                                     {\displaystyle\sum_{j_m \neq s} \frac{\conc_{j_m}}{\diff_{j_m,s}}} \\
-\uu \frac{[cm^2\,s^{-1}]}{[K]} & \uu = [cm^2\,s^{-1}] \frac{\displaystyle\sum_{j_m \neq s} \frac{[cm^{-3}]}{[cm^2\,s^{-1}]^2}\frac{[cm^2\,s^{-1}]}{[K]} }
-                                                           {\displaystyle\sum_{j_m \neq s} \frac{[cm^{-3}]}{[cm^2\,s^{-1}]}}
+\doverd{\diff_s}{T} & = \frac{\diff_s}{T} \frac{\displaystyle\sum_{j_m \neq s} \frac{\conc_{j_m}}{\diff_{j_m,s}}(\smas{j_m,s} - 1)}
+                                     {\displaystyle\sum_{j_m \neq s} \frac{\conc_{j_m}}{\diff_{j_m,s}}}  \\[5pt]
+\uu \frac{[cm^2\,s^{-1}]}{[K]} & \uu = \frac{[cm^2\,s^{-1}]}{[K]} \frac{\displaystyle\sum_{j_m \neq s}\frac{[cm^{-3}]}{[cm^2\,s^{-1}]}([-] - [-])}
+                                                                       {\displaystyle\sum_{j_m \neq s}\frac{[cm^{-3}]}{[cm^2\,s^{-1}]}}
 \end{split}
 \label{Titan:Ds_dT}
 \end{equationCode}
@@ -233,7 +239,7 @@ The derivative are given by
                               - \frac{\tilde{\diff_s}^2}{\diff_s}%1-\frac{\conc_s}{\concAtm}\left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)} \\
                                 \left( \left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}} \right)
                                         \left(\underbrace{-\frac{1}{\concAtm}}_{\text{if } k = s} + \frac{\conc_s}{\concAtm^2}\right)
-                                       + \frac{\conc_s}{\concAtm}\frac{\Mm_s}{\mean{\Mm_{\neq s}}^2}\doverd{\mean{\Mm_{\neq s}}}{\conc_k}
+                                       - \frac{\conc_s}{\concAtm}\frac{\Mm_s}{\mean{\Mm_{\neq s}}^2}\doverd{\mean{\Mm_{\neq s}}}{\conc_k}
                                 \right) \\[5pt]
 \uu \frac{[cm^2\,s^{-1}]}{[cm^{-3}]} & \uu = \frac{[cm^2\,s^{-1}]}{[cm^2\,s^{-1}]}\frac{[cm^2\,s^{-1}]}{[cm^{-3}]}
                                              - \frac{[cm^2\,s^{-1}]^2}{[cm^2\,s^{-1}]}\\
@@ -241,7 +247,7 @@ The derivative are given by
                                               \left(\left([-] - \frac{[g\,mol^{-1}]}{[g\,mol^{-1}]}\right)
                                                     \left(\underbrace{\uu-\frac{[-]}{[cm^{-3}]}}_{\text{if }s = k} + 
                                                            \frac{[cm^{-3}]}{[cm^{-3}]^2}\right)
-                                                   + \frac{[cm^{-3}]}{[cm^{-3}]}\frac{[g\,mol^{-1}]}{[g\,mol^{-1}]^2}\frac{[g\,mol^{-1}]}{[cm^{-3}]}
+                                                   - \frac{[cm^{-3}]}{[cm^{-3}]}\frac{[g\,mol^{-1}]}{[g\,mol^{-1}]^2}\frac{[g\,mol^{-1}]}{[cm^{-3}]}
                                               \right)
 \end{split}
 \label{Titan:Ds-tilde_dn}
@@ -285,14 +291,13 @@ Finally, all contracted up:
 \begin{equationCode}{MolecularDiffusionEvaluator}
 \begin{split}
 \doverd{\tilde{\diff_s}}{\conc_k} & = \tilde{\diff_s}\Bigg[
-                                        \underbrace{\frac{1}{\concAtm - \conc_s} - \frac{1}{\concAtm} 
-                                                \underbrace{-\frac{1}{\diff_{k,s}\displaystyle\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{j_m,s}}}   }_{\text{if } k \in \{j_m\}}
-                                               }_{\text{if } s \neq k} \\
+                                        \underbrace{\frac{1}{\concAtm - \conc_s}}_{\text{if } s \neq k}  - \frac{1}{\concAtm} 
+                                                \underbrace{-\frac{1}{\diff_{k,s}\displaystyle\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{j_m,s}}}   }_{\text{if } k \in \{j_m \neq s\}} \\
                                   & \fakeequalspace  
-                                     - \frac{\tilde{\diff_s}}{\diff_s}
+                                     + \frac{\tilde{\diff_s}}{\diff_s}
                                         \left(
                                        \left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}} \right)
-                                        \left(\underbrace{-\frac{1}{\concAtm}}_{\text{if } k = s} + \frac{\conc_s}{\concAtm^2}\right)
+                                        \left(\underbrace{\frac{1}{\concAtm}}_{\text{if } k = s} - \frac{\conc_s}{\concAtm^2}\right)
                                        + \underbrace{\frac{\conc_s}{\concAtm}\frac{\Mm_s}{\mean{\Mm_{\neq s}}^2}\frac{\Mm_k - \mean{\Mm_{\neq s}}}{\concAtm - \conc_s}}_{\text{if } k \neq s}
                                         \right)\Bigg]
 \end{split}

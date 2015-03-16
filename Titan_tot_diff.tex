@@ -1,7 +1,7 @@
 The total diffusion is written as \citep{Haye2005,Hebrard_PhD}:
 \begin{equation}
 \begin{split}
-\conc_s \omega_s & = -\tilde{\diff_s} 
+\conc_s\omega_s & = -\tilde{\diff_s} 
                 \left[
                       \doverdz{\conc_s} + \frac{\conc_s}{\sch_s} + 
                       \frac{\conc_s}{T}\doverdz{T}\left(1 + \frac{\concAtm - \conc_s}{\concAtm}\thermcoef_{T_s}\right)
@@ -31,7 +31,7 @@ The total diffusion is written as \citep{Haye2005,Hebrard_PhD}:
 We write it as:
 \begin{equation}
 \begin{split}
-\conc_s\omega_s = & \underbrace{- \left( \tilde{\diff_s} + \eddy \right)}_{\omega_{As}} \doverdz{\conc_s} \\
+\transport_s = & \underbrace{- \left( \tilde{\diff_s} + \eddy \right)}_{\omega_{As}} \doverdz{\conc_s} \\
                   & \underbrace{- \left[
                                     \frac{\tilde{\diff_s}}{\sch_s} + \frac{\tilde{\diff_s}}{T}\doverdz{T}\left(1 + \frac{\concAtm - \conc_s}{\concAtm}\thermcoef_{T_s}\right)
                                   + \frac{\eddy}{\sch_a} + \frac{\eddy}{T}\doverdz{T}
@@ -51,9 +51,9 @@ and
 %%
 \begin{equationCode}{DiffusionEvaluator}
 \begin{split}
-\omega_{Bs} & = \frac{\tilde{\diff_s}}{\sch_s} + \frac{\tilde{\diff_s}}{T}\doverdz{T}\left(1 + \frac{\concAtm - \conc_s}{\concAtm}\thermcoef_{T_s}\right)
-                               + \frac{\eddy}{\sch_a} + \frac{\eddy}{T}\doverdz{T} \\[5pt]
-\uu [km\,s^{-1}] & \uu = 10^{-10}\Bigg\{\frac{[cm^2\,s^{-1}]}{[km]} + \frac{[cm^2\,s^{-1}]}{[K]}\frac{[K]}{[km]}\left([-] + \frac{[cm^{-3}] - [cm^{-3}]}{[cm^{-3}]}[-]\right) \\
+\omega_{Bs} & = - \left[\frac{\tilde{\diff_s}}{\sch_s} + \frac{\tilde{\diff_s}}{T}\doverdz{T}\left(1 + \frac{\concAtm - \conc_s}{\concAtm}\thermcoef_{T_s}\right)
+                               + \frac{\eddy}{\sch_a} + \frac{\eddy}{T}\doverdz{T} \right]\\[5pt]
+\uu [km\,s^{-1}] & \uu = - 10^{-10}\Bigg\{\frac{[cm^2\,s^{-1}]}{[km]} + \frac{[cm^2\,s^{-1}]}{[K]}\frac{[K]}{[km]}\left([-] + \frac{[cm^{-3}] - [cm^{-3}]}{[cm^{-3}]}[-]\right) \\
                  & \uu \fakeequalspace   + \frac{[cm^2\,s^{-1}]}{[km]} + \frac{[cm^2\,s^{-1}]}{[K]}\frac{[K]}{[km]} \Bigg\}
 \end{split}
 \end{equationCode}

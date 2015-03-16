@@ -10,17 +10,17 @@ and we develop thanks to equations~\ref{Titan:diffusion} and \ref{Titan:kinetics
 \begin{equation}
 \begin{split}
 \left(\doverd{\conc_s}{t}\right) & = \sum_{r\in \text{reactions}} \stoi{s,r}\rate_{r} \prod_{i\in\text{reactants}}\conc_i^{|\stoi{i,r}|} -
-                                     \frac{1}{r^2}\doverd{\left(r^2\conc_s\omega_s\right)}{r} \\
+                                     \frac{1}{r^2}\doverd{\left(r^2\transport_s\right)}{r} \\
                                  & = \sum_{r\in \text{reactions}} \stoi{s,r} \rate_r\prod_{i\in\text{reactants}}\conc_i^{|\stoi{i,r}|} -
-                                     \frac{1}{r^2}\doverd{\left(r^2\right)}{r}\conc_s\omega_s - \doverd{\left(\conc_s\omega_s\right)}{r} \\
+                                     \frac{1}{r^2}\doverd{r^2}{r}\transport_s - \doverd{\transport_s}{r} \\
                                  & = \sum_{r\in \text{reactions}} \stoi{s,r} \rate_{r}\prod_{i\in\text{reactants}}\conc_i^{|\stoi{i,r}|} -
-                                     \frac{2\conc_s\omega_s}{r} - \doverdz{\left(\conc_s\omega_s\right)} \\[\baselineskip]
-                                 & = - \dOverdz{\conc_s\omega_s} - \frac{2\conc_s\omega_s}{r} + \sum_{r\in \text{reactions}} \stoi{s,r} \rate_{r}\prod_{i\in\text{reactants}}\conc_i^{|\stoi{i,r}|} 
+                                     \frac{2\transport_s}{r} - \doverdz{\transport_s} \\[\baselineskip]
+                                 & = - \doverdz{\transport_s} - \frac{2\transport_s}{r} + \sum_{r\in \text{reactions}} \stoi{s,r} \rate_{r}\prod_{i\in\text{reactants}}\conc_i^{|\stoi{i,r}|} 
 \end{split}
 \end{equation}
 Finally:
 \begin{equation}
-\doverd{\conc_s}{t} = \omegadot_s - \dOverdz{\conc_s\omega_s} - \frac{2}{r}\conc_s\omega_s
+\doverd{\conc_s}{t} = \omegadot_s - \doverdz{\transport_s} - \frac{2}{r}\transport_s
 \label{Titan:photochem_eq}
 \end{equation}
 with \omegadot\ the contribution of the chemistry.

@@ -109,33 +109,32 @@ $\phi_i\phi_j$                         & mass term\\
 \label{math:photo_solve}
 The photochemical equation, Eq.~\ref{Titan:photochem_eq}, can be written as:
 \begin{equation}
-\doverd{u}{t} - \chi + \diverge{u\omega} = 0
+\doverd{u}{t} - \chi + \diverge{\transport} = 0
 \end{equation}
-with $\vect{u\omega} = u\vect{\omega}$, 
-we will thus operate the integration by parts on the \diverge{u\omega} term.
+we will thus operate the integration by parts on the \diverge{\transport} term.
 
 \subsubsection{In three dimensions}
 
 So here is the $v$ function, and what we need is an integration on
 the atmosphere:
 \begin{equation}
-\intvol\left[\doverd{u}{t}v - \chi v + \diverge{u\omega} v\right] \dd V = 0
+\intvol\left[\doverd{u}{t}v - \chi v + \diverge{\transport} v\right] \dd V = 0
 \label{math:solve:3D_photo}
 \end{equation}
 with $V$ a volume element
 \begin{equation}
   \intvol\doverd{u}{t}v\dd V 
 - \intvol\chi v \dd V 
-+ \intvol\diverge{u\omega}v \dd V  = 0
++ \intvol\diverge{\transport}v \dd V  = 0
 \label{math:photo_3D_start}
 \end{equation}
 Thus, integration by parts will give,
-using that $\left(\diverge{u\omega}\right) v = \diverge{vu\omega}$:
+using that $\left(\diverge{\transport}\right) v = \diverge{v\transport}$:
 \begin{equation}
   \intvol\doverd{u}{t}v\dd V
 - \intvol\chi v \dd V 
-- \intvol u\omega \diverge{v} \dd V 
-+ \intboundary u\vect{\omega}\vect{s}v \dboundary = 0
+- \intvol \transport \diverge{v} \dd V 
++ \intboundary \vect{\transport}\vect{s}v \dboundary = 0
 \label{math:photo_3D_fin}
 \end{equation}
 Using the formulation:
@@ -148,7 +147,7 @@ we rewrite Eq.~\ref{math:photo_3D_fin}
 \begin{split}
   \underbrace{\sum_{i=1}^N\sum_{j=1}^N\ui_i\vi_j\intvol\doverd{\phi_i}{t}\phi_j\dd V}_{\text{mass\_residual}}
 - \underbrace{\sum_{j=1}^N\vi_j\intvol\chi \phi_j \dd V}_\text{element\_time\_derivative} \\
-- \underbrace{\sum_{i=1}^N\sum_{j=1}^N\ui_i\vi_j\intvol \phi_i\omega \diverge{\phi_j} \dd V}_\text{element\_time\_derivative}
+- \underbrace{\sum_{j=1}^N\vi_j\intvol \transport \diverge{\phi_j} \dd V}_\text{element\_time\_derivative}
 + \underbrace{\intboundary u\vect{\omega}\vect{s}v \dboundary}_\text{side\_time\_derivative} & = 0
 \end{split}
 \end{equation}
@@ -164,23 +163,23 @@ we integrate on $\theta$ and $\varphi$,
 which gives a constant we can get rid of.
 \begin{equation}
 \intr\left[   \doverd{u}{t} v 
-                       - \chi v + \frac{1}{r^2}\doverd{(r^2u\omega)}{r} v
+                       - \chi v + \frac{1}{r^2}\dOverd{r^2\transport}{r} v
                 \right] \dVs = 0
 \end{equation}
 thus
 \begin{equation}
 \int_{r_0}^{r_1}\left[   \doverd{u}{t} v 
-                       - \chi v + \doverd{(u\omega)}{r} v
-                       + \frac{2}{r}u\omega v
+                       - \chi v + \doverd{\transport}{r} v
+                       + \frac{2}{r}\transport v
                 \right] r^2\dd r = 0
 \end{equation}
 now we integrate by parts:
 \begin{equation}
 \begin{split}
-\int_{r_0}^{r_1}\doverd{(u\omega)}{r} v r^2 \dd r 
-   & = - \int_{r_0}^{r_1}u\omega \left(\doverd{v}{r}r^2 + 2 r v\right) \dd r + \left[u\omega v r^2\right]_{r_0}^{r_1}
+\int_{r_0}^{r_1}\doverd{\transport}{r} v r^2 \dd r 
+   & = - \int_{r_0}^{r_1}\transport \left(\doverd{v}{r}r^2 + 2 r v\right) \dd r + \left[\transport v r^2\right]_{r_0}^{r_1}
         \\[\baselineskip]
-   & = - \int_{r_0}^{r_1}u\omega \doverd{v}{r} r^2  \dd r - 2 \int_{r_0}^{r_1}u\omega  r v \dd r  + \left[u\omega v r^2\right]_{r_0}^{r_1}
+   & = - \int_{r_0}^{r_1}\transport \doverd{v}{r} r^2  \dd r - 2 \int_{r_0}^{r_1}\transport  r v \dd r  + \left[\transport v r^2\right]_{r_0}^{r_1}
 \end{split}
 \end{equation}
 So
@@ -188,23 +187,23 @@ So
 \begin{split}
 \int_{r_0}^{r_1} \left[   \doverd{u}{t} v 
                         - \chi v
-                        + \frac{2}{r} u\omega v
+                        + \frac{2}{r} \transport v
                         - u\omega\doverd{v}{r}
-                        - \frac{2}{r} u\omega v
+                        - \frac{2}{r} \transport v
                  \right] r^2 \dd r 
-     + \left[u\omega v r^2\right]_{r_0}^{r_1}   & = 0 \\
+     + \left[\transport v r^2\right]_{r_0}^{r_1}   & = 0 \\
 \int_{r_0}^{r_1} \left[   \doverd{u}{t} v 
                         - \chi v
-                        - u\omega\doverd{v}{r}
+                        - \transport\doverd{v}{r}
                  \right] r^2 \dd r 
-     + \left[u\omega v r^2\right]_{r_0}^{r_1}   & = 0 
+     + \left[\transport v r^2\right]_{r_0}^{r_1}   & = 0 
 \end{split}
 \end{equation}
 rewriting the transport term:
 \begin{equation}
 \int_{r_0}^{r_1} \left[   \doverd{u}{t} v 
                         - \chi v
-                        - (\omega_A \doverd{u}{r} + \omega_B u )\doverd{v}{r}
+                        - \left(\omega_A \doverd{u}{r} + \omega_B u \right)\doverd{v}{r}
                  \right] r^2 \dd r 
      + \left[(\omega_A \doverd{u}{r} + \omega_B u) v r^2\right]_{r_0}^{r_1}  = 0 
 \end{equation}
