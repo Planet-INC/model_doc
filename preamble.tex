@@ -3,19 +3,8 @@
 %%% misc
 \@addtoreset{chapter}{part}%because I want my chapter to be in parts
 \newcommand{\mytilde}{\raisebox{-0.3\baselineskip}{\~{}}}
-\newlength{\fakespace}
-\newcommand{\fakeequalspace}{%
-\settowidth{\fakespace}{= }%
-\hspace{\fakespace}}
-\newcommand{\mathdashrule}{%
-\newcount\r%
-\r=0
-\loop\advance\r by1\rule{5mm}{0.4pt}\hspace{2.5mm}\ifnum\r < 2\repeat%
-\rule{5mm}{0.4pt}\hspace{1.25mm} & 
-\hspace{1.25mm}%
-\loop\advance\r by1\rule{5mm}{0.4pt}\hspace{2.5mm}\ifnum\r < 4\repeat%
-\rule{5mm}{0.4pt}%
-}
+\newcommand{\fakeequalspace}{\hphantom{= }}%
+
 %%% from report.cls, adapated
 %%% added the makegraph stuff and
 %% redefined \thesubsection to protect it and below
@@ -94,10 +83,10 @@
 \newcommand{\doverdt}       [1]{\ensuremath{\frac{\dd #1}{\dd t}}}
 \newcommand{\vect}          [1]{\ensuremath{\overrightarrow{#1}}}
 \newcommand{\diverge}       [1]{\ensuremath{\vect{\nabla}\cdot(\vect{#1})}}
-\newcommand{\divergex}      [2]{\ensuremath{\partial_{#1}{\vect{#2}}}}
-\newcommand{\divergez}      [1]{\divergex{z}{#1}}
-\newcommand{\gradien}       [2]{\ensuremath{\text{grad}_{#1}\vect{#2}}}
+\newcommand{\gradien}       [2]{\ensuremath{\partial_{#1}{#2}}}
+\newcommand{\Gradien}       [2]{\ensuremath{\partial_{#1}\left({#2}\right)}}
 \newcommand{\gradienz}      [1]{\gradien{z}{#1}}
+\newcommand{\gradn}         [1]{\ensuremath{\vect{\nabla_{#1}}}}
 \newcommand{\vectProd}      [2]{\ensuremath{\vect{#1}\cdot\vect{#2}}}
 \newcommand{\vectprod}      [2]{\ensuremath{#1\cdot#2}}
 \newcommand{\coeffderiv}    [3]{\ensuremath{a^{(#1)}_{#2#3}}}

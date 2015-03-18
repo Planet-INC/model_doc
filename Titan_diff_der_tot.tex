@@ -17,13 +17,13 @@ with
 thus
 \begin{equation}
 \doverdz{\mean{\Mm}} =   \frac{\vectprod{\vect{\Mm}}{\gradienz{\conc}}}{\concAtm}
-                        - \frac{\mean{\Mm}}{\concAtm}\divergez{\conc}
+                        - \frac{\mean{\Mm}}{\concAtm}\gradienz{\conc}
 \end{equation}
 \begin{equation}
 \doverdz{\gloc} = -   \gloc \frac{2}{\RTitan + z}
 \end{equation}
 \begin{equation}
-\doverdz{\sch_a} = \sch_a \left(\frac{\divergez{\conc}}{\concAtm}
+\doverdz{\sch_a} = \sch_a \left(\frac{\gradienz{\conc}}{\concAtm}
                                 - \frac{\vectprod{\vect{\Mm}}{\gradienz{\conc}}}{\mean{\Mm}\concAtm}
                                 + \frac{2}{\RTitan + z} 
                                 + \frac{1}{T}\doverdz{T(z)}\right)
@@ -34,8 +34,8 @@ thus
 
 The contribution of diffusion to \doverd{\conc}{t} is:
 \begin{equation}
-\left(\doverd{\conc}{t}\right)_{\text{diff}} = \frac{1}{r^2}\doverd{\left(r^2\conc\omega\right)}{r}
-                                             = \frac{1}{r^2}\left(2 r + \dOverdz{\conc\omega}\right)
+\left(\doverd{\conc}{t}\right)_{\text{diff}} = \frac{1}{r^2}\doverd{\left(r^2\transport\right)}{r}
+                                             = \frac{1}{r^2}\left(2 r + \dOverdz{\transport}\right)
 \label{Titan:diffusion}
 \end{equation}
 
@@ -74,7 +74,7 @@ Let's start with
                         \right)
             \right]\conc_s \\
   & + \left[\frac{\thermcoef_{T_s}}{T}\doverdz{T}\left(
-                \frac{\divergez{\conc}}{\concAtm}
+                \frac{\gradienz{\conc}}{\concAtm}
                 + \frac{1}{T}\doverdz{T}\right)
       - \frac{\thermcoef_{T_s}}{T}\ddoverdz{T}\right]\frac{\conc_s^2}{\concAtm}\\
 \end{split}
@@ -95,7 +95,7 @@ and let's go on with
                                      \right)
            -\frac{1}{\sch_a}
                              \left(
-                                  \frac{\divergez{\conc}}{\concAtm}
+                                  \frac{\gradienz{\conc}}{\concAtm}
                                 - \frac{\vectprod{\vect{\Mm}}{\gradienz{\conc}}}{\mean{\Mm}\concAtm}
                                 + \frac{2}{\RTitan + z} 
                             \right)
@@ -121,9 +121,9 @@ So, using Eq.~\ref{Titan:diff_deriv_K_fac}, \ref{Titan:eddy_diff_deriv},
             \doverdz{\conc_s} \\
 & \qquad - \frac{\tilde{\diff_s}}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
                 \sum_{k_m\neq s}
-                                \frac{\doverdz{\conc_{k_m}} + \conc_{k_m}\divergez{\conc}}{\diff_{s,k_m}} \\
+                                \frac{\doverdz{\conc_{k_m}} + \conc_{k_m}\gradienz{\conc}}{\diff_{s,k_m}} \\
 & \qquad + \frac{1}{T}\left(
-           - \eddy \left[\frac{T}{\sch_a} + \doverdz{T} + \frac{T}{2\concAtm} \divergez{\conc}\right]
+           - \eddy \left[\frac{T}{\sch_a} + \doverdz{T} + \frac{T}{2\concAtm} \gradienz{\conc}\right]
            - \tilde{\diff_s}\left[
                                    \frac{T}{\sch_s}
                                    + \doverdz{T}\left(1 + \thermcoef_{T_s}\right)
@@ -141,9 +141,9 @@ So, using Eq.~\ref{Titan:diff_deriv_K_fac}, \ref{Titan:eddy_diff_deriv},
                                 \left(1 + \frac{\vectProd{\conc}{\Mm} - \conc_s\Mm_s}{\Mm_s\concAtm} + \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)
                   + 1
              \right] \\
-& \qquad + \tilde{\diff_s}\left(\frac{\divergez{\conc} }{\concAtm - \conc_s}
+& \qquad + \tilde{\diff_s}\left(\frac{\gradienz{\conc} }{\concAtm - \conc_s}
             + \frac{1}{1-\frac{\conc_s}{\concAtm}\left(1 - \frac{\Mm_s}{\mean{\Mm_{\neq s}}}\right)}
-              \left[\left(\frac{\conc_s}{\concAtm^2} - \frac{\Mm_s}{\vectProd{\conc}{\Mm}}\right)\divergez{\conc}
+              \left[\left(\frac{\conc_s}{\concAtm^2} - \frac{\Mm_s}{\vectProd{\conc}{\Mm}}\right)\gradienz{\conc}
                         - \frac{\Mm_s\:\vectprod{\vect{\Mm}}{\gradienz{\conc}}}
                                {\mean{\Mm_{\neq s}}\left(\vectProd{\conc}{\Mm} - \conc_s\Mm_s\right)}
                     \right]\right) \\
@@ -159,11 +159,11 @@ So, using Eq.~\ref{Titan:diff_deriv_K_fac}, \ref{Titan:eddy_diff_deriv},
                      - \thermcoef_{T_s}\ddoverdz{T}
                      + \thermcoef_{T_s}\doverdz{T}
                                     \Bigg(
-                                          \frac{\divergez{\conc}}{\concAtm} 
+                                          \frac{\gradienz{\conc}}{\concAtm} 
                                           + \frac{1}{T}\doverdz{T}
                                           - \sum_{k_m\neq s}\frac{1}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
                                                         \frac{1}{\diff_{s,k_m}} \doverdz{\conc_{k_m}} \\
-    & \qquad\qquad\qquad                  + \divergez{\conc} 
+    & \qquad\qquad\qquad                  + \gradienz{\conc} 
                                                 \left( 
                                                   \sum_{k_m\neq s}\frac{1}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
                                                         \frac{\conc_{k_m}}{\diff_{s,k_m}} 
@@ -180,10 +180,10 @@ So, using Eq.~\ref{Titan:diff_deriv_K_fac}, \ref{Titan:eddy_diff_deriv},
 %% e * n
 & + \Bigg( - \frac{\eddy}{T} 
           \left[ \ddoverdz{T} 
-           - \doverdz{T}\left(\frac{1}{T}\doverdz{T} + \frac{1}{\sch_a} - \frac{\divergez{\conc}}{2\concAtm}\right)
+           - \doverdz{T}\left(\frac{1}{T}\doverdz{T} + \frac{1}{\sch_a} - \frac{\gradienz{\conc}}{2\concAtm}\right)
            - \frac{T}{\sch_a\concAtm}
                              \left(
-                                  \frac{\divergez{\conc}}{2}
+                                  \frac{\gradienz{\conc}}{2}
                                 - \frac{\vectprod{\vect{\Mm}}{\gradienz{\conc}}}{\mean{\Mm}}
                                 + \frac{2\concAtm}{\RTitan + z} 
                             \right)
@@ -198,7 +198,7 @@ So, using Eq.~\ref{Titan:diff_deriv_K_fac}, \ref{Titan:eddy_diff_deriv},
 &\qquad\qquad + \left(\frac{T}{\sch_s} + \doverdz{T}\left(1 + \thermcoef_{T_s}\right)\right)
 \Bigg[ - \sum_{k_m\neq s}\frac{1}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}
                                 \frac{1}{\diff_{s,k_m}} \doverdz{\conc_{k_m}} \\
-& \qquad\qquad\qquad + \divergez{\conc}
+& \qquad\qquad\qquad + \gradienz{\conc}
                  \left(\sum_{k_m\neq s}\frac{1}{\sum_{j_m \neq s}\frac{\conc_{j_m}}{\diff_{s,j_m}}}\frac{\conc_{k_m}}{\diff_{s,k_m}}
                       + \frac{1}{\concAtm - \conc_s}
                       + \frac{\frac{\conc_s}{\concAtm^2} - \frac{\Mm_s}{\vectProd{\conc}{\Mm}}}

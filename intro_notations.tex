@@ -1,13 +1,14 @@
 We use the following notations:
 \begin{notation}
-\divergex{x}{y} = \sum_{i}\doverd{y_i}{x}
+\vectProd{f}{g} = \sum_{i = x,y,z}f_i g_i
 \end{notation}
 \begin{notation}
-\vectProd{x}{y} = \sum_{i}y_i x_i
+\renewcommand{\arraystretch}{1.5}
+\vect{\text{grad}(f)} = \gradn{f} = \left[\begin{array}{c}\doverd{f}{x} \\ \doverd{f}{y} \\ \doverd{f}{z} \end{array}\right]
 \end{notation}
 \begin{notation}
-\gradien{x}{y} = \vect{\left(\doverd{y}{x}\right)}
+\gradien{x}{f} = \doverd{f}{x}
 \end{notation}
 \begin{notation}
-\diverge{F} = \text{div}(\vect{F}) = \doverd{F_x}{x} + \doverd{F_y}{y} + \doverd{F_z}{z}
+\text{div}(f) = \diverge{f} = \text{div}(\vect{f}) = \doverd{f}{x} + \doverd{f}{y} + \doverd{f}{z}
 \end{notation}
