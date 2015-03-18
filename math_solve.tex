@@ -107,134 +107,170 @@ $\phi_i\phi_j$                         & mass term\\
 
 \subsection{Photochemical equation}
 \label{math:photo_solve}
-The photochemical equation, Eq.~\ref{Titan:photochem_eq}, can be written as:
+
+The photochemical equation, Eq.~\ref{Titan:photochem_eq}, is given by:
 \begin{equation}
-\doverd{u}{t} - \chi + \diverge{\transport} = 0
+\doverd{u}{t} - \chi + \diverge{\transport} = 0,
 \end{equation}
 we will thus operate the integration by parts on the \diverge{\transport} term.
 
-\subsubsection{In three dimensions}
+\subsubsection{Spherical coordinates}
 
-So here is the $v$ function, and what we need is an integration on
-the atmosphere:
+The divergence in spherical coordinates $(r, \theta, \varphi)$ is given by:
 \begin{equation}
-\intvol\left[\doverd{u}{t}v - \chi v + \diverge{\transport} v\right] \dd V = 0
-\label{math:solve:3D_photo}
+\diverge{\cdot} = \frac{1}{r^2}\dOverd{r^2\cdot}{r} + 
+                  \frac{1}{r\sin(\theta)}\dOverd{\sin(\theta)\cdot}{\theta} +
+                  \frac{1}{r\sin(\theta)}\doverd{\cdot}{\varphi}.
 \end{equation}
-with $V$ a volume element
-\begin{equation}
-  \intvol\doverd{u}{t}v\dd V 
-- \intvol\chi v \dd V 
-+ \intvol\diverge{\transport}v \dd V  = 0
-\label{math:photo_3D_start}
-\end{equation}
-Thus, integration by parts will give,
-using that $\left(\diverge{\transport}\right) v = \diverge{v\transport}$:
-\begin{equation}
-  \intvol\doverd{u}{t}v\dd V
-- \intvol\chi v \dd V 
-- \intvol \transport \diverge{v} \dd V 
-+ \intboundary \vect{\transport}\vect{s}v \dboundary = 0
-\label{math:photo_3D_fin}
-\end{equation}
-Using the formulation:
-\begin{equation}
-u = \sum_{i=1}^N \ui_i \phi_i,\qquad v = \sum_{i=1}^N\vi_i \phi_i
-\end{equation}
-with $\ui \in \mathcal{R}$ and true $\forall \vi \in \mathcal{R}$. 
-we rewrite Eq.~\ref{math:photo_3D_fin}
+%
+We can rewrite the equation in spherical coordinates:
 \begin{equation}
 \begin{split}
-  \underbrace{\sum_{i=1}^N\sum_{j=1}^N\ui_i\vi_j\intvol\doverd{\phi_i}{t}\phi_j\dd V}_{\text{mass\_residual}}
-- \underbrace{\sum_{j=1}^N\vi_j\intvol\chi \phi_j \dd V}_\text{element\_time\_derivative} \\
-- \underbrace{\sum_{j=1}^N\vi_j\intvol \transport \diverge{\phi_j} \dd V}_\text{element\_time\_derivative}
-+ \underbrace{\intboundary u\vect{\omega}\vect{s}v \dboundary}_\text{side\_time\_derivative} & = 0
+\dot{\conc_s} & = \chi -  \frac{1}{r^2}\Gradien{r}{r^2\transport} - 
+                          \frac{1}{r\sin(\theta)}\Gradien{\theta}{\sin(\theta)\transport} -
+                          \frac{1}{r\sin(\theta)}\gradien{\varphi}{\transport} \\[5pt]
+              & = \chi - \frac{r^2}{r^2}\gradien{r}{\transport} - \frac{\transport}{r^2}\Gradien{r}{r^2} -
+                         \frac{\sin(\theta)}{r\sin(\theta)}\gradien{\theta}{\transport} -
+                         \frac{\transport}{r\sin(\theta)}\gradien{\theta}{\sin(\theta)} -
+                         \frac{1}{r\sin(\theta)}\gradien{\varphi}{\transport} \\[5pt]
+              & = \chi - \gradien{r}{\transport} - \frac{2}{r}\transport -
+                         \frac{1}{r}\gradien{\theta}{\transport} -
+                         \frac{\cos(\theta)}{r\sin(\theta)}\transport -
+                         \frac{1}{r\sin(\theta)}\gradien{\varphi}{\transport}
 \end{split}
 \end{equation}
-
-\subsubsection{In one dimension}
-
-We can make the assumption that the only interesting dimension is the altitude, and
-not caring for the other dimensions. Either everything
-is considered independant or we really solve only a 1D problem, still,
-the natural coordinate system is the spherical
-coordinates system, thus we re-write Eq.~\ref{math:solve:3D_photo}, 
-we integrate on $\theta$ and $\varphi$,
-which gives a constant we can get rid of.
+%
+We solve the steady state, therefore $\dot{\conc_s}=0$, we integrate on the atmosphere:
 \begin{equation}
-\intr\left[   \doverd{u}{t} v 
-                       - \chi v + \frac{1}{r^2}\dOverd{r^2\transport}{r} v
-                \right] \dVs = 0
+\int_\Omega \left( \chi - \gradien{r}{\transport} - \frac{2}{r}\transport -
+                         \frac{1}{r}\gradien{\theta}{\transport} -
+                         \frac{\cos(\theta)}{r\sin(\theta)}\transport -
+                         \frac{1}{r\sin(\theta)}\gradien{\varphi}{\transport} \right) \dd\Omega
+ = 0,
 \end{equation}
-thus
+the volume element $\dd\Omega$ is expressed in spherical coordinates:
 \begin{equation}
-\int_{r_0}^{r_1}\left[   \doverd{u}{t} v 
-                       - \chi v + \doverd{\transport}{r} v
-                       + \frac{2}{r}\transport v
-                \right] r^2\dd r = 0
+\int_{\varphi = 0}^{2\pi}\int_{\theta = 0}^{\pi}\int_{r_0}^{r_1}
+\left( \chi - \gradien{r}{\transport} - \frac{2}{r}\transport -
+                         \frac{1}{r}\gradien{\theta}{\transport} -
+                         \frac{\cos(\theta)}{r\sin(\theta)}\transport -
+                         \frac{1}{r\sin(\theta)}\gradien{\varphi}{\transport} \right) 
+r^2\sin(\theta)\dd\varphi\dd\theta\dd r
+= 0.
 \end{equation}
-now we integrate by parts:
+%
+As of now, \transport\ depends only on $r$, giving thus 
+$\gradien{\theta}{\transport} = \gradien{\varphi}{\transport} = 0$.
+%
 \begin{equation}
 \begin{split}
-\int_{r_0}^{r_1}\doverd{\transport}{r} v r^2 \dd r 
-   & = - \int_{r_0}^{r_1}\transport \left(\doverd{v}{r}r^2 + 2 r v\right) \dd r + \left[\transport v r^2\right]_{r_0}^{r_1}
-        \\[\baselineskip]
-   & = - \int_{r_0}^{r_1}\transport \doverd{v}{r} r^2  \dd r - 2 \int_{r_0}^{r_1}\transport  r v \dd r  + \left[\transport v r^2\right]_{r_0}^{r_1}
+\int_{\varphi = 0}^{2\pi}\int_{\theta = 0}^{\pi}\int_{r_0}^{r_1}
+\left( \chi - \gradien{r}{\transport} - \frac{2}{r}\transport - \frac{\cos(\theta)}{r\sin(\theta)}\transport 
+\right) 
+r^2\sin(\theta)\dd\varphi\dd\theta\dd r
+ & = 0 \\[5pt]
+2\pi\int_{r_0}^{r_1}
+\left(
+\chi - \gradien{r}{\transport} - \frac{2}{r}\transport
+\right)
+r^2
+\int_{0}^{\pi}\sin(\theta)\dd\theta\dd r
+ - 
+2\pi\int_{r_0}^{r_1}\int_{0}^{\pi}
+\left(
+\frac{\cos(\theta)}{r\sin(\theta)}\transport  \right)
+r^2\sin(\theta)\dd\theta\dd r
+ & = 0 \\[5pt]
+4\pi\int_{r_0}^{r_1}\left(
+\chi - \gradien{r}{\transport} - \frac{2}{r}\transport
+\right)
+r^2\dd r
+-
+2\pi\int_{r_0}^{r_1} r\transport \int_{0}^{\pi}
+\cos(\theta)\dd\theta\dd r
+ & = 0
 \end{split}
 \end{equation}
-So
+%
+Finally, the equation is:
 \begin{equation}
-\begin{split}
-\int_{r_0}^{r_1} \left[   \doverd{u}{t} v 
-                        - \chi v
-                        + \frac{2}{r} \transport v
-                        - u\omega\doverd{v}{r}
-                        - \frac{2}{r} \transport v
-                 \right] r^2 \dd r 
-     + \left[\transport v r^2\right]_{r_0}^{r_1}   & = 0 \\
-\int_{r_0}^{r_1} \left[   \doverd{u}{t} v 
-                        - \chi v
-                        - \transport\doverd{v}{r}
-                 \right] r^2 \dd r 
-     + \left[\transport v r^2\right]_{r_0}^{r_1}   & = 0 
-\end{split}
-\end{equation}
-rewriting the transport term:
-\begin{equation}
-\int_{r_0}^{r_1} \left[   \doverd{u}{t} v 
-                        - \chi v
-                        - \left(\omega_A \doverd{u}{r} + \omega_B u \right)\doverd{v}{r}
-                 \right] r^2 \dd r 
-     + \left[(\omega_A \doverd{u}{r} + \omega_B u) v r^2\right]_{r_0}^{r_1}  = 0 
+\int_{r_0}^{r_1}\left(\chi - \gradien{r}{\transport} - \frac{2}{r}\transport\right)r^2\dd r = 0
+\label{solve:photochemical_equation}
 \end{equation}
 
-using again the notations:
+\subsubsection{The weak form}
+
+For any function $v \in \mathcal{H}^1$\footnote{$v$ is called the \emph{test function}}:
 \begin{equation}
-u = \sum_{i=0}^{N} \ui_i \phi_i, \qquad v = \sum_{i=0}^{N} \vi_i \phi_i
+\int_{r_0}^{r_1}\left(\chi v - \gradien{r}{\transport} v - \frac{2}{r}\transport v \right)r^2\dd r = 0
+\label{solve:weak_form_start}
 \end{equation}
-We obtain:
+%
+integration by parts provides:
 \begin{equation}
-\begin{split}
- \int_{r_0}^{r_1}\left[
-                  \sum_{i=0}^{N}\ui_i\doverd{\phi_i}{t} \sum_{j=0}^{N}\vi_j \phi_j
-                 - \chi \sum_{i=0}^{N}\vi_i\phi_i 
-                 - \sum_{i=0}^{N}\ui_i\left(\omega_A\doverd{\phi_i}{r} + \omega_B \phi_i\right)
-                     \sum_{j=0}^{N}\vi_j\doverd{\phi_j}{r}\right]r^2\dd r \\
- + \left[\sum_{i=0}^{N}\ui_i\left(\omega_A\doverd{\phi_i}{r} + \omega_B\phi_i \right)\sum_{j=0}^{N}\vi_j\phi_j r^2\right]_{r_0}^{r_1} = 0
-\end{split}
+\int_{r_0}^{r_1}\gradien{r}{\transport} v r^2 \dd r = - \int_{r_0}^{r^1} \transport \left(r^2\gradien{r}{v} + 2 r v\right)\dd r
+                                                    + \left[\transport v r^2\right]_{r_0}^{r_1}
 \end{equation}
-The rearrangement gives:
+%
+substitution in Eq.~\ref{solve:weak_form_start} provides:
 \begin{equation}
-\begin{split}
-  \underbrace{\sum_{i=1}^{N}\sum_{j=0}^{N}\ui_i\vi_j\int_{r_0}^{r_1}\doverd{\phi_i}{t}\phi_jr^2\dd r}_\text{mass\_residual}
-- \underbrace{\sum_{i=0}^{N}\vi_i\int_{r_0}^{r_1}\chi\phi_i r^2\dd r}_\text{element\_time\_derivative} \\
-- \underbrace{\sum_{i=0}^{N}\sum_{j=0}^{N}\ui_i\vi_j\int_{r_0}^{r_1}\omega_A\doverd{\phi_i}{r}\doverd{\phi_j}{r}r^2\dd r}_\text{element\_time\_derivative}
-- \underbrace{\sum_{i=0}^{N}\sum_{j=0}^{N}\ui_i\vi_j\int_{r_0}^{r_1}\omega_B\phi_i\doverd{\phi_j}{r}r^2\dd r}_\text{element\_time\_derivative} \\
-+ \underbrace{\sum_{i=0}^{N}\sum_{j=0}^{N}\ui_i\vi_j\left[\omega_A\doverd{\phi_i}{r}\phi_j r^2 + \omega_B\phi_i\phi_jr^2\right]_{r_0}^{r_1}}_\text{side\_time\_derivative}  & = 0
-\end{split}
+\int_{r_0}^{r_1}\left(\chi v + \transport\gradien{r}{v} + \transport\frac{2}{r} v  - \frac{2}{r}\transport v \right)r^2\dd r
+ + \left[\transport r^2 v\right]_{r_0}^{r^1} = 0.
+\end{equation}
+%
+As this holds for any $v \in \mathcal{H}^1$, in particular for $v$ such as
+\[
+\left\{\begin{array}{l}
+         v(r_0) = 0 \\
+         v(r_1) = 0 \\
+        \end{array}\right.,
+\]
+%
+we have finally the weak form of equation \ref{solve:photochemical_equation}:
+\begin{equation}
+\int_{r_0}^{r_1}\left(\chi v + \transport\gradien{r}{v} \right)r^2\dd r
 \end{equation}
 
+\subsubsection{Residual}
 
-At this point, we link to \GRINS\footnote{\GitGrins}: the planetary code provides $\chi$, $u$ and
-$\omega$ for any $s$ species and $r$ \GRINS\ asks. \LibMesh\footnote{\GitLibmesh} is the underlying library that
-does all the calculations.
+Using expression \ref{Titan:transport_expression} for the transport, we can
+express the residual for any species $s$:
+\begin{equationCode}{PlanetPhysics}
+F_s = \left(\chi_s v + \omega_{As}\gradien{r}{\conc_s}\gradien{r}{v} + \omega_{Bs}\conc_s\gradien{r}{v} \right)r^2
+\end{equationCode}
+
+\subsubsection{The jacobian}
+
+We discretize the test function $v$ and the solutions $\conc$ on
+a basis of function $\phi$ such as:
+\[
+  \left\{\begin{array}{l}
+         \conc = \displaystyle\sum_i^N \ui_i\phi_i \\[5pt]
+         v     = \displaystyle\sum_i^N \vi_i\phi_i \\
+         \end{array}\right.
+\]
+%
+The jacobian will be defined by:
+\[
+J_{i,j} = \doverd{F(i)}{\phi_j} = 
+        \left(\dOverd{\chi_s \phi_i + \omega_{As}\gradien{r}{\conc_s}\gradien{r}{\phi_i} + \omega_{Bs}\conc_s\gradien{r}{\phi_i}}{\phi_j} \right) \vi_i r^2 
+\]
+%
+To performs this, for every species $s$, we consider all the contributions
+from all species $t$. We have as the jacobian expression:
+\begin{equationCode}{PlanetPhysics}
+\begin{split}
+J_{i,j} & = \sum_t\Bigg(\doverd{\chi_s}{\conc_t} \phi_i \phi_j +  \\  
+        & \hphantom{= \sum_t\Bigg(}
+            \doverd{\omega_{As}}{\conc_t}\gradien{r}{\conc_s}\gradien{r}{\phi_i}\phi_j + 
+            \omega_{As}\gradien{r}{\phi_i}\gradien{r}{\phi_j}  + \\ 
+        & \hphantom{= \sum_t\Bigg(}
+             \doverd{\omega_{Bs}}{\conc_t}\conc_s\gradien{r}{\phi_i}\phi_j +
+            \omega_{Bs}\gradien{r}{\phi_i}\phi_j  \\
+        & \hphantom{= \sum_t\Bigg(} \Bigg)\vi_i r^2 
+\end{split}
+\end{equationCode}
+
+At this point, we link to \GRINS\footnote{\GitGrins}: the planetary code provides $\chi$,
+$\omega_A$, $\omega_B$ and the required derivatives. \GRINS\ and \LibMesh\footnote{\GitLibmesh} (the underlying library)
+provide the $\phi$ fonctions, \conc, their derivatives and solve.
