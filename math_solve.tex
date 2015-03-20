@@ -263,10 +263,10 @@ from all species $t$. We have as the jacobian expression:
 J_{i,j} & = \sum_t\Bigg(\doverd{\chi_s}{\conc_t} \phi_i \phi_j +  \\  
         & \hphantom{= \sum_t\Bigg(}
             \doverd{\omega_{As}}{\conc_t}\gradien{r}{\conc_s}\gradien{r}{\phi_i}\phi_j + 
-            \omega_{As}\gradien{r}{\phi_i}\gradien{r}{\phi_j}  + \\ 
+            \underbrace{\omega_{As}\gradien{r}{\phi_i}\gradien{r}{\phi_j}}_{\text{if } s=t}  + \\ 
         & \hphantom{= \sum_t\Bigg(}
              \doverd{\omega_{Bs}}{\conc_t}\conc_s\gradien{r}{\phi_i}\phi_j +
-            \omega_{Bs}\gradien{r}{\phi_i}\phi_j  \\
+            \underbrace{\omega_{Bs}\gradien{r}{\phi_i}\phi_j}_{\text{if } s = t}  \\
         & \hphantom{= \sum_t\Bigg(} \Bigg)\vi_i r^2 
 \end{split}
 \end{equationCode}
